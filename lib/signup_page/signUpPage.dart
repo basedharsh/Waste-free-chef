@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
     SignupAuthorization signupAuth = Provider.of<SignupAuthorization>(context);
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 18, 17, 17),
+      backgroundColor: Color.fromARGB(255, 0, 0, 0),
       body: SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -65,20 +65,39 @@ class _MyAppState extends State<MyApp> {
                   style: GoogleFonts.lobster(
                     textStyle: TextStyle(
                       color: Color.fromARGB(255, 5, 237, 125),
-                      fontSize: 30,
+                      fontSize: 40,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
+                Text(
+                  "Welcome to Waste-food-Chef",
+                  style: GoogleFonts.autourOne(
+                    textStyle: TextStyle(
+                      color: Color.fromARGB(255, 177, 124, 242),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
                 TextFormField(
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 227, 233, 236),
+                  ),
                   controller: username,
                   decoration: InputDecoration(
                     hintText: 'Username',
                     hintStyle: TextStyle(
                       color: Color.fromARGB(255, 139, 13, 236),
                       // align the text to the left instead of centered
+                    ),
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Color.fromARGB(255, 139, 13, 236),
                     ),
                     labelText: 'Username',
                     labelStyle: TextStyle(
@@ -94,12 +113,19 @@ class _MyAppState extends State<MyApp> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 227, 233, 236),
+                  ),
                   controller: emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Email Address',
                     hintStyle: TextStyle(
                       color: Color.fromARGB(255, 139, 13, 236),
                       // align the text to the left instead of centered
+                    ),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Color.fromARGB(255, 139, 13, 236),
                     ),
                     labelText: 'Email Address',
                     labelStyle: TextStyle(
@@ -115,6 +141,9 @@ class _MyAppState extends State<MyApp> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 227, 233, 236),
+                  ),
                   controller: password,
                   obscureText: true,
                   decoration: InputDecoration(
@@ -122,6 +151,10 @@ class _MyAppState extends State<MyApp> {
                     hintStyle: TextStyle(
                       color: Color.fromARGB(255, 139, 13, 236),
                       // align the text to the left instead of centered
+                    ),
+                    prefixIcon: Icon(
+                      Icons.remove_red_eye,
+                      color: Color.fromARGB(255, 139, 13, 236),
                     ),
                     labelText: 'Password',
                     labelStyle: TextStyle(
@@ -155,7 +188,7 @@ class _MyAppState extends State<MyApp> {
                     : Center(
                         child: CircularProgressIndicator(),
                       ),
-                SizedBox(height: 20),
+                SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -163,6 +196,7 @@ class _MyAppState extends State<MyApp> {
                       'Already have an account? ',
                       style: TextStyle(
                         color: Color.fromARGB(255, 139, 13, 236),
+                        fontSize: 20,
                         // align the text to the left instead of centered
                       ),
                     ),
@@ -175,13 +209,22 @@ class _MyAppState extends State<MyApp> {
                         'Login',
                         style: TextStyle(
                           color: Color.fromARGB(255, 5, 237, 125),
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           // align the text to the left instead of centered
                         ),
                       ),
                     ),
                   ],
-                )
+                ),
+                SizedBox(height: 100),
+                Text(
+                  "CopyRight@2023",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 56, 58, 58),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
