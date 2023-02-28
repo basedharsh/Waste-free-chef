@@ -1,21 +1,16 @@
-<h3 align="center">
- Heyy there! Team Scaffold here 👋
-</h3>
+# firebase
 
-<p align="center">
-  <a href="https://github.com/DenverCoder1/readme-typing-svg"><img src="https://readme-typing-svg.herokuapp.com?lines=Food+Waste+Management+App;Made%20By%20Team%20Scaffold&center=true&width=500&height=50"></a>
-</p>
+A new Flutter project.
 
-<h3 align="center">
-🌱 we're currently trying to learn App Dev... 
-</h3>
+## Getting Started
 
+This project is a starting point for a Flutter application.
 
+A few resources to get you started if this is your first Flutter project:
 
- 
- <p align="center">Welcome to the repository of Team Scaffold's food waste management app, developed with the Flutter framework. Our team was motivated to tackle the growing issue of food waste and aimed to create an innovative solution through this app. Despite not winning the hackathon, we were determined to continue working on this project and improve it further.</p>
- 
- 
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-
-
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

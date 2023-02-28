@@ -1,14 +1,17 @@
 import 'package:firebase/order_form/food_details_form.dart';
 import 'package:firebase/map_page/mapPage.dart';
 import 'package:firebase/order_display/orders_display.dart';
+import 'package:firebase/past_orders/past_orders.dart';
 import 'package:firebase/signup_page/signUpPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 int selectedIndex = 0;
+
 List<Widget> myPages = [
   OrdersDisplay(),
   OrderDetails(),
+  PastOrders(),
   MapPage()
 ];
 
@@ -47,7 +50,16 @@ class _MyAppState extends State<MyApp> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => SignUpPage())));
               },
-              icon: Icon(Icons.exit_to_app))
+              icon: Icon(Icons.exit_to_app)
+          ),
+          IconButton(
+              onPressed: (){
+                setState(() {
+
+                });
+              },
+              icon: Icon(Icons.refresh)
+          )
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -61,11 +73,16 @@ class _MyAppState extends State<MyApp> {
             label: 'Donate',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Past',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.map),
             label: 'Map',
           ),
         ],
         currentIndex: selectedIndex,
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.amber[800],
         onTap: (index){
           setState(() {

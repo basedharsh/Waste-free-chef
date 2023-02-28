@@ -19,7 +19,12 @@ class LoginAuthorization with ChangeNotifier {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Password is Empty")));
       return;
-    } else {
+    } else if(emailAddress.text.trim() == 'admin1@gmail.com' && password.text.trim() == 'admin1pass'){
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Invalid Credentials")));
+      return;
+    }
+    else {
       try{
         loading = true;
         notifyListeners();

@@ -1,13 +1,42 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:location/location.dart';
+import '../order_display/orderDataList.dart';
 
 
 
-class MapPage extends StatelessWidget {
+final db = FirebaseFirestore.instance;
+var orderData = OrderDataList();
+
+void GetDataFromDatabase()async{
+  await db.collection("sellerOrder").get().then((event) {
+    orderData.orderDataList = event.docs;
+    print(orderData.orderDataList);
+  });
+}
+
+
+
+
+class MapPage extends StatefulWidget {
+  const MapPage({Key? key}) : super(key: key);
+
+  @override
+  State<MapPage> createState() => _MapPageState();
+}
+
+class _MapPageState extends State<MapPage> {
+  @override
+  void initState(){
+    GetDataFromDatabase();
+    super.initState();
+    print("data aa raha hai");
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -16,6 +45,7 @@ class MapPage extends StatelessWidget {
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -70,96 +100,19 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  List<Marker> allMarker = [];
-
-  setMarker() {
-    allMarker.add(Marker(
-        width: 100.0,
-        height: 100.0,
-        point: latLng.LatLng(
-            _locationData?.latitude ?? 0.0, _locationData?.longitude ?? 0.0),
-        builder: (ctx) => Icon(
-          Icons.my_location_rounded,
-          color: Colors.blue,
-        )));
-
-    allMarker.add(new Marker(
-        width: 200.0,
-        height: 200.0,
-        point: new latLng.LatLng(19.073836, 72.891126),
-        builder: (ctx) => Icon(
-          Icons.location_on,
-          color: Colors.red,
-        )));
-
-    allMarker.add(new Marker(
-        width: 200.0,
-        height: 200.0,
-        point: new latLng.LatLng(19.173736, 72.894128),
-        builder: (ctx) => Icon(
-          Icons.location_on,
-          color: Colors.red,
-        )));
-
-    allMarker.add(new Marker(
-        width: 200.0,
-        height: 200.0,
-        point: new latLng.LatLng(19.073736, 72.895126),
-        builder: (ctx) => Icon(
-          Icons.location_on,
-          color: Colors.red,
-        )));
-
-    allMarker.add(new Marker(
-        width: 200.0,
-        height: 200.0,
-        point: new latLng.LatLng(19.078996, 72.901331),
-        builder: (ctx) => Icon(
-          Icons.location_on,
-          color: Colors.red,
-        )));
-
-    allMarker.add(new Marker(
-        width: 200.0,
-        height: 200.0,
-        point: new latLng.LatLng(19.074556, 72.897129),
-        builder: (ctx) => Icon(
-          Icons.location_on,
-          color: Colors.red,
-        )));
-
-    allMarker.add(new Marker(
-        width: 200.0,
-        height: 200.0,
-        point: new latLng.LatLng(19.072556, 72.898129),
-        builder: (ctx) => Icon(
-          Icons.location_on,
-          color: Colors.red,
-        )));
-
-    allMarker.add(new Marker(
-        width: 200.0,
-        height: 200.0,
-        point: new latLng.LatLng(19.084903, 72.902328),
-        builder: (ctx) => Icon(
-          Icons.location_on,
-          color: Colors.red,
-        )));
-
-    return allMarker;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return  Scaffold(
       body: _locationData != null
-          ? new FlutterMap(
-          options: new MapOptions(
-              center: new latLng.LatLng(_locationData?.latitude ?? 0.0,
+          ?  FlutterMap(
+          options: MapOptions(
+              center: latLng.LatLng(_locationData?.latitude ?? 0.0,
                   _locationData?.longitude ?? 0.0),
-              zoom: 14.0),
+              zoom: 14.0,
+            rotationWinGestures: MultiFingerGesture.none
+          ),
           layers: [
-            new TileLayerOptions(
+             TileLayerOptions(
                 urlTemplate:
                 "https://api.mapbox.com/styles/v1/shrivatsa27/cldz201kl003h01pdp3to77ky/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2hyaXZhdHNhMjciLCJhIjoiY2xkejFkbWU3MHd2ZjNwcWptZ2kzNzFhNyJ9.ctks2LJ7nJvRGaC1YaR2fw",
                 additionalOptions: {
@@ -167,7 +120,131 @@ class _MyHomePageState extends State<MyHomePage> {
                   'pk.eyJ1Ijoic2hyaXZhdHNhMjciLCJhIjoiY2xkejFkbWU3MHd2ZjNwcWptZ2kzNzFhNyJ9.ctks2LJ7nJvRGaC1YaR2fw',
                   'id': 'mapbox.satellite'
                 }),
-            new MarkerLayerOptions(markers: setMarker())
+             MarkerLayerOptions(
+                markers: List.generate(orderData.orderDataList.length,(index){
+                  var listy = orderData.orderDataList[index];
+                  if(listy['approved']=='true'){
+                    return Marker(
+                        width: 200.0,
+                        height: 200.0,
+                        point:  latLng.LatLng(listy["latitude"], listy["longitude"]),
+                        builder: (ctx) => Container(
+                          child: IconButton(
+                            onPressed: (){
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (builder){
+                                    return Container(
+                                      height: 100,
+                                      width: double.infinity,
+                                      color: Colors.lightBlue,
+                                      margin: EdgeInsets.all(10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10)
+                                            ),
+                                            height: 100,
+                                            width: 100,
+                                            child: FittedBox(
+                                              fit: BoxFit.fill,
+                                              child: Image(
+                                                image: NetworkImage(listy['foodimage']),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 50),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text('NAME : ${listy['foodname']}',style: TextStyle(color: Colors.white)),
+                                              Text('PRICE : ${listy['foodprice']} Rs',style: TextStyle(color: Colors.white)),
+                                              Text('QUANTITY : ${listy['foodnos']}',style: TextStyle(color: Colors.white)),
+                                              Text('TYPE : ${listy['foodtype']}',style: TextStyle(color: Colors.white)),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }
+                              );
+                            },
+                            icon: Icon(
+                              Icons.location_on,
+                              color: Colors.red,
+                            ),
+                          ),
+                        )
+                      // builder: (ctx) => Icon(
+                      //   Icons.location_on,
+                      //   color: Colors.red,
+                      // )
+                    );
+                  }
+                  else{
+                    return Marker(
+                        width: 200.0,
+                        height: 200.0,
+                        point:  latLng.LatLng(listy["latitude"], listy["longitude"]),
+                        builder: (ctx) => Container(
+                          child: IconButton(
+                            onPressed: (){
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (builder){
+                                    return Container(
+                                      height: 100,
+                                      width: double.infinity,
+                                      color: Colors.lightBlue,
+                                      margin: EdgeInsets.all(10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10)
+                                            ),
+                                            height: 100,
+                                            width: 100,
+                                            child: FittedBox(
+                                              fit: BoxFit.fill,
+                                              child: Image(
+                                                image: NetworkImage(listy['foodimage']),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 50),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text('NAME : ${listy['foodname']}',style: TextStyle(color: Colors.white)),
+                                              Text('PRICE : ${listy['foodprice']} Rs',style: TextStyle(color: Colors.white)),
+                                              Text('QUANTITY : ${listy['foodnos']}',style: TextStyle(color: Colors.white)),
+                                              Text('TYPE : ${listy['foodtype']}',style: TextStyle(color: Colors.white)),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }
+                              );
+                            },
+                            icon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        )
+                    );
+                  }
+
+                }
+            ),
+            )
           ])
           : Center(child: CircularProgressIndicator()),
     );
