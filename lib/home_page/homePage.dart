@@ -1,3 +1,4 @@
+import 'package:firebase/chat_page/chatBot.dart';
 import 'package:firebase/order_form/food_details_form.dart';
 import 'package:firebase/map_page/mapPage.dart';
 import 'package:firebase/order_display/orders_display.dart';
@@ -12,7 +13,8 @@ List<Widget> myPages = [
   OrdersDisplay(),
   OrderDetails(),
   PastOrders(),
-  MapPage()
+  MapPage(),
+  ChatBot()
 ];
 
 class HomePage extends StatefulWidget {
@@ -26,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyApp(),
     );
   }
@@ -79,6 +82,10 @@ class _MyAppState extends State<MyApp> {
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
             label: 'Map',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chat',
           ),
         ],
         currentIndex: selectedIndex,
