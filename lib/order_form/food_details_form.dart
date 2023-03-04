@@ -1,17 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/order_display/orders_display.dart';
 import 'package:firebase/order_display/orderDataList.dart';
-import 'package:firebase/routing/routing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
 import 'package:location/location.dart';
-import 'package:intl/date_symbol_data_local.dart';
-//initializeDateFormatting('fr_FR', null).then((_) => runMyCode());
 
 final db = FirebaseFirestore.instance;
 var orderData = OrderDataList();
@@ -32,7 +28,7 @@ final details = <String, dynamic>{
   "foodnos": "",
   "foodtype": "",
   "foodimage": "",
-  //"expirydate": "",
+  "expirydate": "",
   "latitude": "",
   "longitude": "",
   "approved": "true",
@@ -327,6 +323,7 @@ class _MyAppState extends State<MyApp> {
                     //details['foodtype'] = foodType.text.trim();
                     details['foodimage'] = foodImageUrl;
                     details['providerid'] = currentUser.uid;
+                    details['expirydate'] = expiryDate.text.trim();
 
                         db
                         .collection('sellerOrder')
