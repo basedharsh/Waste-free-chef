@@ -50,7 +50,6 @@ dependencies:
   geocode: ^1.0.2
   google_fonts: ^4.0.3
   liquid_pull_to_refresh: ^3.0.1
-  kommunicate_flutter: ^1.5.1
 
 dev_dependencies:
   flutter_test:

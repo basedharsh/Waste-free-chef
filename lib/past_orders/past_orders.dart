@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     print(currentUser.uid);
-    print(listy);
+    print(listy[0].data());
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 
 class ChatBot extends StatefulWidget {
   const ChatBot({Key? key}) : super(key: key);
@@ -32,19 +31,6 @@ class _MyAppState extends State<MyApp> {
       body: Center(
         child: MaterialButton(
           onPressed: ()async{
-
-            dynamic conversationObject = {
-              'appId': '33f46f0a6e967a48578e561a8b05f001c',// The [APP_ID](https://dashboard.kommunicate.io/settings/install) obtained from kommunicate dashboard.
-              'withPreChat': true
-            };
-
-            KommunicateFlutterPlugin.buildConversation(conversationObject)
-                .then((clientConversationId) {
-              print("Conversation builder success : " + clientConversationId.toString());
-            }).catchError((error) {
-              print("Conversation builder error : " + error.toString());
-            });
-
           },
             child: Text("Chattt")
         ),
