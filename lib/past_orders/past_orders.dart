@@ -33,6 +33,9 @@ class _PastOrdersState extends State<PastOrders> {
   void initState(){
     super.initState();
     GetDataFromDatabase();
+    setState(() {
+       listy = listy;
+    });
   }
 
   @override

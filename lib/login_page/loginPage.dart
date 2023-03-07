@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Text(
-                  "Waste-food-Chef",
+                  "Waste-free-Chef",
                   style: GoogleFonts.lobster(
                     textStyle: TextStyle(
                       color: Color.fromARGB(255, 5, 237, 125),
