@@ -46,6 +46,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 139, 13, 236),
         actions: [
           IconButton(
               onPressed: () {
@@ -55,17 +56,10 @@ class _MyAppState extends State<MyApp> {
               },
               icon: Icon(Icons.exit_to_app)
           ),
-          IconButton(
-              onPressed: (){
-                setState(() {
-
-                });
-              },
-              icon: Icon(Icons.refresh)
-          )
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -90,12 +84,13 @@ class _MyAppState extends State<MyApp> {
         ],
         currentIndex: selectedIndex,
         unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Color.fromARGB(255, 139, 13, 236),
         onTap: (index){
           setState(() {
             selectedIndex = index;
           });
         },
+        //backgroundColor: Color.fromARGB(255, 139, 13, 236),
       ),
       body: myPages[selectedIndex],
     );
