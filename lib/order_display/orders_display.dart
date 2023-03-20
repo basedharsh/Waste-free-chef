@@ -4,7 +4,13 @@ import 'package:firebase/order_display/orderDataList.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/order_display/getUserLocationFunction.dart';
 import 'package:firebase/order_display/deleteExpiredFromDatabaseFunction.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:firebase/order_display/distanceFilteringFunction.dart';
+
+
+RefreshController _refreshController =
+RefreshController(initialRefresh: false);
+
 
 final db = FirebaseFirestore.instance;
 
@@ -18,6 +24,7 @@ bool loading = true;
 
 class OrdersDisplay extends StatefulWidget {
   const OrdersDisplay({Key? key}) : super(key: key);
+  //OrdersDisplay({required ordersist});
 
   @override
   State<OrdersDisplay> createState() => _OrdersDisplayState();
@@ -36,12 +43,13 @@ class _OrdersDisplayState extends State<OrdersDisplay> {
     setState(() {
       GetDataFromDatabase();
       listy = orderData.orderDataList;
-      listy = DistanceFilter(list: orderData.orderDataList);
+      //listy = DistanceFilter(list: orderData.orderDataList);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Building");
     return MaterialApp(
       debugShowCheckedModeBanner: false,
         home: MyApp()
@@ -63,10 +71,29 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: SafeArea(
+      body: SmartRefresher(
+        controller: _refreshController,
+        onRefresh: ()async{
+          await Future.delayed(Duration(milliseconds: 1000));
+          setState(() {
+            getLocation().then((value) {
+              currentLatitude = value.latitude;
+              currentLongitude = value.longitude;
+            });
+            DeleteExpiredFromDatabase();
+            setState(() {
+              GetDataFromDatabase();
+              listy = orderData.orderDataList;
+              //listy = DistanceFilter(list: orderData.orderDataList);
+            });
+          });
+          _refreshController.refreshCompleted();
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            child: (loading == false)?(listy.length!=0)?
+            child: (listy.length!=0)?
             Column(
                 children:  List.generate(listy.length,(index){
                   //var listy = orderData.orderDataList[index];
@@ -98,7 +125,14 @@ class _MyAppState extends State<MyApp> {
                               Text('PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',style: TextStyle(color: Colors.white)),
                               Text('QUANTITY : ${listy.elementAt(index).data()['foodnos']}',style: TextStyle(color: Colors.white)),
                               Text('TYPE : ${listy.elementAt(index).data()['foodtype']}',style: TextStyle(color: Colors.white)),
-                              Text('EXPITY DATE : ${listy.elementAt(index).data()['expirydate']}',style: TextStyle(color: Colors.white))
+                              Text('EXPITY DATE : ${listy.elementAt(index).data()['expirydate']}',style: TextStyle(color: Colors.white)),
+                              MaterialButton(
+                                  onPressed: (){
+
+                                  },
+                                child: Text("Chat"),
+                                color: Colors.purple,
+                              )
                             ],
                           ),
                         )
@@ -118,12 +152,9 @@ class _MyAppState extends State<MyApp> {
               children: [
                 Text("No Orders Available Currently")
               ],
-            )):Center(
-              child: Column(
-                children: [CircularProgressIndicator()],
-              ),
-            )
-          )
+            ))
+          ),
+        ),
       ),
     );
   }
