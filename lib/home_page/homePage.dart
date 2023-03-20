@@ -25,9 +25,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,20 +46,26 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 139, 13, 236),
+        backgroundColor: Color.fromARGB(255, 174, 68, 255),
         actions: [
+          IconButton(
+            alignment: Alignment.centerLeft,
+            // Go back to last page
+            onPressed: () {
+              // Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
           IconButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) =>
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SignUpPage())));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SignUpPage())));
               },
-              icon: Icon(Icons.exit_to_app)
-          ),
+              icon: Icon(Icons.exit_to_app)),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -88,7 +91,7 @@ class _MyAppState extends State<MyApp> {
         currentIndex: selectedIndex,
         unselectedItemColor: Colors.grey,
         selectedItemColor: Color.fromARGB(255, 139, 13, 236),
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             selectedIndex = index;
           });
@@ -99,4 +102,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
