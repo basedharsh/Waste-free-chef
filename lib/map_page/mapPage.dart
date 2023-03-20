@@ -7,20 +7,15 @@ import 'package:latlong2/latlong.dart' as latLng;
 import 'package:location/location.dart';
 import '../order_display/orderDataList.dart';
 
-
-
 final db = FirebaseFirestore.instance;
 var orderData = OrderDataList();
 
-void GetDataFromDatabase()async{
+void GetDataFromDatabase() async {
   await db.collection("sellerOrder").get().then((event) {
     orderData.orderDataList = event.docs;
     print(orderData.orderDataList);
   });
 }
-
-
-
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -31,7 +26,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   @override
-  void initState(){
+  void initState() {
     GetDataFromDatabase();
     super.initState();
     print("data aa raha hai");
@@ -45,7 +40,6 @@ class _MapPageState extends State<MapPage> {
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -87,10 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
     getLocation();
     locationSubscription =
         Location().onLocationChanged.listen((LocationData _locationData) {
-          setState(() {
-            _locationData = _locationData;
-          });
-        });
+      setState(() {
+        _locationData = _locationData;
+      });
+    });
   }
 
   void dispose() {
@@ -102,150 +96,207 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: _locationData != null
-          ?  FlutterMap(
-          options: MapOptions(
-              center: latLng.LatLng(_locationData?.latitude ?? 0.0,
-                  _locationData?.longitude ?? 0.0),
-              zoom: 14.0,
-            rotationWinGestures: MultiFingerGesture.none
-          ),
-          layers: [
-             TileLayerOptions(
-                urlTemplate:
-                "https://api.mapbox.com/styles/v1/shrivatsa27/cldz201kl003h01pdp3to77ky/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2hyaXZhdHNhMjciLCJhIjoiY2xkejFkbWU3MHd2ZjNwcWptZ2kzNzFhNyJ9.ctks2LJ7nJvRGaC1YaR2fw",
-                additionalOptions: {
-                  'accessToken':
-                  'pk.eyJ1Ijoic2hyaXZhdHNhMjciLCJhIjoiY2xkejFkbWU3MHd2ZjNwcWptZ2kzNzFhNyJ9.ctks2LJ7nJvRGaC1YaR2fw',
-                  'id': 'mapbox.satellite'
-                }),
-             MarkerLayerOptions(
-                markers: List.generate(orderData.orderDataList.length,(index){
-                  var listy = orderData.orderDataList[index];
-                  if(listy['approved']=='true'){
-                    return Marker(
-                        width: 200.0,
-                        height: 200.0,
-                        point:  latLng.LatLng(listy["latitude"], listy["longitude"]),
-                        builder: (ctx) => Container(
-                          child: IconButton(
-                            onPressed: (){
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (builder){
-                                    return Container(
-                                      height: 100,
-                                      width: double.infinity,
-                                      color: Colors.lightBlue,
-                                      margin: EdgeInsets.all(10),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10)
-                                            ),
-                                            height: 100,
-                                            width: 100,
-                                            child: FittedBox(
-                                              fit: BoxFit.fill,
-                                              child: Image(
-                                                image: NetworkImage(listy['foodimage']),
+          ? FlutterMap(
+              options: MapOptions(
+                  center: latLng.LatLng(_locationData?.latitude ?? 0.0,
+                      _locationData?.longitude ?? 0.0),
+                  zoom: 14.0,
+                  rotationWinGestures: MultiFingerGesture.none),
+              layers: [
+                  TileLayerOptions(
+                      urlTemplate:
+                          "https://api.mapbox.com/styles/v1/shrivatsa27/cldz201kl003h01pdp3to77ky/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2hyaXZhdHNhMjciLCJhIjoiY2xkejFkbWU3MHd2ZjNwcWptZ2kzNzFhNyJ9.ctks2LJ7nJvRGaC1YaR2fw",
+                      additionalOptions: {
+                        'accessToken':
+                            'pk.eyJ1Ijoic2hyaXZhdHNhMjciLCJhIjoiY2xkejFkbWU3MHd2ZjNwcWptZ2kzNzFhNyJ9.ctks2LJ7nJvRGaC1YaR2fw',
+                        'id': 'mapbox.satellite'
+                      }),
+                  MarkerLayerOptions(
+                    markers:
+                        List.generate(orderData.orderDataList.length, (index) {
+                      var listy = orderData.orderDataList[index];
+                      if (listy['approved'] == 'true') {
+                        return Marker(
+                            width: 200.0,
+                            height: 200.0,
+                            point: latLng.LatLng(
+                                listy["latitude"], listy["longitude"]),
+                            builder: (ctx) => Container(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (builder) {
+                                            return Container(
+                                              height: 100,
+                                              width: double.infinity,
+                                              color: Color.fromARGB(
+                                                  255, 198, 170, 245),
+                                              margin: EdgeInsets.all(10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10)),
+                                                    height: 100,
+                                                    width: 100,
+                                                    child: FittedBox(
+                                                      fit: BoxFit.fill,
+                                                      child: Image(
+                                                        image: NetworkImage(
+                                                            listy['foodimage']),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 50),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                          'NAME : ${listy['foodname']}',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      17,
+                                                                      15,
+                                                                      15))),
+                                                      Text(
+                                                          'PRICE : ${listy['foodprice']} Rs',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      0,
+                                                                      0,
+                                                                      0))),
+                                                      Text(
+                                                          'QUANTITY : ${listy['foodnos']}',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      11,
+                                                                      8,
+                                                                      8))),
+                                                      Text(
+                                                          'TYPE : ${listy['foodtype']}',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      1,
+                                                                      1,
+                                                                      1))),
+                                                    ],
+                                                  )
+                                                ],
                                               ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 50),
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text('NAME : ${listy['foodname']}',style: TextStyle(color: Colors.white)),
-                                              Text('PRICE : ${listy['foodprice']} Rs',style: TextStyle(color: Colors.white)),
-                                              Text('QUANTITY : ${listy['foodnos']}',style: TextStyle(color: Colors.white)),
-                                              Text('TYPE : ${listy['foodtype']}',style: TextStyle(color: Colors.white)),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }
-                              );
-                            },
-                            icon: Icon(
-                              Icons.location_on,
-                              color: Colors.red,
-                            ),
-                          ),
-                        )
-                      // builder: (ctx) => Icon(
-                      //   Icons.location_on,
-                      //   color: Colors.red,
-                      // )
-                    );
-                  }
-                  else{
-                    return Marker(
-                        width: 200.0,
-                        height: 200.0,
-                        point:  latLng.LatLng(listy["latitude"], listy["longitude"]),
-                        builder: (ctx) => Container(
-                          child: IconButton(
-                            onPressed: (){
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (builder){
-                                    return Container(
-                                      height: 100,
-                                      width: double.infinity,
-                                      color: Colors.lightBlue,
-                                      margin: EdgeInsets.all(10),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10)
-                                            ),
-                                            height: 100,
-                                            width: 100,
-                                            child: FittedBox(
-                                              fit: BoxFit.fill,
-                                              child: Image(
-                                                image: NetworkImage(listy['foodimage']),
+                                            );
+                                          });
+                                    },
+                                    icon: Icon(
+                                      Icons.location_on,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                )
+                            // builder: (ctx) => Icon(
+                            //   Icons.location_on,
+                            //   color: Colors.red,
+                            // )
+                            );
+                      } else {
+                        return Marker(
+                            width: 200.0,
+                            height: 200.0,
+                            point: latLng.LatLng(
+                                listy["latitude"], listy["longitude"]),
+                            builder: (ctx) => Container(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (builder) {
+                                            return Container(
+                                              height: 100,
+                                              width: double.infinity,
+                                              color: Colors.lightBlue,
+                                              margin: EdgeInsets.all(10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10)),
+                                                    height: 100,
+                                                    width: 100,
+                                                    child: FittedBox(
+                                                      fit: BoxFit.fill,
+                                                      child: Image(
+                                                        image: NetworkImage(
+                                                            listy['foodimage']),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 50),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                          'NAME : ${listy['foodname']}',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white)),
+                                                      Text(
+                                                          'PRICE : ${listy['foodprice']} Rs',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white)),
+                                                      Text(
+                                                          'QUANTITY : ${listy['foodnos']}',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white)),
+                                                      Text(
+                                                          'TYPE : ${listy['foodtype']}',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white)),
+                                                    ],
+                                                  )
+                                                ],
                                               ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 50),
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text('NAME : ${listy['foodname']}',style: TextStyle(color: Colors.white)),
-                                              Text('PRICE : ${listy['foodprice']} Rs',style: TextStyle(color: Colors.white)),
-                                              Text('QUANTITY : ${listy['foodnos']}',style: TextStyle(color: Colors.white)),
-                                              Text('TYPE : ${listy['foodtype']}',style: TextStyle(color: Colors.white)),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }
-                              );
-                            },
-                            icon: Icon(
-                              Icons.location_on,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        )
-                    );
-                  }
-
-                }
-            ),
-            )
-          ])
+                                            );
+                                          });
+                                    },
+                                    icon: Icon(
+                                      Icons.location_on,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ));
+                      }
+                    }),
+                  )
+                ])
           : Center(child: CircularProgressIndicator()),
     );
   }
