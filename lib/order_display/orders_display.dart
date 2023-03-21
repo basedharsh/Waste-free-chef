@@ -9,6 +9,7 @@ import 'package:firebase/order_display/deleteExpiredFromDatabaseFunction.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:firebase/order_display/distanceFilteringFunction.dart';
 
+import '../models/price_model.dart';
 import 'filter_page.dart';
 
 RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -63,7 +64,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 241, 231, 245),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SmartRefresher(
         controller: _refreshController,
         onRefresh: () async {
@@ -84,50 +85,58 @@ class _MyAppState extends State<MyApp> {
         },
         child: Column(
           children: [
-            SizedBox(height: 1),
+            SizedBox(height: 2),
             InkWell(
               onTap: () {},
-              child: Container(
-                height: 100,
-                width: double.infinity,
-                color: Color.fromARGB(255, 222, 123, 239),
-                child: Column(
-                  children: [
-                    SizedBox(height: 14),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Waste",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "-Food",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text("-Chef",
+              child: Material(
+                elevation: 10,
+                borderRadius: BorderRadius.circular(30),
+                child: Container(
+                  height: 100,
+                  width: 400,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30)),
+                      color: Color.fromARGB(255, 254, 197, 187)),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 14),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Waste",
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Color.fromARGB(255, 254, 88, 104),
                                 fontSize: 30,
-                                fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      "Food for the needy",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 23, 17, 17),
-                          fontSize: 20,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "-Food",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text("-Chef",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 254, 88, 104),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        "Food for the needy",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 23, 17, 17),
+                            fontSize: 20,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -148,10 +157,11 @@ class _MyAppState extends State<MyApp> {
                     icon:
                         Icon(Icons.filter_alt, color: Colors.purple, size: 30),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FilterScreen()),
-                      );
+                      _showBottomSheet();
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => FilterScreen()),
+                      // );
                     },
                   ),
                 ),
@@ -169,66 +179,75 @@ class _MyAppState extends State<MyApp> {
                           if (listy.elementAt(index).data()["approved"] ==
                               "true") {
                             // main container for each order
-                            return Container(
-                              // add border radius
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(80),
-                                  color: Color.fromARGB(255, 254, 197, 187)),
-                              height: 350,
-                              width: 250,
-                              // color: Color.fromARGB(255, 238, 139, 255),
-                              margin: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  // Image
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    height: 200,
-                                    width: 250,
-                                    child: FittedBox(
-                                      fit: BoxFit.fill,
-                                      child: Image(
-                                        image: NetworkImage(listy
-                                            .elementAt(index)
-                                            .data()['foodimage']),
+                            return Material(
+                              elevation: 3,
+                              borderRadius: BorderRadius.circular(80),
+                              child: Container(
+                                // add border radius
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(80),
+                                    color: Color.fromARGB(255, 254, 197, 187)),
+                                height: 350,
+                                width: 250,
+                                // color: Color.fromARGB(255, 238, 139, 255),
+                                // Add gap between each order
+                                margin: EdgeInsets.all(2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // Image
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      height: 200,
+                                      width: 250,
+                                      child: FittedBox(
+                                        fit: BoxFit.fill,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(80),
+                                          child: Image(
+                                            image: NetworkImage(listy
+                                                .elementAt(index)
+                                                .data()['foodimage']),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                      'NAME : ${listy.elementAt(index).data()['foodname']}',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(255, 8, 8, 8),
-                                          fontWeight: FontWeight.bold)),
-                                  Text(
-                                      'PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(255, 8, 8, 8),
-                                          fontWeight: FontWeight.bold)),
-                                  Text(
-                                      'QUANTITY : ${listy.elementAt(index).data()['foodnos']}',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(255, 8, 8, 8),
-                                          fontWeight: FontWeight.bold)),
-                                  Text(
-                                      'TYPE : ${listy.elementAt(index).data()['foodtype']}',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(255, 8, 8, 8),
-                                          fontWeight: FontWeight.bold)),
-                                  Text(
-                                      'EXPIRY DATE : ${listy.elementAt(index).data()['expirydate']}',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(255, 8, 8, 8),
-                                          fontWeight: FontWeight.bold)),
-                                  MaterialButton(
-                                    onPressed: () {},
-                                    child: Text("Chat"),
-                                    color: Color.fromARGB(255, 226, 84, 245),
-                                  )
-                                ],
+                                    SizedBox(height: 5),
+                                    Text(
+                                        'NAME : ${listy.elementAt(index).data()['foodname']}',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(255, 8, 8, 8),
+                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                        'PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(255, 8, 8, 8),
+                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                        'QUANTITY : ${listy.elementAt(index).data()['foodnos']}',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(255, 8, 8, 8),
+                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                        'TYPE : ${listy.elementAt(index).data()['foodtype']}',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(255, 8, 8, 8),
+                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                        'EXPIRY DATE : ${listy.elementAt(index).data()['expirydate']}',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(255, 8, 8, 8),
+                                            fontWeight: FontWeight.bold)),
+                                    MaterialButton(
+                                      onPressed: () {},
+                                      child: Text("Chat"),
+                                      color: Color.fromARGB(255, 226, 84, 245),
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           } else {
@@ -267,6 +286,13 @@ class _MyAppState extends State<MyApp> {
                           ],
                         ))),
             ),
+            SizedBox(height: 5),
+            Divider(
+              color: Color.fromARGB(255, 139, 139, 139),
+              indent: 25, //spacing at the start of divider
+              endIndent: 25,
+              thickness: 1,
+            ),
             Text("Restaurants",
                 style: TextStyle(
                     color: Colors.black,
@@ -276,6 +302,238 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.purple.shade50,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        ),
+        builder: (_) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              Text(
+                "Filter",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Roboto',
+                  color: Colors.purple,
+                ),
+              ),
+              Row(
+                children: [
+                  Icon(Icons.filter_alt,
+                      color: Color.fromARGB(255, 74, 61, 155)),
+                  SizedBox(width: 10),
+                  Text(
+                    "Price",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                      color: Colors.purple,
+                    ),
+                  ),
+                ],
+              ),
+              CustomFilterPrice(prices: Price.prices),
+              Row(
+                children: [
+                  Icon(Icons.swipe_left,
+                      color: Color.fromARGB(255, 74, 61, 155)),
+                  SizedBox(width: 10),
+                  Text(
+                    "Preferences",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                      color: Colors.purple,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Veg",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'BebasNeue',
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                  Switch(
+                    value: true,
+                    onChanged: (value) {},
+                  ),
+                  Text(
+                    "Non-Veg",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Roboto',
+                      color: Color.fromARGB(255, 18, 17, 18),
+                    ),
+                  ),
+                  Switch(
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(Icons.calendar_today_outlined,
+                      color: Color.fromARGB(255, 74, 61, 155)),
+                  SizedBox(width: 10),
+                  Text(
+                    "Categories",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                      color: Colors.purple,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Lunch',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Roboto',
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                        Checkbox(value: false, onChanged: (value) {}),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Dinner',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Roboto',
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                        Checkbox(value: false, onChanged: (value) {}),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Snacks',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Roboto',
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                        Checkbox(value: false, onChanged: (value) {}),
+                      ],
+                    ),
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       'Breakfast',
+                    //       style: TextStyle(
+                    //         fontSize: 15,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontFamily: 'Roboto',
+                    //         color: Color.fromARGB(255, 0, 0, 0),
+                    //       ),
+                    //     ),
+                    //     Checkbox(value: false, onChanged: (value) {}),
+                    //   ],
+                    // ),
+                    SizedBox(height: 10),
+                    //Location range enter manually container
+
+                    // Apply Button Container
+                    Container(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 200, 165, 253),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            'Apply',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Roboto',
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          )),
+                    )
+                  ],
+                ),
+              )
+            ],
+          );
+        });
+  }
+}
+
+class CustomFilterPrice extends StatelessWidget {
+  final List<Price> prices;
+  const CustomFilterPrice({super.key, required this.prices});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: prices
+          .map((price) => InkWell(
+                onTap: () {},
+                child: Container(
+                  margin: const EdgeInsets.only(top: 10, bottom: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 200, 165, 253),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    price.price,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                ),
+              ))
+          .toList(),
     );
   }
 }
