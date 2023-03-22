@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/order_display/getDataFromDatabaseFunction.dart';
 import 'package:firebase/order_display/orderDataList.dart';
+import 'package:firebase/order_display/orderFilteringFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/order_display/getUserLocationFunction.dart';
 import 'package:firebase/order_display/deleteExpiredFromDatabaseFunction.dart';
@@ -16,11 +17,20 @@ RefreshController _refreshController = RefreshController(initialRefresh: false);
 
 final db = FirebaseFirestore.instance;
 
+Color diselectedPriceColor = Color.fromARGB(255, 200, 165, 253);
+Color selectedPriceColor = Color.fromARGB(255, 250, 125, 253);
+
 var orderData = OrderDataList();
 var currentLatitude;
 var currentLongitude;
 var listy;
 bool loading = true;
+bool vegFilter = true;
+bool lunchFliter = false;
+bool snacksFliter = false;
+bool dinnerFliter = false;
+bool applyFilter = false;
+var priceFilter = "";
 
 class OrdersDisplay extends StatefulWidget {
   const OrdersDisplay({Key? key}) : super(key: key);
@@ -42,7 +52,15 @@ class _OrdersDisplayState extends State<OrdersDisplay> {
     setState(() {
       GetDataFromDatabase();
       listy = orderData.orderDataList;
-      //listy = DistanceFilter(list: orderData.orderDataList);
+      listy = DistanceFilter(list: orderData.orderDataList);
+      if(applyFilter){
+        if(lunchFliter || snacksFliter || dinnerFliter) {
+          listy = CategoryFilter(list: listy, l: lunchFliter, s: snacksFliter, d: dinnerFliter);
+        }
+        if(priceFilter!=""){
+          listy = PriceFilter(list1: listy, p: priceFilter);
+        }
+      }
     });
   }
 
@@ -78,7 +96,15 @@ class _MyAppState extends State<MyApp> {
             setState(() {
               GetDataFromDatabase();
               listy = orderData.orderDataList;
-              //listy = DistanceFilter(list: orderData.orderDataList);
+              listy = DistanceFilter(list: orderData.orderDataList);
+              if(applyFilter){
+                if(lunchFliter || snacksFliter || dinnerFliter) {
+                  listy = CategoryFilter(list: listy, l: lunchFliter, s: snacksFliter, d: dinnerFliter);
+                }
+                if(priceFilter!=""){
+                  listy = PriceFilter(list1: listy, p: priceFilter);
+                }
+              }
             });
           });
           _refreshController.refreshCompleted();
@@ -314,194 +340,269 @@ class _MyAppState extends State<MyApp> {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         ),
-        builder: (_) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 20),
-              Text(
-                "Filter",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Roboto',
-                  color: Colors.purple,
+        builder: (context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState){
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Text(
+                  "Filter",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto',
+                    color: Colors.purple,
+                  ),
                 ),
-              ),
-              Row(
-                children: [
-                  Icon(Icons.filter_alt,
-                      color: Color.fromARGB(255, 74, 61, 155)),
-                  SizedBox(width: 10),
-                  Text(
-                    "Price",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                      color: Colors.purple,
-                    ),
-                  ),
-                ],
-              ),
-              CustomFilterPrice(prices: Price.prices),
-              Row(
-                children: [
-                  Icon(Icons.swipe_left,
-                      color: Color.fromARGB(255, 74, 61, 155)),
-                  SizedBox(width: 10),
-                  Text(
-                    "Preferences",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                      color: Colors.purple,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Veg",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'BebasNeue',
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-                  ),
-                  Switch(
-                    value: true,
-                    onChanged: (value) {},
-                  ),
-                  Text(
-                    "Non-Veg",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Roboto',
-                      color: Color.fromARGB(255, 18, 17, 18),
-                    ),
-                  ),
-                  Switch(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(Icons.calendar_today_outlined,
-                      color: Color.fromARGB(255, 74, 61, 155)),
-                  SizedBox(width: 10),
-                  Text(
-                    "Categories",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                      color: Colors.purple,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Lunch',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roboto',
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                        Checkbox(value: false, onChanged: (value) {}),
-                      ],
+                    Icon(Icons.filter_alt,
+                        color: Color.fromARGB(255, 74, 61, 155)),
+                    SizedBox(width: 10),
+                    Text(
+                      "Price",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Roboto',
+                        color: Colors.purple,
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'Dinner',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roboto',
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                        Checkbox(value: false, onChanged: (value) {}),
-                      ],
+                  ],
+                ),
+                CustomFilterPrice(prices: Price.prices),
+                Row(
+                  children: [
+                    Icon(Icons.swipe_left,
+                        color: Color.fromARGB(255, 74, 61, 155)),
+                    SizedBox(width: 10),
+                    Text(
+                      "Preferences",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Roboto',
+                        color: Colors.purple,
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'Snacks',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roboto',
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                        Checkbox(value: false, onChanged: (value) {}),
-                      ],
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Veg",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'BebasNeue',
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     Text(
-                    //       'Breakfast',
-                    //       style: TextStyle(
-                    //         fontSize: 15,
-                    //         fontWeight: FontWeight.bold,
-                    //         fontFamily: 'Roboto',
-                    //         color: Color.fromARGB(255, 0, 0, 0),
-                    //       ),
-                    //     ),
-                    //     Checkbox(value: false, onChanged: (value) {}),
-                    //   ],
-                    // ),
-                    SizedBox(height: 10),
-                    //Location range enter manually container
-
-                    // Apply Button Container
-                    Container(
-                      alignment: Alignment.center,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 200, 165, 253),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            'Apply',
+                    Switch(
+                      value: true,
+                      onChanged: (value) {},
+                    ),
+                    Text(
+                      "Non-Veg",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Roboto',
+                        color: Color.fromARGB(255, 18, 17, 18),
+                      ),
+                    ),
+                    Switch(
+                      value: false,
+                      onChanged: (value) {},
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today_outlined,
+                        color: Color.fromARGB(255, 74, 61, 155)),
+                    SizedBox(width: 10),
+                    Text(
+                      "Categories",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Roboto',
+                        color: Colors.purple,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Lunch',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Roboto',
                               color: Color.fromARGB(255, 0, 0, 0),
                             ),
-                          )),
-                    )
-                  ],
-                ),
-              )
-            ],
+                          ),
+                          Checkbox(
+                              value: lunchFliter,
+                              onChanged: (value) {
+                                setState(() {
+                                  lunchFliter = value!;
+                                });
+                                print(lunchFliter);
+                              }
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Dinner',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Roboto',
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                          Checkbox(
+                              value: dinnerFliter,
+                              onChanged: (value) {
+                                setState(() {
+                                  dinnerFliter = value!;
+                                });
+                              }
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Snacks',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Roboto',
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                          Checkbox(
+                              value: snacksFliter,
+                              onChanged: (value) {
+                                setState(() {
+                                  snacksFliter = value!;
+                                });
+                              }),
+                        ],
+                      ),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       'Breakfast',
+                      //       style: TextStyle(
+                      //         fontSize: 15,
+                      //         fontWeight: FontWeight.bold,
+                      //         fontFamily: 'Roboto',
+                      //         color: Color.fromARGB(255, 0, 0, 0),
+                      //       ),
+                      //     ),
+                      //     Checkbox(value: false, onChanged: (value) {}),
+                      //   ],
+                      // ),
+                      SizedBox(height: 10),
+                      //Location range enter manually container
+
+                      // Apply Button Container
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 10),
+                          //Location range enter manually container
+
+                          // Apply Button Container
+                          Container(
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color.fromARGB(255, 200, 165, 253),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setState((){
+                                    applyFilter = true;
+                                  });
+                                },
+                                child: Text(
+                                  'Apply',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                )),
+                          ),
+
+                          SizedBox(width: 30),
+                          //Location range enter manually container
+
+                          // Apply Button Container
+                          Container(
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color.fromARGB(255, 200, 165, 253),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setState((){
+                                    applyFilter = false;
+                                    lunchFliter = false;
+                                    snacksFliter = false;
+                                    dinnerFliter = false;
+                                    priceFilter = "";
+                                  });
+                                },
+                                child: Text(
+                                  'Remove',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                )),
+                          )
+                        ],
+                      )
+
+                    ],
+                  ),
+                )
+              ],
+            );
+            }
           );
-        });
+        }
+        );
   }
 }
+
 
 class CustomFilterPrice extends StatelessWidget {
   final List<Price> prices;
@@ -513,13 +614,20 @@ class CustomFilterPrice extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: prices
           .map((price) => InkWell(
-                onTap: () {},
+                onTap: () {
+                  priceFilter = price.price;
+                  print(priceFilter);
+                  for(var p in prices){
+                    p.boxColor = diselectedPriceColor;
+                  }
+                  (price.boxColor==diselectedPriceColor)?price.boxColor=selectedPriceColor:price.boxColor=diselectedPriceColor;
+                },
                 child: Container(
                   margin: const EdgeInsets.only(top: 10, bottom: 10),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 200, 165, 253),
+                    color: price.boxColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
@@ -537,3 +645,59 @@ class CustomFilterPrice extends StatelessWidget {
     );
   }
 }
+
+
+
+//Statefull Karna Padega Price Wale Class ko(Try kiys mene but nahi hua)
+// class CustomFilterPrice extends StatefulWidget {
+//   final List<Price> prices;
+//   CustomFilterPrice({super.key, required this.prices});
+//
+//   @override
+//   State<CustomFilterPrice> createState() => _CustomFilterPriceState();
+// }
+//
+// class _CustomFilterPriceState extends State<CustomFilterPrice> {
+//    //final List<Price> prices1;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: CustomFilterPrice(prices: [
+//         Price(id: 1, price: '\0',boxColor: diselectedPriceColor),
+//         Price(id: 2, price: '<200',boxColor: diselectedPriceColor),
+//         Price(id: 3, price: '>200',boxColor: diselectedPriceColor),
+//       ],).prices
+//           .map((price) => InkWell(
+//         onTap: () {
+//           priceFilter = price.price;
+//           print(priceFilter);
+//           setState(() {
+//             print("colorrrrr");
+//             (price.boxColor==diselectedPriceColor)?price.boxColor=selectedPriceColor:price.boxColor=diselectedPriceColor;
+//           });
+//         },
+//         child: Container(
+//           margin: const EdgeInsets.only(top: 10, bottom: 10),
+//           padding:
+//           const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+//           decoration: BoxDecoration(
+//             color: price.boxColor,
+//             borderRadius: BorderRadius.circular(10),
+//           ),
+//           child: Text(
+//             price.price,
+//             style: TextStyle(
+//               fontSize: 20,
+//               fontWeight: FontWeight.bold,
+//               fontFamily: 'Roboto',
+//               color: Color.fromARGB(255, 0, 0, 0),
+//             ),
+//           ),
+//         ),
+//       ))
+//           .toList(),
+//     );
+//   }
+// }
