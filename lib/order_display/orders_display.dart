@@ -53,11 +53,12 @@ class _OrdersDisplayState extends State<OrdersDisplay> {
       GetDataFromDatabase();
       listy = orderData.orderDataList;
       listy = DistanceFilter(list: orderData.orderDataList);
-      if(applyFilter){
-        if(lunchFliter || snacksFliter || dinnerFliter) {
-          listy = CategoryFilter(list: listy, l: lunchFliter, s: snacksFliter, d: dinnerFliter);
+      if (applyFilter) {
+        if (lunchFliter || snacksFliter || dinnerFliter) {
+          listy = CategoryFilter(
+              list: listy, l: lunchFliter, s: snacksFliter, d: dinnerFliter);
         }
-        if(priceFilter!=""){
+        if (priceFilter != "") {
           listy = PriceFilter(list1: listy, p: priceFilter);
         }
       }
@@ -81,6 +82,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    // write media query here
+
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SmartRefresher(
@@ -97,11 +100,15 @@ class _MyAppState extends State<MyApp> {
               GetDataFromDatabase();
               listy = orderData.orderDataList;
               listy = DistanceFilter(list: orderData.orderDataList);
-              if(applyFilter){
-                if(lunchFliter || snacksFliter || dinnerFliter) {
-                  listy = CategoryFilter(list: listy, l: lunchFliter, s: snacksFliter, d: dinnerFliter);
+              if (applyFilter) {
+                if (lunchFliter || snacksFliter || dinnerFliter) {
+                  listy = CategoryFilter(
+                      list: listy,
+                      l: lunchFliter,
+                      s: snacksFliter,
+                      d: dinnerFliter);
                 }
-                if(priceFilter!=""){
+                if (priceFilter != "") {
                   listy = PriceFilter(list1: listy, p: priceFilter);
                 }
               }
@@ -118,23 +125,26 @@ class _MyAppState extends State<MyApp> {
                 elevation: 10,
                 borderRadius: BorderRadius.circular(30),
                 child: Container(
-                  height: 100,
+                  height: 200,
                   width: 400,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
                           bottomLeft: Radius.circular(30),
                           bottomRight: Radius.circular(30)),
-                      color: Color.fromARGB(255, 254, 197, 187)),
+                      color: Color.fromARGB(255, 255, 38, 38)),
                   child: Column(
                     children: [
                       SizedBox(height: 14),
+                      Image.asset("images/band.gif", height: 100, width: 300),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Waste",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 254, 88, 104),
+                                color: Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -147,16 +157,22 @@ class _MyAppState extends State<MyApp> {
                           ),
                           Text("-Chef",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 254, 88, 104),
+                                  color: Color.fromARGB(255, 255, 253, 253),
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold)),
                         ],
                       ),
                       SizedBox(height: 5),
+                      Divider(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        thickness: 0.7,
+                        indent: 40,
+                        endIndent: 40,
+                      ),
                       Text(
                         "Food for the needy",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 23, 17, 17),
+                            color: Color.fromARGB(255, 255, 252, 252),
                             fontSize: 20,
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold),
@@ -342,7 +358,7 @@ class _MyAppState extends State<MyApp> {
         ),
         builder: (context) {
           return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState){
+              builder: (BuildContext context, StateSetter setState) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -460,8 +476,7 @@ class _MyAppState extends State<MyApp> {
                                   lunchFliter = value!;
                                 });
                                 print(lunchFliter);
-                              }
-                          ),
+                              }),
                         ],
                       ),
                       Row(
@@ -481,8 +496,7 @@ class _MyAppState extends State<MyApp> {
                                 setState(() {
                                   dinnerFliter = value!;
                                 });
-                              }
-                          ),
+                              }),
                         ],
                       ),
                       Row(
@@ -541,7 +555,7 @@ class _MyAppState extends State<MyApp> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  setState((){
+                                  setState(() {
                                     applyFilter = true;
                                   });
                                 },
@@ -570,7 +584,7 @@ class _MyAppState extends State<MyApp> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  setState((){
+                                  setState(() {
                                     applyFilter = false;
                                     lunchFliter = false;
                                     snacksFliter = false;
@@ -590,19 +604,15 @@ class _MyAppState extends State<MyApp> {
                           )
                         ],
                       )
-
                     ],
                   ),
                 )
               ],
             );
-            }
-          );
-        }
-        );
+          });
+        });
   }
 }
-
 
 class CustomFilterPrice extends StatelessWidget {
   final List<Price> prices;
@@ -617,10 +627,12 @@ class CustomFilterPrice extends StatelessWidget {
                 onTap: () {
                   priceFilter = price.price;
                   print(priceFilter);
-                  for(var p in prices){
+                  for (var p in prices) {
                     p.boxColor = diselectedPriceColor;
                   }
-                  (price.boxColor==diselectedPriceColor)?price.boxColor=selectedPriceColor:price.boxColor=diselectedPriceColor;
+                  (price.boxColor == diselectedPriceColor)
+                      ? price.boxColor = selectedPriceColor
+                      : price.boxColor = diselectedPriceColor;
                 },
                 child: Container(
                   margin: const EdgeInsets.only(top: 10, bottom: 10),
