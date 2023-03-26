@@ -46,37 +46,12 @@ class _MyAppState extends State<MyApp> {
   SMIInput<bool>? isHandsUp;
   SMIInput<bool>? trigSuccess;
   SMIInput<bool>? trigFail;
+  //on screen tap keyboard will be closed funxtion
+  void _requestKeyboardClose() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
 
-  // var animationLink = 'images/login.riv';
-  // late SMITrigger failTrigger, successTrigger; // Trigger for animation state
-  // late SMIBool lookBOOL, closeEyeBOOL; // Boolean for animation state
-  // Artboard? artboard; // Artboard for animation state (Rive file)
-  // late StateMachineController?
-  //     stateMachineController; // State machine controller for animation state which is used to control animation state
   @override
-  // void initState() {
-  //   super.initState();
-  //   initArtboard(); // start animation process
-  // }
-
-  // // Start animation process function
-  // initArtboard() {
-  //   rootBundle.load(animationLink).then((value) {
-  //     final file = RiveFile.import(value); // import rive file
-  //     final art = file.mainArtboard; // get artboard from rive file
-  //     stateMachineController = StateMachineController.fromArtboard(
-  //         art, 'StateMachine')!; // get state machine controller from artboard
-
-  //     if (stateMachineController != null) {
-  //       art.addController(
-  //           stateMachineController!); // add state machine controller to artboard for animation
-  //     }
-  //     setState(() {
-  //       artboard = art; // set artboard for animation
-  //     });
-  //   });
-  // }
-
   Widget build(BuildContext context) {
     LoginAuthorization loginAuth = Provider.of<LoginAuthorization>(context);
     // MediaQuery for responsive design
@@ -85,18 +60,58 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 0, 0),
       body: SafeArea(
-        child: Center(
+        //on screen tap keyboard will be closed
+        child: GestureDetector(
+          onTap: () {
+            _requestKeyboardClose();
+          },
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 10),
+                Text(
+                  "Waste-food-Chef",
+                  style: GoogleFonts.lobster(
+                    textStyle: TextStyle(
+                      color: Color.fromARGB(255, 5, 237, 125),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Welcome to Waste-food-Chef",
+                  style: GoogleFonts.autourOne(
+                    textStyle: TextStyle(
+                      color: Color.fromARGB(255, 177, 124, 242),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
                 // artboard for animation here
 
-                SizedBox(
-                  height: size.width,
-                  width: size.height,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 148, 197, 135),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  height: 0.3 * size.height,
+                  //write width using MediaQuery
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  width: 0.6 * size.width,
                   child: RiveAnimation.asset(
                     "images/login.riv",
+                    // height of animation
+                    fit: BoxFit.fill,
+
+                    //ROund corners of animation
+                    alignment: Alignment.topCenter,
                     stateMachines: const ["Login Machine"],
                     onInit: (artboard) {
                       controller = StateMachineController.fromArtboard(
@@ -111,19 +126,24 @@ class _MyAppState extends State<MyApp> {
                     },
                   ),
                 ),
+
                 Container(
-                  alignment: Alignment.center,
-                  width: 400,
+                  padding: EdgeInsets.all(10),
+                  // padding: EdgeInsets.all(20),
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  width: 0.96 * size.width,
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 255, 255, 255),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(height: 20),
                       SizedBox(height: 30),
+                      //For Email
                       TextFormField(
+                        controller: emailAddress,
                         onChanged: ((value) {
                           if (isHandsUp != null) {
                             isHandsUp!.change(false);
@@ -132,33 +152,38 @@ class _MyAppState extends State<MyApp> {
 
                           isChecking!.change(true);
                         }),
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 227, 233, 236),
-                        ),
-                        controller: emailAddress,
                         decoration: InputDecoration(
-                          hintText: 'Email',
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
-                            // align the text to the left instead of centered
-                          ),
-                          labelText: 'Email Address',
+                          //label text and style
+                          labelText: 'Email',
                           labelStyle: TextStyle(
                             color: Color.fromARGB(255, 139, 13, 236),
                           ),
+                          // Icon for email
                           prefixIcon: Icon(
                             Icons.email,
                             color: Color.fromARGB(255, 139, 13, 236),
                           ),
+
+                          hintText: 'Email',
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 154, 120, 255),
+                              width: 3,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0),
+                            //thickness: 5,
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color.fromARGB(255, 230, 230, 230),
+                              width: 1,
+                              color: Color.fromRGBO(158, 136, 255, 1),
                             ),
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
                       ),
                       SizedBox(height: 20),
+                      // For Password
                       TextFormField(
                         onChanged: ((value) {
                           if (isChecking != null) {
@@ -168,30 +193,36 @@ class _MyAppState extends State<MyApp> {
 
                           isHandsUp!.change(true);
                         }),
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 227, 233, 236),
-                        ),
                         controller: password,
                         obscureText: true,
+                        //Password decoration
                         decoration: InputDecoration(
-                          hintText: 'Password',
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
-                            // align the text to the left instead of centered
-                          ),
-                          prefixIcon: Icon(
-                            Icons.remove_red_eye,
-                            color: Color.fromARGB(255, 139, 13, 236),
-                          ),
+                          //label text and style
                           labelText: 'Password',
                           labelStyle: TextStyle(
                             color: Color.fromARGB(255, 139, 13, 236),
                           ),
+                          // Icon for email
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Color.fromARGB(255, 139, 13, 236),
+                          ),
+
+                          hintText: 'Password',
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 154, 120, 255),
+                              width: 3,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0),
+                            //thickness: 5,
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color.fromARGB(255, 249, 241, 255),
+                              width: 1,
+                              color: Color.fromRGBO(158, 136, 255, 1),
                             ),
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
                       ),
@@ -214,7 +245,7 @@ class _MyAppState extends State<MyApp> {
                           : Center(
                               child: CircularProgressIndicator(),
                             ),
-                      SizedBox(height: 40),
+                      SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -241,7 +272,7 @@ class _MyAppState extends State<MyApp> {
                       SizedBox(height: 30),
                       Text("Forgot Password?",
                           style: TextStyle(
-                              color: Colors.greenAccent,
+                              color: Color.fromARGB(255, 210, 152, 255),
                               fontSize: 15,
                               fontWeight: FontWeight.bold)),
                       SizedBox(height: 30),
@@ -256,7 +287,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
 
 // import 'package:firebase/login_page/loginAuthorization.dart';
 // import 'package:firebase/signup_page/signUpPage.dart';
