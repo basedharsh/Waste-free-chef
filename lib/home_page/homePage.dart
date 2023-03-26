@@ -46,8 +46,24 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 174, 68, 255),
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'WFC',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Color.fromARGB(255, 255, 235, 235),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.person),
+            alignment: Alignment.centerRight,
+            color: Colors.black,
+          ),
           IconButton(
             alignment: Alignment.centerLeft,
             // Go back to last page
@@ -55,14 +71,17 @@ class _MyAppState extends State<MyApp> {
               // Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back),
+            color: Colors.black,
           ),
           IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) =>
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SignUpPage())));
-              },
-              icon: Icon(Icons.exit_to_app)),
+            onPressed: () {
+              FirebaseAuth.instance.signOut().then((value) =>
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SignUpPage())));
+            },
+            icon: Icon(Icons.exit_to_app),
+            color: Colors.black,
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
