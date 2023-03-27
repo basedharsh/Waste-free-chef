@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/order_display/getDataFromDatabaseFunction.dart';
 import 'package:firebase/order_display/orderDataList.dart';
 import 'package:firebase/order_display/orderFilteringFunctions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/order_display/getUserLocationFunction.dart';
 import 'package:firebase/order_display/deleteExpiredFromDatabaseFunction.dart';
@@ -16,6 +17,7 @@ import 'filter_page.dart';
 RefreshController _refreshController = RefreshController(initialRefresh: false);
 
 final db = FirebaseFirestore.instance;
+var currentUser;
 
 Color diselectedPriceColor = Color.fromARGB(255, 200, 165, 253);
 Color selectedPriceColor = Color.fromARGB(255, 250, 125, 253);
@@ -51,6 +53,7 @@ class _OrdersDisplayState extends State<OrdersDisplay> {
     DeleteExpiredFromDatabase();
     setState(() {
       GetDataFromDatabase();
+      currentUser = FirebaseAuth.instance.currentUser;
       listy = orderData.orderDataList;
       listy = DistanceFilter(list: orderData.orderDataList);
       if (applyFilter) {
@@ -97,6 +100,7 @@ class _MyAppState extends State<MyApp> {
             });
             DeleteExpiredFromDatabase();
             setState(() {
+              currentUser = FirebaseAuth.instance.currentUser;
               GetDataFromDatabase();
               listy = orderData.orderDataList;
               listy = DistanceFilter(list: orderData.orderDataList);
@@ -219,7 +223,7 @@ class _MyAppState extends State<MyApp> {
                           children: List.generate(listy.length, (index) {
                           //var listy = orderData.orderDataList[index];
                           if (listy.elementAt(index).data()["approved"] ==
-                              "true") {
+                              "true" && listy.elementAt(index).data()["providerid"] != currentUser.uid) {
                             // main container for each order
                             return Material(
                               elevation: 3,
@@ -284,7 +288,10 @@ class _MyAppState extends State<MyApp> {
                                             color: Color.fromARGB(255, 8, 8, 8),
                                             fontWeight: FontWeight.bold)),
                                     MaterialButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        print(currentUser.uid);
+                                        print(listy.elementAt(index).data()["providerid"]);
+                                      },
                                       child: Text("Chat"),
                                       color: Color.fromARGB(255, 226, 84, 245),
                                     )
