@@ -483,26 +483,41 @@ class _MyAppState extends State<MyApp> {
               SizedBox(height: 20),
               MaterialButton(
                 onPressed: ()async{
-                  details['providername'] = providerName.text.trim();
-                  details['foodname'] = foodName.text.trim();
-                  (priceEnabled==false)?details['foodprice']="0":details['foodprice'] = foodPrice.text.trim();
-                  details['foodnos'] = nos.text.trim();
-                  //details['foodtype'] = foodType.text.trim();
-                  details['foodimage'] = foodImageUrl;
-                  details['providerid'] = currentUser.uid;
-                  details['expirydate'] = expiryDate.text.trim();
 
-                      db
-                      .collection('sellerOrder')
-                      .doc(uuid.v1())
-                      .set(details)
-                      .onError((e, _) => print("Error In Placing Order: $e"));
+                  if(foodImageUrl==""){
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text("Input an image for food to place order")));
+                  }
+                  else if(details['latitude']=="" && details['longitude']==""){
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text("Select your Location to place order")));
+                  }
+                  else {
+                    details['providername'] = providerName.text.trim();
+                    details['foodname'] = foodName.text.trim();
+                    (priceEnabled == false)
+                        ? details['foodprice'] = "0"
+                        : details['foodprice'] = foodPrice.text.trim();
+                    details['foodnos'] = nos.text.trim();
+                    //details['foodtype'] = foodType.text.trim();
+                    details['foodimage'] = foodImageUrl;
+                    details['providerid'] = currentUser.uid;
+                    details['expirydate'] = expiryDate.text.trim();
 
-                  await db.collection("sellerOrder").get().then((event) {
-                    orderData.orderDataList = event.docs;
-                  });
-                  print(details);
+                    db
+                        .collection('sellerOrder')
+                        .doc(uuid.v1())
+                        .set(details)
+                        .onError((e, _) => print("Error In Placing Order: $e"));
 
+                    await db.collection("sellerOrder").get().then((event) {
+                      orderData.orderDataList = event.docs;
+                    });
+                    print(details);
+                  }
+
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text("Order Placed"),));
                 },
                 child: Text("Submit"),
                 color: Color.fromARGB(255, 139, 13, 236),
