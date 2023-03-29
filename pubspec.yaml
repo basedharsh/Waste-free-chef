@@ -51,6 +51,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   equatable: ^2.0.5
   rive: ^0.10.3
+  url_launcher: ^6.1.10
 
 #***********Warn****************--> Don't Touch this until and unless you want to change ICON of the app
 #   # for changing icon of app
