@@ -37,7 +37,8 @@ final details = <String, dynamic>{
   "latitude": "",
   "longitude": "",
   "approved": "true",
-  "providerid": ""
+  "providerid": "",
+  "providernumber": ""
 };
 
 bool priceEnabled = true;
@@ -50,6 +51,7 @@ TextEditingController foodPrice = TextEditingController();
 TextEditingController nos = TextEditingController();
 TextEditingController foodType = TextEditingController();
 TextEditingController expiryDate = TextEditingController();
+TextEditingController providerNumber = TextEditingController();
 
 
 bool _serviceEnabled = false;
@@ -377,6 +379,30 @@ class _MyAppState extends State<MyApp> {
                     ],
                   )
               :SizedBox(),
+              TextFormField(
+                style: TextStyle(
+                  color: Color.fromARGB(255, 227, 233, 236),
+                ),
+                controller: providerNumber,
+                decoration: InputDecoration(
+                  hintText: 'Contact Number',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 139, 13, 236),
+                    // align the text to the left instead of centered
+                  ),
+                  labelText: 'Contact Number',
+                  labelStyle: TextStyle(
+                    color: Color.fromARGB(255, 139, 13, 236),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 230, 230, 230),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               (imageClicked==false)?
               MaterialButton(
                   onPressed: ()async{
@@ -503,6 +529,8 @@ class _MyAppState extends State<MyApp> {
                     details['foodimage'] = foodImageUrl;
                     details['providerid'] = currentUser.uid;
                     details['expirydate'] = expiryDate.text.trim();
+                    details['providernumber'] = providerNumber.text.trim();
+                    details['foodimage'] = foodImageUrl;
 
                     db
                         .collection('sellerOrder')

@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/order_display/getDataFromDatabaseFunction.dart';
 import 'package:firebase/order_display/orderDataList.dart';
 import 'package:firebase/order_display/orderFilteringFunctions.dart';
+import 'package:firebase/place_order/placeOrder.dart';
+import 'package:firebase/routing/routing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/order_display/getUserLocationFunction.dart';
@@ -291,10 +293,27 @@ class _MyAppState extends State<MyApp> {
                                       onPressed: () {
                                         print(currentUser.uid);
                                         print(listy.elementAt(index).data()["providerid"]);
+                                        print(listy.elementAt(index).id);
+                                        print("Ahhhhhhhhhhhh");
+                                        RoutingPage.goToNext(context: context, navigateTo: PlaceOrderPage(
+                                            custId: currentUser.uid,
+                                            provId: listy.elementAt(index).data()["providerid"],
+                                            ordId: listy.elementAt(index).id,
+                                            ordD: listy.elementAt(index),
+                                        )
+                                        );
                                       },
-                                      child: Text("Chat"),
+                                      child: Text("Confirm Order"),
                                       color: Color.fromARGB(255, 226, 84, 245),
-                                    )
+                                    ),
+                                    // MaterialButton(
+                                    //   onPressed: () {
+                                    //     print(currentUser.uid);
+                                    //     print(listy.elementAt(index).data()["providerid"]);
+                                    //   },
+                                    //   child: Text("Chat"),
+                                    //   color: Color.fromARGB(255, 226, 84, 245),
+                                    // )
                                   ],
                                 ),
                               ),
