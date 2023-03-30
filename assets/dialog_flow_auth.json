@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "wfcsupport-twlb",
+  "private_key_id": "deeaccc86d6bf85e648852a807924401b2ebe612",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCOnDSQQ2l73pLo\nDGqNk0a7naynKSufv72bb63x5+U6rBN3vXOHlgIYs3iY6WPqm8FBzwnbMtpz+vUS\nH5RXe2yGbwbZD990GdwmQ7b+NzANWK2mPCJ3AZg1K6DTxNY7fQZCdfNPtdL/OedD\nnbCqbAlFW/nZx5kMXI7B6wWel5Iaiv7aMbIYrt3jCnbMmAl6KDTjTVezJQ8Yh3qk\nyHWnQtCA3IGlRPRO/0cGMAcCXsS+zFNI4Dzq0Af9NwoP8PA9Hz4Hrp12R3SNNqfI\nbVD/Vcb4iu18rOuK3RLX9XTt2uElDB4FnMRAtAqiJb2cRkRCNY8/lRAGNrB3PxaB\ngHOxssWrAgMBAAECggEAGCxoSI/0wHeBBW6dXTQ6yDC5BHjZGTIiTMfIf3nkhGaI\nwkJN5AzMfC1n4tulAS63upUCwbJED2bZxeGufonAYqVNTtv+76o2hBH0YfEu5wRC\nIyyMVwnhKBomH998xQazWe6ueLOEeZjyF6cSPEEl7SjjGERaMBs8Y6iYAkMFFBR8\nwcnqvqZm2dc2XcoklMGdsEJTKhOI5lFEUyDWCA/bgkDvLMk1ONIm38IADt2SxfCp\njUs39631BoY9+nuSgSzeDzd5fbcraqLjcKY4CLNf+uCsPQFuOr+8YGIIWT8siXMj\njudIOnP9sWGti8pUJjPxOMvoMK7AApT7gus5mAC5cQKBgQDFHFatC4XLDtI/l632\nTIxJBWGrEpymtyvgyBcskihuoS2kTs20ZBFzcy/+JFEkLFl1/ZrUr07AJ1uU1C0U\n1wPBCX6ijMYs1NgBXgTqVvAAja3sbsrj1CU5OCCadBSuG3L5WEG/fY1plbRaTQC3\nbFwnqP8gp9LwlryeQvIXzHoM2QKBgQC5N33FFxbVerDTPXmiAnFBhpUEiDpbYv15\nFXhct/XSHtB/4E73ycJw4JIGZ50WOY5102ZJFCuEJ4sdGFVKVx61hNLLnuUmxW3J\n2HPcgjQfLbYmDEEg/UH/jXqMdsoZTjtaOzhtC1IiLkN2T3tiGUxLS7YmwPmRb1bA\nmyGllgikIwKBgQCCm+6LJ5F2JdIHNVieVca3NAutsd1/UuyOO8evTwHfnImD0HvZ\nxl0R5QeuHR5vG7wDxRHtUGScSvgSPC3LG1ZveP0idKl0V2zyKvyS0xyhIUBX5Goo\nYRBxQ9HGxphVbfbXZjXazzT++6XQGCobYIAH/6FeYBYUOa2uKKoGPwW4sQKBgHAK\nHU6H9QwWN7jQyy8xgwk8PBCNx59YdjQ0xKZxsYX1lfKE4cAKkFBvyGWPb/rtvjuQ\nMaOrS9eZhBGJkq5xnOX4/vqll8CoVQ1wnkWZjaX+pNzHNO6bxLyt/J/Ti9Va+ZRP\nloZ//qMmkTCUS/K/kuNJXVp8CXvsefHw5Z2g8IE5AoGAV6DSs4EhZFZ0w9lxizIx\nvAQIBXoYNXnEzZSnc4capkdlhXNvs2uQnkwwVRSnmdVLh8WltR9F8hwGBKwP8Ep2\nT+AKEgGOPWf2siJHXMjsqfu7a1K4bNeKHJsUX4vEDSVfq/iFr+C0C1sR5vci2mTT\nOxUaXRdClpBZAvDlH3g6BxU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "wfcsupport@wfcsupport-twlb.iam.gserviceaccount.com",
+  "client_id": "103598894997924980527",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/wfcsupport%40wfcsupport-twlb.iam.gserviceaccount.com"
+}

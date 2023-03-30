@@ -14,7 +14,7 @@ List<Widget> myPages = [
   OrderDetails(),
   PastOrders(),
   MapPage(),
-  ChatBot()
+  Chatbotsupport()
 ];
 
 class HomePage extends StatefulWidget {
