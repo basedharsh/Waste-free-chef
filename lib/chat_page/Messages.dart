@@ -15,6 +15,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return ListView.separated(
+        reverse: false,
         itemBuilder: (context, index) {
           return Container(
             margin: EdgeInsets.all(10),
