@@ -1,8 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 String chatLink = "https://wa.me/918779618833?text=Hyyy";
+Email email = Email(
+  body: 'Order Details Daal dunga',
+  subject: 'Mail to Confirm Order',
+  recipients: ['shrivatsa.d@somaiya.edu'],
+  isHTML: false,
+);
 
 final PlacedOrderDetails = <String, dynamic>{
   "providerId": "",
@@ -118,22 +126,32 @@ class _PlaceOrderPageAppState extends State<PlaceOrderPageApp> {
                   ),
                   SizedBox(width: 20),
                   MaterialButton(
-                    onPressed: (){
-
+                    onPressed: ()async{
+                      await FlutterEmailSender.send(email);
                     },
-                    child: Icon(Icons.call),
+                    child: Icon(Icons.mail),
+                    color: Colors.pink,
+                  ),
+                  SizedBox(width: 20),
+                  MaterialButton(
+                    onPressed: ()async{
+                      var number = '9324366823'; //set the number here
+                      bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+                    },
+                    child: Icon(Icons.phone),
                     color: Colors.pink,
                   ),
                 ],
               ),
 
               MaterialButton(
-                  onPressed: (){
-                    db
+                  onPressed: ()async{
+                    await db
                         .collection('customerOrder')
                         .doc(PlacedOrderDetails['orderId'] + PlacedOrderDetails['customerId'])
                         .set(PlacedOrderDetails)
                         .onError((e, _) => print("Error In Placing Order: $e"));
+
 
                     ScaffoldMessenger.of(context)
                         .showSnackBar(SnackBar(content: Text("Order Placed"),));

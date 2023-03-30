@@ -14,6 +14,7 @@ var customerOrdersData = OrderDataList();
 var currentUser;
 var listy;
 var customerListy;
+var originalOrderDetails;
 
 void GetDataFromDatabase()async{
   await db.collection("users").get().then((event) {
@@ -23,13 +24,11 @@ void GetDataFromDatabase()async{
   await db.collection("sellerOrder").get().then((event) {
     orderData.orderDataList = event.docs;
     listy = orderData.orderDataList;
-    print(listy);
   });
 
   await db.collection("customerOrder").get().then((event) {
     customerOrdersData.orderDataList = event.docs;
     customerListy = customerOrdersData.orderDataList;
-    print(customerListy);
   });
 }
 
@@ -92,7 +91,6 @@ class _MyAppState extends State<MyApp> {
                       child: (customerListy!=null)?(customerListy.length!=0)?
                       Row(
                           children:  List.generate(customerListy.length,(index){
-                            //var listy = orderData.orderDataList[index];
                             if(customerListy.elementAt(index).data()["apporived"]==false && customerListy.elementAt(index).data()["providerId"]==currentUser.uid ){
                               return Center(
                                   child: Padding(
@@ -122,6 +120,23 @@ class _MyAppState extends State<MyApp> {
                                                     "status": "pickupReady"
                                                   }).then((result){
                                                     print("Order Status Updated");
+                                                  }).catchError((onError){
+                                                    print("onError");
+                                                  });
+
+                                                  originalOrderDetails = await db
+                                                      .collection("sellerOrder")
+                                                      .doc(customerListy.elementAt(index).data()['orderId'])
+                                                      .get();
+
+                                                  await FirebaseFirestore.instance
+                                                      .collection('sellerOrder')
+                                                      .doc(customerListy.elementAt(index).data()['orderId'])
+                                                      .update({
+                                                    "foodnos": (int.parse(originalOrderDetails.data()['foodnos']) - customerListy.elementAt(index).data()['orderQuantity']).toString(),
+                                                    "foodprice": (int.parse(originalOrderDetails.data()['foodprice']) - customerListy.elementAt(index).data()['orderPrice']).toString()
+                                                  }).then((result){
+                                                    print("Original Order Updated");
                                                   }).catchError((onError){
                                                     print("onError");
                                                   });
@@ -213,7 +228,40 @@ class _MyAppState extends State<MyApp> {
                                               ),
                                               SizedBox(width: 20),
                                               MaterialButton(
-                                                onPressed: (){
+                                                onPressed: ()async{
+
+                                                  await FirebaseFirestore.instance
+                                                      .collection('customerOrder')
+                                                      .doc(customerListy.elementAt(index).data()['orderId'] + customerListy.elementAt(index).data()['customerId'])
+                                                      .update({
+                                                    "apporived": false,
+                                                    "status": "onHold"
+                                                  }).then((result){
+                                                    print("Order Status Updated");
+                                                  }).catchError((onError){
+                                                    print("onError");
+                                                  });
+
+                                                  originalOrderDetails = await db
+                                                      .collection("sellerOrder")
+                                                      .doc(customerListy.elementAt(index).data()['orderId'])
+                                                      .get();
+
+                                                  await FirebaseFirestore.instance
+                                                      .collection('sellerOrder')
+                                                      .doc(customerListy.elementAt(index).data()['orderId'])
+                                                      .update({
+                                                    "foodnos": (int.parse(originalOrderDetails.data()['foodnos']) + customerListy.elementAt(index).data()['orderQuantity']).toString(),
+                                                    "foodprice": (int.parse(originalOrderDetails.data()['foodprice']) + customerListy.elementAt(index).data()['orderPrice']).toString()
+                                                  }).then((result){
+                                                    print("Original Order Updated");
+                                                  }).catchError((onError){
+                                                    print("onError");
+                                                  });
+
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(content: Text("Order waiting for approval")));
+
 
                                                 },
                                                 child: Icon(Icons.close),
