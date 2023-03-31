@@ -55,7 +55,9 @@ class _MyAppState extends State<MyApp> {
     // media query
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      // backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      // catch bg color from main.dart
+      backgroundColor: Colors.grey.shade200,
       body: SafeArea(
         child: GestureDetector(
           onTap: () {
@@ -82,7 +84,7 @@ class _MyAppState extends State<MyApp> {
                     "Waste-food-Chef",
                     style: GoogleFonts.lobster(
                       textStyle: TextStyle(
-                        color: Color.fromARGB(255, 5, 237, 125),
+                        color: Color.fromARGB(255, 0, 0, 0),
                         fontSize: 30,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.italic,
@@ -94,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                     "Welcome to Waste-food-Chef",
                     style: GoogleFonts.autourOne(
                       textStyle: TextStyle(
-                        color: Color.fromARGB(255, 177, 124, 242),
+                        color: Color.fromARGB(255, 206, 7, 0),
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.italic,
@@ -103,10 +105,10 @@ class _MyAppState extends State<MyApp> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: Colors.grey.shade200,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    height: 0.3 * size.height,
+                    height: 0.28 * size.height,
                     //write width using MediaQuery
                     margin: EdgeInsets.only(left: 10, right: 10),
                     width: 0.6 * size.width,
@@ -134,9 +136,10 @@ class _MyAppState extends State<MyApp> {
                   SizedBox(height: 00),
 
                   Container(
+                    margin: EdgeInsets.only(left: 14, right: 14),
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: Color.fromARGB(255, 255, 254, 254),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(children: [
@@ -155,18 +158,18 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Username',
                           labelStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Colors.blueGrey,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
                             Icons.person,
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
 
                           hintText: 'Username',
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color.fromARGB(255, 154, 120, 255),
+                              color: Color.fromARGB(255, 0, 0, 0),
                               width: 3,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -175,7 +178,7 @@ class _MyAppState extends State<MyApp> {
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 1,
-                              color: Color.fromRGBO(158, 136, 255, 1),
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -196,18 +199,18 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Email',
                           labelStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Colors.blueGrey,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
                             Icons.email,
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
 
                           hintText: 'Email',
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color.fromARGB(255, 154, 120, 255),
+                              color: Color.fromARGB(255, 0, 0, 0),
                               width: 3,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -216,7 +219,7 @@ class _MyAppState extends State<MyApp> {
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 1,
-                              color: Color.fromRGBO(158, 136, 255, 1),
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -239,18 +242,18 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Password',
                           labelStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Colors.blueGrey,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
                             Icons.lock,
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
 
                           hintText: 'Password',
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color.fromARGB(255, 154, 120, 255),
+                              color: Color.fromARGB(255, 0, 0, 0),
                               width: 3,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -259,7 +262,7 @@ class _MyAppState extends State<MyApp> {
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 1,
-                              color: Color.fromRGBO(158, 136, 255, 1),
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -275,9 +278,13 @@ class _MyAppState extends State<MyApp> {
                                     password: password,
                                     context: context);
                               },
-                              hoverColor: Color.fromARGB(255, 195, 66, 30),
-                              child: Text("Signup"),
-                              color: Colors.greenAccent,
+                              hoverColor: Color.fromARGB(255, 206, 7, 0),
+                              child: Text(
+                                "Sign Up",
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.white),
+                              ),
+                              color: Color.fromARGB(255, 0, 0, 0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -286,14 +293,20 @@ class _MyAppState extends State<MyApp> {
                               child: CircularProgressIndicator(),
                             ),
                       SizedBox(height: 20),
+                      Divider(
+                        color: Colors.grey.shade300,
+                        thickness: 1,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'Already have an account? ',
                             style: TextStyle(
-                              color: Color.fromARGB(255, 139, 13, 236),
-                              fontSize: 20,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 15,
                               // align the text to the left instead of centered
                             ),
                           ),
@@ -305,8 +318,8 @@ class _MyAppState extends State<MyApp> {
                             child: Text(
                               'Login',
                               style: TextStyle(
-                                color: Color.fromARGB(255, 5, 237, 125),
-                                fontSize: 20,
+                                color: Color.fromARGB(255, 206, 7, 0),
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 // align the text to the left instead of centered
                               ),

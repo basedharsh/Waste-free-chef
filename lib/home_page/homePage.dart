@@ -45,6 +45,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // catch thene from main.dart
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -56,7 +58,7 @@ class _MyAppState extends State<MyApp> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 255, 235, 235),
+        // backgroundColor: Color.fromARGB(255, 255, 235, 235),
         actions: [
           IconButton(
             onPressed: () {},

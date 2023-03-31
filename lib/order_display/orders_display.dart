@@ -90,7 +90,11 @@ class _MyAppState extends State<MyApp> {
     // write media query here
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      // backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      // catch backgrond color from main.dart
+      
+  
+
       body: SmartRefresher(
         controller: _refreshController,
         onRefresh: () async {
@@ -225,7 +229,9 @@ class _MyAppState extends State<MyApp> {
                           children: List.generate(listy.length, (index) {
                           //var listy = orderData.orderDataList[index];
                           if (listy.elementAt(index).data()["approved"] ==
-                              "true" && listy.elementAt(index).data()["providerid"] != currentUser.uid) {
+                                  "true" &&
+                              listy.elementAt(index).data()["providerid"] !=
+                                  currentUser.uid) {
                             // main container for each order
                             return Material(
                               elevation: 3,
@@ -292,16 +298,21 @@ class _MyAppState extends State<MyApp> {
                                     MaterialButton(
                                       onPressed: () {
                                         print(currentUser.uid);
-                                        print(listy.elementAt(index).data()["providerid"]);
+                                        print(listy
+                                            .elementAt(index)
+                                            .data()["providerid"]);
                                         print(listy.elementAt(index).id);
                                         print("Ahhhhhhhhhhhh");
-                                        RoutingPage.goToNext(context: context, navigateTo: PlaceOrderPage(
-                                            custId: currentUser.uid,
-                                            provId: listy.elementAt(index).data()["providerid"],
-                                            ordId: listy.elementAt(index).id,
-                                            ordD: listy.elementAt(index),
-                                        )
-                                        );
+                                        RoutingPage.goToNext(
+                                            context: context,
+                                            navigateTo: PlaceOrderPage(
+                                              custId: currentUser.uid,
+                                              provId: listy
+                                                  .elementAt(index)
+                                                  .data()["providerid"],
+                                              ordId: listy.elementAt(index).id,
+                                              ordD: listy.elementAt(index),
+                                            ));
                                       },
                                       child: Text("Confirm Order"),
                                       color: Color.fromARGB(255, 226, 84, 245),

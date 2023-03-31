@@ -19,7 +19,7 @@ var locationClicked = false;
 var locationLoading = false;
 var imageClicked = false;
 
-void GetDataFromDatabase()async{
+void GetDataFromDatabase() async {
   await db.collection("sellerOrder").get().then((event) {
     orderData.orderDataList = event.docs;
     currentUser = FirebaseAuth.instance.currentUser;
@@ -53,13 +53,11 @@ TextEditingController foodType = TextEditingController();
 TextEditingController expiryDate = TextEditingController();
 TextEditingController providerNumber = TextEditingController();
 
-
 bool _serviceEnabled = false;
 Location location = Location();
 PermissionStatus _permissionGranted = PermissionStatus.denied;
 LocationData? _locationData;
 StreamSubscription<LocationData>? locationSubscription;
-
 
 Future<dynamic> getLocation() async {
   _serviceEnabled = await location.serviceEnabled();
@@ -82,7 +80,6 @@ Future<dynamic> getLocation() async {
   return _locationData;
 }
 
-
 class OrderDetails extends StatefulWidget {
   const OrderDetails({Key? key}) : super(key: key);
 
@@ -92,25 +89,23 @@ class OrderDetails extends StatefulWidget {
 
 class _OrderDetailsState extends State<OrderDetails> {
   @override
-  void initState(){
+  void initState() {
     GetDataFromDatabase();
     setState(() {
       locationClicked = false;
     });
     super.initState();
   }
+
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
           unselectedWidgetColor: Color.fromARGB(255, 227, 233, 236),
         ),
         debugShowCheckedModeBanner: false,
-        home: MyApp()
-    );
+        home: MyApp());
   }
 }
-
-
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -202,15 +197,14 @@ class _MyAppState extends State<MyApp> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onTap: ()async{
+                onTap: () async {
                   DateTime? pickeddate = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2000),
-                      lastDate: DateTime(2101)
-                  );
+                      lastDate: DateTime(2101));
 
-                  if(pickeddate != null){
+                  if (pickeddate != null) {
                     setState(() {
                       expiryDate.text = pickeddate.toString().split(" ")[0];
                     });
@@ -244,37 +238,39 @@ class _MyAppState extends State<MyApp> {
               SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: Color.fromARGB(255, 227, 233, 236),
-                  )
-                ),
-
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Color.fromARGB(255, 227, 233, 236),
+                    )),
                 padding: EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Food Type",style: TextStyle(
-                      color: Color.fromARGB(255, 139, 13, 236),
-                    )),
+                    Text("Food Type",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 139, 13, 236),
+                        )),
                     RadioListTile(
                       activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Breakfast",style: TextStyle(color: Color.fromARGB(255, 227, 233, 236))),
+                      title: Text("Breakfast",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 227, 233, 236))),
                       value: "breakfast",
                       groupValue: details['foodtype'],
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           details['foodtype'] = value.toString();
                         });
                       },
                     ),
-
                     RadioListTile(
                       activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Lunch",style: TextStyle(color: Color.fromARGB(255, 227, 233, 236))),
+                      title: Text("Lunch",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 227, 233, 236))),
                       value: "lunch",
                       groupValue: details['foodtype'],
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           details['foodtype'] = value.toString();
                         });
@@ -282,10 +278,12 @@ class _MyAppState extends State<MyApp> {
                     ),
                     RadioListTile(
                       activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Snacks",style: TextStyle(color: Color.fromARGB(255, 227, 233, 236))),
+                      title: Text("Snacks",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 227, 233, 236))),
                       value: "snacks",
                       groupValue: details['foodtype'],
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           details['foodtype'] = value.toString();
                         });
@@ -293,10 +291,12 @@ class _MyAppState extends State<MyApp> {
                     ),
                     RadioListTile(
                       activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Dinner",style: TextStyle(color: Color.fromARGB(255, 227, 233, 236))),
+                      title: Text("Dinner",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 227, 233, 236))),
                       value: "dinner",
                       groupValue: details['foodtype'],
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           details['foodtype'] = value.toString();
                         });
@@ -311,74 +311,74 @@ class _MyAppState extends State<MyApp> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: Color.fromARGB(255, 227, 233, 236),
-                      )
-                  ),
-
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Donate or Sell",style: TextStyle(
-                      color: Color.fromARGB(255, 139, 13, 236),
-                    )),
-                    RadioListTile(
-                      activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Donate",style: TextStyle(color: Color.fromARGB(255, 227, 233, 236))),
-                      value: false,
-                      groupValue: priceEnabled,
-                      onChanged: (value){
-                        setState(() {
-                          priceEnabled = false;
-                        });
-                      },
-                    ),
-
-                    RadioListTile(
-                      activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Sell",style: TextStyle(color: Color.fromARGB(255, 227, 233, 236))),
-                      value: true,
-                      groupValue: priceEnabled,
-                      onChanged: (value){
-                        setState(() {
-                          priceEnabled = true;
-                        });
-                      },
-                    ),
-                ]
-              )
-              ),
+                      )),
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Donate or Sell",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 139, 13, 236),
+                            )),
+                        RadioListTile(
+                          activeColor: Color.fromARGB(255, 139, 13, 236),
+                          title: Text("Donate",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 227, 233, 236))),
+                          value: false,
+                          groupValue: priceEnabled,
+                          onChanged: (value) {
+                            setState(() {
+                              priceEnabled = false;
+                            });
+                          },
+                        ),
+                        RadioListTile(
+                          activeColor: Color.fromARGB(255, 139, 13, 236),
+                          title: Text("Sell",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 227, 233, 236))),
+                          value: true,
+                          groupValue: priceEnabled,
+                          onChanged: (value) {
+                            setState(() {
+                              priceEnabled = true;
+                            });
+                          },
+                        ),
+                      ])),
               SizedBox(height: 20),
-              (priceEnabled==true)?
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormField(
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 227, 233, 236),
-                        ),
-                        controller: foodPrice,
-                        decoration: InputDecoration(
-                          hintText: 'Food Price',
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
-                            // align the text to the left instead of centered
+              (priceEnabled == true)
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 227, 233, 236),
                           ),
-                          labelText: 'Food Price',
-                          labelStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color.fromARGB(255, 230, 230, 230),
+                          controller: foodPrice,
+                          decoration: InputDecoration(
+                            hintText: 'Food Price',
+                            hintStyle: TextStyle(
+                              color: Color.fromARGB(255, 139, 13, 236),
+                              // align the text to the left instead of centered
                             ),
-                            borderRadius: BorderRadius.circular(10),
+                            labelText: 'Food Price',
+                            labelStyle: TextStyle(
+                              color: Color.fromARGB(255, 139, 13, 236),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 230, 230, 230),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                    ],
-                  )
-              :SizedBox(),
+                        SizedBox(height: 20),
+                      ],
+                    )
+                  : SizedBox(),
               TextFormField(
                 style: TextStyle(
                   color: Color.fromARGB(255, 227, 233, 236),
@@ -403,122 +403,129 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               SizedBox(height: 20),
-              (imageClicked==false)?
-              MaterialButton(
-                  onPressed: ()async{
+              (imageClicked == false)
+                  ? MaterialButton(
+                      onPressed: () async {
+                        ImagePicker imagePicker = ImagePicker();
+                        XFile? foodimage = await imagePicker.pickImage(
+                            source: ImageSource.gallery);
+                        print(foodimage?.path);
 
-                    ImagePicker imagePicker = ImagePicker();
-                    XFile? foodimage = await imagePicker.pickImage(source: ImageSource.gallery);
-                    print(foodimage?.path);
+                        if (foodimage == null) return;
 
-                    if(foodimage==null) return;
+                        Reference referenceRoot =
+                            FirebaseStorage.instance.ref();
+                        Reference referenceImageDir =
+                            referenceRoot.child('foodImage');
+                        Reference referenceImageToUpload =
+                            referenceImageDir.child(uuid.v1());
 
-                    Reference referenceRoot = FirebaseStorage.instance.ref();
-                    Reference referenceImageDir = referenceRoot.child('foodImage');
-                    Reference referenceImageToUpload = referenceImageDir.child(uuid.v1());
+                        try {
+                          await referenceImageToUpload
+                              .putFile(File(foodimage!.path) as File)
+                              .then((value) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Image Noted"),
+                            ));
+                          });
+                          foodImageUrl =
+                              await referenceImageToUpload.getDownloadURL();
+                        } catch (error) {}
+                        setState(() {
+                          imageClicked = true;
+                        });
+                      },
+                      child: Text("Image"),
+                      color: Color.fromARGB(255, 139, 13, 236),
+                    )
+                  : MaterialButton(
+                      onPressed: () async {
+                        ImagePicker imagePicker = ImagePicker();
+                        XFile? foodimage = await imagePicker.pickImage(
+                            source: ImageSource.gallery);
+                        print(foodimage?.path);
 
+                        if (foodimage == null) return;
 
-                    try{
-                      await referenceImageToUpload.putFile(File(foodimage!.path) as File).then((value){
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text("Image Noted"),));
-                      });
-                      foodImageUrl = await referenceImageToUpload.getDownloadURL();
-                    }catch(error){
+                        Reference referenceRoot =
+                            FirebaseStorage.instance.ref();
+                        Reference referenceImageDir =
+                            referenceRoot.child('foodImage');
+                        Reference referenceImageToUpload =
+                            referenceImageDir.child(uuid.v1());
 
-                    }
-                    setState(() {
-                      imageClicked = true;
-                    });
-
-                  },
-                child: Text("Image"),
-                color: Color.fromARGB(255, 139, 13, 236),
-              ):MaterialButton(
-                onPressed: ()async{
-
-                  ImagePicker imagePicker = ImagePicker();
-                  XFile? foodimage = await imagePicker.pickImage(source: ImageSource.gallery);
-                  print(foodimage?.path);
-
-                  if(foodimage==null) return;
-
-                  Reference referenceRoot = FirebaseStorage.instance.ref();
-                  Reference referenceImageDir = referenceRoot.child('foodImage');
-                  Reference referenceImageToUpload = referenceImageDir.child(uuid.v1());
-
-
-                  try{
-                    await referenceImageToUpload.putFile(File(foodimage!.path) as File).then((value){
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text("Image Noted"),));
-                    });
-                    foodImageUrl = await referenceImageToUpload.getDownloadURL();
-                  }catch(error){
-
-                  }
-
-
-                },
-                child: Icon(Icons.check),
-                color: Color.fromARGB(255, 139, 13, 236),
-              ),
-                SizedBox(height: 20),
-              (locationClicked==false)?
-                MaterialButton(
-                    child: (locationLoading==true)?CircularProgressIndicator():Text("Get Location"),
-                    color: Color.fromARGB(255, 139, 13, 236),
-                   onPressed: ()async{
-                      setState(() {
-                        locationLoading = true;
-                      });
-                      await getLocation().then((value){
-                        print(value);
-                        details['latitude'] = value.latitude;
-                        details['longitude'] = value.longitude;
-                            ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text("Location Noted")));
-                      });
-                      setState(() {
-                        locationClicked = true;
-                        locationLoading = false;
-                      });
-                   }):
-              MaterialButton(
-                  child: (locationLoading==true)?CircularProgressIndicator():Icon(Icons.check),
-                  color: Color.fromARGB(255, 139, 13, 236),
-                  onPressed: (){
-                    setState(() {
-                      locationLoading = true;
-                    });
-                    getLocation().then((value){
-                      print(value);
-                      details['latitude'] = value.latitude;
-                      details['longitude'] = value.longitude;
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(
-                          content: Text("Location Noted"),
-
-                      ));
-                    });
-                    setState(() {
-                      locationClicked = true;
-                      locationLoading = false;
-                    });
-                  }),
+                        try {
+                          await referenceImageToUpload
+                              .putFile(File(foodimage!.path) as File)
+                              .then((value) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Image Noted"),
+                            ));
+                          });
+                          foodImageUrl =
+                              await referenceImageToUpload.getDownloadURL();
+                        } catch (error) {}
+                      },
+                      child: Icon(Icons.check),
+                      color: Color.fromARGB(255, 139, 13, 236),
+                    ),
+              SizedBox(height: 20),
+              (locationClicked == false)
+                  ? MaterialButton(
+                      child: (locationLoading == true)
+                          ? CircularProgressIndicator()
+                          : Text("Get Location"),
+                      color: Color.fromARGB(255, 139, 13, 236),
+                      onPressed: () async {
+                        setState(() {
+                          locationLoading = true;
+                        });
+                        await getLocation().then((value) {
+                          print(value);
+                          details['latitude'] = value.latitude;
+                          details['longitude'] = value.longitude;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Location Noted")));
+                        });
+                        setState(() {
+                          locationClicked = true;
+                          locationLoading = false;
+                        });
+                      })
+                  : MaterialButton(
+                      child: (locationLoading == true)
+                          ? CircularProgressIndicator()
+                          : Icon(Icons.check),
+                      color: Color.fromARGB(255, 139, 13, 236),
+                      onPressed: () {
+                        setState(() {
+                          locationLoading = true;
+                        });
+                        getLocation().then((value) {
+                          print(value);
+                          details['latitude'] = value.latitude;
+                          details['longitude'] = value.longitude;
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Location Noted"),
+                          ));
+                        });
+                        setState(() {
+                          locationClicked = true;
+                          locationLoading = false;
+                        });
+                      }),
               SizedBox(height: 20),
               MaterialButton(
-                onPressed: ()async{
-
-                  if(foodImageUrl==""){
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text("Input an image for food to place order")));
-                  }
-                  else if(details['latitude']=="" && details['longitude']==""){
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text("Select your Location to place order")));
-                  }
-                  else {
+                onPressed: () async {
+                  if (foodImageUrl == "") {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content:
+                            Text("Input an image for food to place order")));
+                  } else if (details['latitude'] == "" &&
+                      details['longitude'] == "") {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Select your Location to place order")));
+                  } else {
                     details['providername'] = providerName.text.trim();
                     details['foodname'] = foodName.text.trim();
                     (priceEnabled == false)
@@ -544,8 +551,9 @@ class _MyAppState extends State<MyApp> {
                     print(details);
                   }
 
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text("Order Placed"),));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Order Placed"),
+                  ));
                 },
                 child: Text("Submit"),
                 color: Color.fromARGB(255, 139, 13, 236),
@@ -571,7 +579,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
-
-
