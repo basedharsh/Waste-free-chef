@@ -7,8 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'home_page/homePage.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -16,15 +14,11 @@ void main() async {
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -35,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          scaffoldBackgroundColor: Color.fromARGB(255, 255, 0, 0),
+        ),
         debugShowMaterialGrid: false,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
@@ -49,4 +46,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

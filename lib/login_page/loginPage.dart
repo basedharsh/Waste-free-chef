@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: Colors.grey.shade200,
       body: SafeArea(
         //on screen tap keyboard will be closed
         child: GestureDetector(
@@ -70,12 +70,12 @@ class _MyAppState extends State<MyApp> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 Text(
                   "Waste-food-Chef",
                   style: GoogleFonts.lobster(
                     textStyle: TextStyle(
-                      color: Color.fromARGB(255, 5, 237, 125),
+                      color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.italic,
@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
                   "Welcome to Waste-food-Chef",
                   style: GoogleFonts.autourOne(
                     textStyle: TextStyle(
-                      color: Color.fromARGB(255, 177, 124, 242),
+                      color: Color.fromARGB(255, 206, 7, 0),
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.italic,
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
 
                 Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 148, 197, 135),
+                    color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   height: 0.3 * size.height,
@@ -130,10 +130,10 @@ class _MyAppState extends State<MyApp> {
                 Container(
                   padding: EdgeInsets.all(10),
                   // padding: EdgeInsets.all(20),
-                  margin: EdgeInsets.only(left: 10, right: 10),
+                  margin: EdgeInsets.only(left: 20, right: 20),
                   width: 0.96 * size.width,
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Column(
@@ -156,18 +156,18 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Email',
                           labelStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Colors.blueGrey,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
                             Icons.email,
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
 
                           hintText: 'Email',
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color.fromARGB(255, 154, 120, 255),
+                              color: Color.fromARGB(255, 0, 0, 0),
                               width: 3,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -176,7 +176,7 @@ class _MyAppState extends State<MyApp> {
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 1,
-                              color: Color.fromRGBO(158, 136, 255, 1),
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -200,18 +200,18 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Password',
                           labelStyle: TextStyle(
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Colors.blueGrey,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
                             Icons.lock,
-                            color: Color.fromARGB(255, 139, 13, 236),
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
 
                           hintText: 'Password',
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color.fromARGB(255, 154, 120, 255),
+                              color: Color.fromARGB(255, 0, 0, 0),
                               width: 3,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -220,7 +220,7 @@ class _MyAppState extends State<MyApp> {
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 1,
-                              color: Color.fromRGBO(158, 136, 255, 1),
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -236,8 +236,12 @@ class _MyAppState extends State<MyApp> {
                                     password: password,
                                     context: context);
                               },
-                              child: Text("Login"),
-                              color: Colors.greenAccent,
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.white),
+                              ),
+                              color: Color.fromARGB(255, 0, 0, 0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -246,14 +250,20 @@ class _MyAppState extends State<MyApp> {
                               child: CircularProgressIndicator(),
                             ),
                       SizedBox(height: 10),
+                      Divider(
+                        color: Colors.grey.shade300,
+                        thickness: 1,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'Don\'t have an account?',
                             style: TextStyle(
-                              color: Color.fromARGB(255, 139, 13, 236),
-                              fontSize: 20,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 15,
                               // align the text to the left instead of centered
                             ),
                           ),
@@ -264,18 +274,18 @@ class _MyAppState extends State<MyApp> {
                               },
                               child: Text(' Signup',
                                   style: TextStyle(
-                                      color: Colors.greenAccent,
-                                      fontSize: 20,
+                                      color: Color.fromARGB(255, 206, 7, 0),
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold))),
                         ],
                       ),
-                      SizedBox(height: 30),
-                      Text("Forgot Password?",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 210, 152, 255),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(height: 30),
+                      SizedBox(height: 20),
+                      // Text("Forgot Password?",
+                      //     style: TextStyle(
+                      //         color: Color.fromARGB(255, 210, 152, 255),
+                      //         fontSize: 15,
+                      //         fontWeight: FontWeight.bold)),
+                      // SizedBox(height: 30),
                     ],
                   ),
                 ),
