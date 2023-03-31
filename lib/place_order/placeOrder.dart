@@ -19,18 +19,18 @@ final PlacedOrderDetails = <String, dynamic>{
   "orderQuantity": 1,
   "orderPrice": 0,
   "apporived": false,
-  "status": "onHold"
+  "status": "onHold",
+  "contactNumber": "",
+  "contactName": ""
 };
 
-final db = FirebaseFirestore.instance;
+TextEditingController contactNumber = TextEditingController();
+TextEditingController contactName = TextEditingController();
+TextEditingController contactEmail = TextEditingController();
 
-//String customerId = "";
-//String providerId = "";
-//String orderId = "";
+final db = FirebaseFirestore.instance;
 var orderDetails;
 
-//int orderQuantity = 1;
-//int orderPrice = 0;
 
 class PlaceOrderPage extends StatefulWidget {
   PlaceOrderPage({required this.custId, required this.provId, required this.ordId, required this.ordD}){
@@ -86,6 +86,78 @@ class _PlaceOrderPageAppState extends State<PlaceOrderPageApp> {
               SizedBox(height: 20),
               Center(child: Text("Place Order")),
               SizedBox(height: 20),
+              TextFormField(
+                style: TextStyle(
+                  color: Color.fromARGB(255, 227, 233, 236),
+                ),
+                controller: contactName,
+                decoration: InputDecoration(
+                  hintText: 'Contact Name',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 139, 13, 236),
+                    // align the text to the left instead of centered
+                  ),
+                  labelText: 'Contact Name',
+                  labelStyle: TextStyle(
+                    color: Color.fromARGB(255, 139, 13, 236),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 230, 230, 230),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                style: TextStyle(
+                  color: Color.fromARGB(255, 227, 233, 236),
+                ),
+                controller: contactNumber,
+                decoration: InputDecoration(
+                  hintText: 'Contact Number',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 139, 13, 236),
+                    // align the text to the left instead of centered
+                  ),
+                  labelText: 'Contact Number',
+                  labelStyle: TextStyle(
+                    color: Color.fromARGB(255, 139, 13, 236),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 230, 230, 230),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                style: TextStyle(
+                  color: Color.fromARGB(255, 227, 233, 236),
+                ),
+                controller: contactEmail,
+                decoration: InputDecoration(
+                  hintText: 'Contact Email',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 139, 13, 236),
+                    // align the text to the left instead of centered
+                  ),
+                  labelText: 'Contact Email',
+                  labelStyle: TextStyle(
+                    color: Color.fromARGB(255, 139, 13, 236),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 230, 230, 230),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               Center(child: Text("Quantity : " + PlacedOrderDetails['orderQuantity'].toString())),
               SliderTheme(
                 data: SliderTheme.of(context).copyWith(  //To only change a few things
@@ -101,7 +173,6 @@ class _PlaceOrderPageAppState extends State<PlaceOrderPageApp> {
                     min: 1,
                     max: double.parse(orderDetails.data()['foodnos']),
                     onChanged: (double quantity){
-                      print(quantity);
                       setState(() {
                         PlacedOrderDetails['orderQuantity'] = quantity.round();
                         PlacedOrderDetails['orderPrice'] = ( int.parse(orderDetails.data()['foodprice']) / int.parse(orderDetails.data()['foodnos']) * PlacedOrderDetails['orderQuantity'] ).round();
@@ -146,6 +217,11 @@ class _PlaceOrderPageAppState extends State<PlaceOrderPageApp> {
 
               MaterialButton(
                   onPressed: ()async{
+
+                    PlacedOrderDetails['contactName'] = contactName.text.trim();
+                    PlacedOrderDetails['contactNumber'] = contactNumber.text.trim();
+                    PlacedOrderDetails['contactEmail'] = contactEmail.text.trim();
+
                     await db
                         .collection('customerOrder')
                         .doc(PlacedOrderDetails['orderId'] + PlacedOrderDetails['customerId'])

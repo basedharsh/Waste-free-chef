@@ -3,6 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../order_display/orderDataList.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
+
+Email email = Email(
+  body: 'Your Order is Confirmed. Please pickup before the expiry date.',
+  subject: 'Order Confirmed',
+  recipients: ['shrivatsa.d@somaiya.edu'],
+  isHTML: false,
+);
 
 RefreshController _refreshPastOrdersController =
     RefreshController(initialRefresh: false);
@@ -209,6 +218,15 @@ class _MyAppState extends State<MyApp> {
                                                     print("onError");
                                                   });
 
+                                                  Email confirmationEmail = Email(
+                                                    body: 'Your Order is Confirmed. Please pickup before the expiry date.',
+                                                    subject: 'Order Confirmed',
+                                                    recipients: [customerListy.elementAt(index).data()['contactEmail']],
+                                                    isHTML: false,
+                                                  );
+
+                                                  await FlutterEmailSender.send(confirmationEmail);
+
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
                                                           content: Text(
@@ -237,6 +255,15 @@ class _MyAppState extends State<MyApp> {
                                                                       .data()[
                                                                   'customerId'])
                                                       .delete();
+
+                                                  Email email = Email(
+                                                    body: 'Sorry, your Order request is not approved',
+                                                    subject: 'Order Declined',
+                                                    recipients: [customerListy.elementAt(index).data()['contactEmail']],
+                                                    isHTML: false,
+                                                  );
+
+                                                  await FlutterEmailSender.send(email);
 
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
