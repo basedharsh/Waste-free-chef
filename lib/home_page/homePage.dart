@@ -45,8 +45,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // catch thene from main.dart
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -58,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // backgroundColor: Color.fromARGB(255, 255, 235, 235),
+        backgroundColor: Colors.grey.shade200,
         actions: [
           IconButton(
             onPressed: () {},
@@ -111,7 +109,7 @@ class _MyAppState extends State<MyApp> {
         ],
         currentIndex: selectedIndex,
         unselectedItemColor: Colors.grey,
-        selectedItemColor: Color.fromARGB(255, 139, 13, 236),
+        selectedItemColor: Color.fromARGB(255, 0, 0, 0),
         onTap: (index) {
           setState(() {
             selectedIndex = index;

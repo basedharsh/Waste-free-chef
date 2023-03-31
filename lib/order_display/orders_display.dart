@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/order_display/getDataFromDatabaseFunction.dart';
 import 'package:firebase/order_display/orderDataList.dart';
@@ -87,13 +89,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    // write media query here
+    // write mq for media query
+    var mq = MediaQuery.of(context).size;
 
     return Scaffold(
       // backgroundColor: Color.fromARGB(255, 0, 0, 0),
       // catch backgrond color from main.dart
-      
-  
+      backgroundColor: Colors.grey.shade200,
 
       body: SmartRefresher(
         controller: _refreshController,
@@ -126,259 +128,343 @@ class _MyAppState extends State<MyApp> {
           });
           _refreshController.refreshCompleted();
         },
-        child: Column(
-          children: [
-            SizedBox(height: 2),
-            InkWell(
-              onTap: () {},
-              child: Material(
-                elevation: 10,
-                borderRadius: BorderRadius.circular(30),
-                child: Container(
-                  height: 200,
-                  width: 400,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30)),
-                      color: Color.fromARGB(255, 255, 38, 38)),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 14),
-                      Image.asset("images/band.gif", height: 100, width: 300),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Waste",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "-Food",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text("-Chef",
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 2),
+              InkWell(
+                onTap: () {},
+                child: Material(
+                  elevation: 10,
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    height: 100,
+                    width: 400,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("images/bg.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30)),
+                        color: Colors.white),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 14),
+                        // Image.asset("images/band.gif", height: 100, width: 300),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Waste",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 253, 253),
+                                  color: Color.fromARGB(255, 206, 7, 0),
                                   fontSize: 30,
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Divider(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        thickness: 0.7,
-                        indent: 40,
-                        endIndent: 40,
-                      ),
-                      Text(
-                        "Food for the needy",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 255, 252, 252),
-                            fontSize: 20,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "-Food",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text("-Chef",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 206, 7, 0),
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        Divider(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          thickness: 0.7,
+                          indent: 40,
+                          endIndent: 40,
+                        ),
+                        Text(
+                          "Food for the needy",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 20,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Orders",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold)),
-                ),
-                // Filter Button
-                Container(
-                  child: IconButton(
-                    icon:
-                        Icon(Icons.filter_alt, color: Colors.purple, size: 30),
-                    onPressed: () {
-                      _showBottomSheet();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => FilterScreen()),
-                      // );
-                    },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Orders",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold)),
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  child: (listy.length != 0)
-                      ? Row(
-                          children: List.generate(listy.length, (index) {
-                          //var listy = orderData.orderDataList[index];
-                          if (listy.elementAt(index).data()["approved"] ==
-                                  "true" &&
-                              listy.elementAt(index).data()["providerid"] !=
-                                  currentUser.uid) {
-                            // main container for each order
-                            return Material(
-                              elevation: 3,
-                              borderRadius: BorderRadius.circular(80),
-                              child: Container(
-                                // add border radius
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(80),
-                                    color: Color.fromARGB(255, 254, 197, 187)),
-                                height: 350,
-                                width: 250,
-                                // color: Color.fromARGB(255, 238, 139, 255),
-                                // Add gap between each order
-                                margin: EdgeInsets.all(2),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    // Image
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      height: 200,
-                                      width: 250,
-                                      child: FittedBox(
-                                        fit: BoxFit.fill,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(80),
-                                          child: Image(
-                                            image: NetworkImage(listy
-                                                .elementAt(index)
-                                                .data()['foodimage']),
+                  // Filter Button
+                  Container(
+                    child: IconButton(
+                      icon: Icon(Icons.filter_alt,
+                          color: Colors.purple, size: 30),
+                      onPressed: () {
+                        _showBottomSheet();
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => FilterScreen()),
+                        // );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(0),
+                child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: (listy.length != 0)
+                        ? Row(
+                            children: List.generate(listy.length, (index) {
+                            //var listy = orderData.orderDataList[index];
+                            if (listy.elementAt(index).data()["approved"] ==
+                                    "true" &&
+                                listy.elementAt(index).data()["providerid"] !=
+                                    currentUser.uid) {
+                              // main container for each order
+                              return Material(
+                                elevation: 3,
+                                borderRadius: BorderRadius.circular(80),
+                                child: Container(
+                                  // add border radius
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(80),
+                                      color: Colors.white),
+                                  height: 350,
+                                  width: 250,
+                                  // color: Color.fromARGB(255, 238, 139, 255),
+                                  // Add gap between each order
+                                  margin: EdgeInsets.all(2),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      // Image
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        height: 200,
+                                        width: 250,
+                                        child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(80),
+                                            child: Image(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                listy
+                                                    .elementAt(index)
+                                                    .data()['foodimage'],
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                        'NAME : ${listy.elementAt(index).data()['foodname']}',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 8, 8, 8),
-                                            fontWeight: FontWeight.bold)),
-                                    Text(
-                                        'PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 8, 8, 8),
-                                            fontWeight: FontWeight.bold)),
-                                    Text(
-                                        'QUANTITY : ${listy.elementAt(index).data()['foodnos']}',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 8, 8, 8),
-                                            fontWeight: FontWeight.bold)),
-                                    Text(
-                                        'TYPE : ${listy.elementAt(index).data()['foodtype']}',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 8, 8, 8),
-                                            fontWeight: FontWeight.bold)),
-                                    Text(
-                                        'EXPIRY DATE : ${listy.elementAt(index).data()['expirydate']}',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 8, 8, 8),
-                                            fontWeight: FontWeight.bold)),
-                                    MaterialButton(
-                                      onPressed: () {
-                                        print(currentUser.uid);
-                                        print(listy
-                                            .elementAt(index)
-                                            .data()["providerid"]);
-                                        print(listy.elementAt(index).id);
-                                        print("Ahhhhhhhhhhhh");
-                                        RoutingPage.goToNext(
-                                            context: context,
-                                            navigateTo: PlaceOrderPage(
-                                              custId: currentUser.uid,
-                                              provId: listy
-                                                  .elementAt(index)
-                                                  .data()["providerid"],
-                                              ordId: listy.elementAt(index).id,
-                                              ordD: listy.elementAt(index),
-                                            ));
-                                      },
-                                      child: Text("Confirm Order"),
-                                      color: Color.fromARGB(255, 226, 84, 245),
-                                    ),
-                                    // MaterialButton(
-                                    //   onPressed: () {
-                                    //     print(currentUser.uid);
-                                    //     print(listy.elementAt(index).data()["providerid"]);
-                                    //   },
-                                    //   child: Text("Chat"),
-                                    //   color: Color.fromARGB(255, 226, 84, 245),
-                                    // )
-                                  ],
+                                      SizedBox(height: 5),
+                                      Text(
+                                          'NAME : ${listy.elementAt(index).data()['foodname']}',
+                                          style: TextStyle(
+                                              color:
+                                                  Color.fromARGB(255, 8, 8, 8),
+                                              fontWeight: FontWeight.bold)),
+                                      Text(
+                                          'PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',
+                                          style: TextStyle(
+                                              color:
+                                                  Color.fromARGB(255, 8, 8, 8),
+                                              fontWeight: FontWeight.bold)),
+                                      Text(
+                                          'QUANTITY : ${listy.elementAt(index).data()['foodnos']}',
+                                          style: TextStyle(
+                                              color:
+                                                  Color.fromARGB(255, 8, 8, 8),
+                                              fontWeight: FontWeight.bold)),
+                                      Text(
+                                          'TYPE : ${listy.elementAt(index).data()['foodtype']}',
+                                          style: TextStyle(
+                                              color:
+                                                  Color.fromARGB(255, 8, 8, 8),
+                                              fontWeight: FontWeight.bold)),
+                                      Text(
+                                          'EXPIRY DATE : ${listy.elementAt(index).data()['expirydate']}',
+                                          style: TextStyle(
+                                              color:
+                                                  Color.fromARGB(255, 8, 8, 8),
+                                              fontWeight: FontWeight.bold)),
+                                      MaterialButton(
+                                        onPressed: () {
+                                          print(currentUser.uid);
+                                          print(listy
+                                              .elementAt(index)
+                                              .data()["providerid"]);
+                                          print(listy.elementAt(index).id);
+                                          print("Ahhhhhhhhhhhh");
+                                          RoutingPage.goToNext(
+                                              context: context,
+                                              navigateTo: PlaceOrderPage(
+                                                custId: currentUser.uid,
+                                                provId: listy
+                                                    .elementAt(index)
+                                                    .data()["providerid"],
+                                                ordId:
+                                                    listy.elementAt(index).id,
+                                                ordD: listy.elementAt(index),
+                                              ));
+                                        },
+                                        child: Text(
+                                          "Confirm Order",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                      ),
+                                      // MaterialButton(
+                                      //   onPressed: () {
+                                      //     print(currentUser.uid);
+                                      //     print(listy.elementAt(index).data()["providerid"]);
+                                      //   },
+                                      //   child: Text("Chat"),
+                                      //   color: Color.fromARGB(255, 226, 84, 245),
+                                      // )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          } else {
-                            return Container(
-                              height: 0,
-                              width: 0,
-                            );
-                          }
-                        }))
-                      : Center(
-                          child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              color: Color.fromARGB(255, 253, 241, 255),
-                              height: 200,
-                              width: 350,
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.not_interested_sharp,
-                                    size: 100,
-                                    color: Color.fromARGB(255, 218, 51, 51),
-                                  ),
-                                  Text(
-                                    " Currently No Orders Available",
-                                    style: TextStyle(
+                              );
+                            } else {
+                              return Container(
+                                height: 0,
+                                width: 0,
+                              );
+                            }
+                          }))
+                        : Center(
+                            child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Material(
+                                elevation: 3,
+                                child: Container(
+                                  color: Colors.white,
+                                  height: 200,
+                                  width: 350,
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.shopping_cart,
+                                        size: 100,
                                         color: Color.fromARGB(255, 218, 51, 51),
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        " Currently No Orders Available",
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 218, 51, 51),
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ))),
-            ),
-            SizedBox(height: 5),
-            Divider(
-              color: Color.fromARGB(255, 139, 139, 139),
-              indent: 25, //spacing at the start of divider
-              endIndent: 25,
-              thickness: 1,
-            ),
-            Text("Restaurants",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold)),
-            Row(),
-          ],
+                                ),
+                              )
+                            ],
+                          ))),
+              ),
+              SizedBox(height: 5),
+              Divider(
+                color: Color.fromARGB(255, 139, 139, 139),
+                indent: 25, //spacing at the start of divider
+                endIndent: 25,
+                thickness: 1,
+              ),
+              // Text("Restaurants",
+              //     style: TextStyle(
+              //         color: Colors.black,
+              //         fontSize: 30,
+              //         fontWeight: FontWeight.bold)),
+              // add carousel slider
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 200.0,
+                  autoPlay: false,
+                  enlargeCenterPage: true,
+                  aspectRatio: 2.0,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enableInfiniteScroll: true,
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  viewportFraction: 0.8,
+                ),
+                items: [
+                  // height of slider is 200
+
+                  //1st Image of Slider
+                  Container(
+                    height: mq.height * 0.2,
+                    margin: EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: AssetImage("images/carousel1.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  //2nd Image of Slider
+                  Container(
+                    margin: EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: AssetImage("images/carousel2.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  //3rd Image of Slider
+                  Container(
+                    margin: EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: AssetImage("images/carousel3.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  // //4th Image of Slider
+                  Container(
+                    margin: EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: AssetImage("images/carousel4.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              //create image slider
+            ],
+          ),
         ),
       ),
     );

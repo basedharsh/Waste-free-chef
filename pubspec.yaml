@@ -56,6 +56,7 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
 
   dialog_flowtter: ^0.3.3
+  carousel_slider: ^4.2.1
 
 
 #***********Warn****************--> Don't Touch this until and unless you want to change ICON of the app
