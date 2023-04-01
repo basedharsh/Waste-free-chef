@@ -46,95 +46,163 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   centerTitle: true,
-      //   leading: IconButton(
-      //     onPressed: () {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (context) => Hiddrawer()),
-      //       );
-      //     },
-      //     icon: Icon(Icons.menu),
-      //     color: Colors.black,
-      //   ),
-      //   title: Text(
-      //     'WFC',
-      //     style: TextStyle(
-      //       color: Colors.black,
-      //       fontSize: 25,
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //   ),
-      //   backgroundColor: Colors.grey.shade200,
-      //   // actions: [
-      //   //   IconButton(
-      //   //     onPressed: () {},
-      //   //     icon: Icon(Icons.keyboard_double_arrow_left_rounded),
-      //   //     alignment: Alignment.centerLeft,
-      //   //     color: Colors.black,
-      //   //   ),
-      //   //   IconButton(
-      //   //     onPressed: () {},
-      //   //     icon: Icon(Icons.person),
-      //   //     alignment: Alignment.centerRight,
-      //   //     color: Colors.black,
-      //   //   ),
-      //   //   IconButton(
-      //   //     alignment: Alignment.centerLeft,
-      //   //     // Go back to last page
-      //   //     onPressed: () {
-      //   //       // Navigator.pop(context);
-      //   //     },
-      //   //     icon: Icon(Icons.arrow_back),
-      //   //     color: Colors.black,
-      //   //   ),
-      //   //   IconButton(
-      //   //     onPressed: () {
-      //   //       FirebaseAuth.instance.signOut().then((value) =>
-      //   //           Navigator.of(context).push(
-      //   //               MaterialPageRoute(builder: (context) => SignUpPage())));
-      //   //     },
-      //   //     icon: Icon(Icons.exit_to_app),
-      //   //     color: Colors.black,
-      //   //   ),
-      //   // ],
-      // ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => Hiddrawer()),
+        //     );
+        //   },
+        //   icon: Icon(Icons.menu),
+        //   color: Colors.black,
+        // ),
+        title: Text(
+          'WFC',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payment),
-            label: 'Donate',
+        ),
+        backgroundColor: Colors.grey.shade200,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.keyboard_double_arrow_left_rounded),
+            alignment: Alignment.centerLeft,
+            color: Colors.black,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Past',
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.person),
+            alignment: Alignment.centerRight,
+            color: Colors.black,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Map',
+          IconButton(
+            alignment: Alignment.centerLeft,
+            // Go back to last page
+            onPressed: () {
+              // Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back),
+            color: Colors.black,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
+          IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut().then((value) =>
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SignUpPage())));
+            },
+            icon: Icon(Icons.exit_to_app),
+            color: Colors.black,
           ),
         ],
-        currentIndex: selectedIndex,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Color.fromARGB(255, 0, 0, 0),
-        onTap: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
-        //backgroundColor: Color.fromARGB(255, 139, 13, 236),
       ),
-      body: myPages[selectedIndex],
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('WFC'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text('Main Page'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrdersDisplay()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Chatbot'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Chatbotsupport()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Past Orders'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PastOrders()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Map'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MapPage()),
+                );
+              },
+            ),
+            // Donate
+            ListTile(
+              title: Text('Donate'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrderDetails()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Sign Out'),
+              onTap: () {
+                FirebaseAuth.instance.signOut().then((value) =>
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SignUpPage())));
+              },
+            ),
+          ],
+        ),
+      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.payment),
+      //       label: 'Donate',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.shopping_cart),
+      //       label: 'Past',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.map),
+      //       label: 'Map',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.chat),
+      //       label: 'Chat',
+      //     ),
+      //   ],
+      //   currentIndex: selectedIndex,
+      //   unselectedItemColor: Colors.grey,
+      //   selectedItemColor: Color.fromARGB(255, 0, 0, 0),
+      //   onTap: (index) {
+      //     setState(() {
+      //       selectedIndex = index;
+      //     });
+      //   },
+      //   //backgroundColor: Color.fromARGB(255, 139, 13, 236),
+      // ),
+      // body: myPages[selectedIndex],
     );
   }
 }
