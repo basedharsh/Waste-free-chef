@@ -121,21 +121,35 @@ class _MyAppState extends State<MyApp> {
                                       child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          opacity: 0.3,
+                                          image: NetworkImage(customerListy.elementAt(index).data()['foodImage']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                       height: 200,
-                                      width: 200,
-                                      color: Color.fromARGB(255, 255, 146, 146),
+                                      width: 400,
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text("CustomerId : " +
+                                          Text("Name : " +
                                               customerListy
                                                   .elementAt(index)
-                                                  .data()['customerId']),
-                                          Text("OrderId : " +
+                                                  .data()['contactName']),
+                                          Text("Email : " +
                                               customerListy
                                                   .elementAt(index)
-                                                  .data()['orderId']),
+                                                  .data()['contactEmail']),
+                                          Text("Number : " +
+                                              customerListy
+                                                  .elementAt(index)
+                                                  .data()['contactNumber']),
+                                          Text("Food Name : " +
+                                              customerListy
+                                                  .elementAt(index)
+                                                  .data()['foodName']),
                                           Text("Quantity : " +
                                               customerListy
                                                   .elementAt(index)
@@ -219,7 +233,7 @@ class _MyAppState extends State<MyApp> {
                                                   });
 
                                                   Email confirmationEmail = Email(
-                                                    body: 'Your Order is Confirmed. Please pickup before the expiry date.',
+                                                    body: 'Your Order is Confirmed. Please pickup before the expiry date. Your order details are:\nQuantity - ${customerListy.elementAt(index).data()['orderQuantity']}\nPrice - ${customerListy.elementAt(index).data()['orderPrice']}\nOrder ID - ${customerListy.elementAt(index).id}',
                                                     subject: 'Order Confirmed',
                                                     recipients: [customerListy.elementAt(index).data()['contactEmail']],
                                                     isHTML: false,
@@ -358,7 +372,9 @@ class _MyAppState extends State<MyApp> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               MaterialButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+
+                                                },
                                                 child: Icon(Icons.check),
                                                 color: Colors.green,
                                                 minWidth: 10,
@@ -492,7 +508,7 @@ class _MyAppState extends State<MyApp> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     height: 400,
-                                    width: 400,
+                                    width: 250,
                                     margin: EdgeInsets.all(10),
                                     child: Column(
                                       mainAxisAlignment:
