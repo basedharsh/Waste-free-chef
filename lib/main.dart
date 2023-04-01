@@ -1,4 +1,5 @@
 import 'package:firebase/login_page/loginAuthorization.dart';
+import 'package:firebase/order_display/orders_display.dart';
 import 'package:firebase/signup_page/signUpAuthorization.dart';
 import 'package:firebase/signup_page/signUpPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,7 +38,9 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, userSnp) {
             if (userSnp.hasData) {
-              return HomePage();
+              return OrdersDisplay();
+              // and appbar
+              
             }
             return SignUpPage();
           },

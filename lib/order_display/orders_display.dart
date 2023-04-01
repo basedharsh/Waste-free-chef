@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/order_display/getDataFromDatabaseFunction.dart';
+
 import 'package:firebase/order_display/orderDataList.dart';
 import 'package:firebase/order_display/orderFilteringFunctions.dart';
 import 'package:firebase/place_order/placeOrder.dart';
@@ -15,10 +15,15 @@ import 'package:firebase/order_display/deleteExpiredFromDatabaseFunction.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:firebase/order_display/distanceFilteringFunction.dart';
 
+import '../chat_page/chatBot.dart';
+import '../map_page/mapPage.dart';
 import '../models/price_model.dart';
+
+import '../signup_page/signUpPage.dart';
 import 'filter_page.dart';
 
-RefreshController _orderDisplayrefreshController = RefreshController(initialRefresh: false);
+RefreshController _orderDisplayrefreshController =
+    RefreshController(initialRefresh: false);
 
 final db = FirebaseFirestore.instance;
 var currentUser;
@@ -96,6 +101,132 @@ class _MyAppState extends State<MyApp> {
       // backgroundColor: Color.fromARGB(255, 0, 0, 0),
       // catch backgrond color from main.dart
       backgroundColor: Colors.grey.shade200,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.red),
+
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => Hiddrawer()),
+        //     );
+        //   },
+        //   icon: Icon(Icons.menu),
+        //   color: Colors.black,
+        // ),
+        title: Text(
+          'WFC',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.grey.shade200,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.keyboard_double_arrow_left_rounded),
+            alignment: Alignment.centerLeft,
+            color: Colors.black,
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.person),
+            alignment: Alignment.centerRight,
+            color: Colors.black,
+          ),
+          IconButton(
+            alignment: Alignment.centerLeft,
+            // Go back to last page
+            onPressed: () {
+              // Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back),
+            color: Colors.black,
+          ),
+          IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut().then((value) =>
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SignUpPage())));
+            },
+            icon: Icon(Icons.exit_to_app),
+            color: Colors.black,
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        backgroundColor: Colors.white,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('WFC'),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+              ),
+            ),
+            ListTile(
+              title: Text('Main Page'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrdersDisplay()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Chatbot'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Chatbotsupport()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Past Orders'),
+              onTap: () {
+                // Error in past orders
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => PastOrders()),
+                // );
+              },
+            ),
+            ListTile(
+              title: Text('Map'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MapPage()),
+                );
+              },
+            ),
+            // Donate
+            ListTile(
+              title: Text('Donate'),
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => OrderDetails()),
+                // );
+              },
+            ),
+            ListTile(
+              title: Text('Sign Out'),
+              onTap: () {
+                FirebaseAuth.instance.signOut().then((value) =>
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SignUpPage())));
+              },
+            ),
+          ],
+        ),
+      ),
 
       body: SmartRefresher(
         controller: _orderDisplayrefreshController,
@@ -411,8 +542,6 @@ class _MyAppState extends State<MyApp> {
                   enableInfiniteScroll: true,
                   autoPlayAnimationDuration: Duration(milliseconds: 800),
                   viewportFraction: 0.8,
-                  
-
                 ),
                 items: [
                   // height of slider is 200
