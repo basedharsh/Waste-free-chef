@@ -18,7 +18,7 @@ import 'package:firebase/order_display/distanceFilteringFunction.dart';
 import '../models/price_model.dart';
 import 'filter_page.dart';
 
-RefreshController _refreshController = RefreshController(initialRefresh: false);
+RefreshController _orderDisplayrefreshController = RefreshController(initialRefresh: false);
 
 final db = FirebaseFirestore.instance;
 var currentUser;
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
       backgroundColor: Colors.grey.shade200,
 
       body: SmartRefresher(
-        controller: _refreshController,
+        controller: _orderDisplayrefreshController,
         onRefresh: () async {
           await Future.delayed(Duration(milliseconds: 1000));
           setState(() {
@@ -126,7 +126,7 @@ class _MyAppState extends State<MyApp> {
               }
             });
           });
-          _refreshController.refreshCompleted();
+          _orderDisplayrefreshController.refreshCompleted();
         },
         child: SingleChildScrollView(
           child: Column(
