@@ -24,7 +24,7 @@ var listy;
 var customerListy;
 var originalOrderDetails;
 
-void GetDataFromDatabase() async {
+void GetDataFromDatabasePastOrder() async {
   await db.collection("users").get().then((event) {
     currentUser = FirebaseAuth.instance.currentUser;
   });
@@ -51,7 +51,7 @@ class _PastOrdersState extends State<PastOrders> {
   @override
   void initState() {
     super.initState();
-    GetDataFromDatabase();
+    GetDataFromDatabasePastOrder();
     setState(() {
       listy = listy;
     });
@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
         onRefresh: () async {
           await Future.delayed(Duration(milliseconds: 1000));
           setState(() {
-            GetDataFromDatabase();
+            GetDataFromDatabasePastOrder();
           });
           _refreshPastOrdersController.refreshCompleted();
         },
