@@ -404,13 +404,15 @@ class _MyAppState extends State<MyApp> {
               CarouselSlider(
                 options: CarouselOptions(
                   height: 200.0,
-                  autoPlay: false,
+                  autoPlay: true,
                   enlargeCenterPage: true,
                   aspectRatio: 2.0,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enableInfiniteScroll: true,
                   autoPlayAnimationDuration: Duration(milliseconds: 800),
                   viewportFraction: 0.8,
+                  
+
                 ),
                 items: [
                   // height of slider is 200
@@ -462,7 +464,6 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ],
               ),
-              //create image slider
             ],
           ),
         ),

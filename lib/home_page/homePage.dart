@@ -1,4 +1,5 @@
 import 'package:firebase/chat_page/chatBot.dart';
+import 'package:firebase/home_page/drawer.dart';
 import 'package:firebase/order_form/food_details_form.dart';
 import 'package:firebase/map_page/mapPage.dart';
 import 'package:firebase/order_display/orders_display.dart';
@@ -45,45 +46,61 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'WFC',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.grey.shade200,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.person),
-            alignment: Alignment.centerRight,
-            color: Colors.black,
-          ),
-          IconButton(
-            alignment: Alignment.centerLeft,
-            // Go back to last page
-            onPressed: () {
-              // Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back),
-            color: Colors.black,
-          ),
-          IconButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut().then((value) =>
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignUpPage())));
-            },
-            icon: Icon(Icons.exit_to_app),
-            color: Colors.black,
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   centerTitle: true,
+      //   leading: IconButton(
+      //     onPressed: () {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => Hiddrawer()),
+      //       );
+      //     },
+      //     icon: Icon(Icons.menu),
+      //     color: Colors.black,
+      //   ),
+      //   title: Text(
+      //     'WFC',
+      //     style: TextStyle(
+      //       color: Colors.black,
+      //       fontSize: 25,
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      //   backgroundColor: Colors.grey.shade200,
+      //   // actions: [
+      //   //   IconButton(
+      //   //     onPressed: () {},
+      //   //     icon: Icon(Icons.keyboard_double_arrow_left_rounded),
+      //   //     alignment: Alignment.centerLeft,
+      //   //     color: Colors.black,
+      //   //   ),
+      //   //   IconButton(
+      //   //     onPressed: () {},
+      //   //     icon: Icon(Icons.person),
+      //   //     alignment: Alignment.centerRight,
+      //   //     color: Colors.black,
+      //   //   ),
+      //   //   IconButton(
+      //   //     alignment: Alignment.centerLeft,
+      //   //     // Go back to last page
+      //   //     onPressed: () {
+      //   //       // Navigator.pop(context);
+      //   //     },
+      //   //     icon: Icon(Icons.arrow_back),
+      //   //     color: Colors.black,
+      //   //   ),
+      //   //   IconButton(
+      //   //     onPressed: () {
+      //   //       FirebaseAuth.instance.signOut().then((value) =>
+      //   //           Navigator.of(context).push(
+      //   //               MaterialPageRoute(builder: (context) => SignUpPage())));
+      //   //     },
+      //   //     icon: Icon(Icons.exit_to_app),
+      //   //     color: Colors.black,
+      //   //   ),
+      //   // ],
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
