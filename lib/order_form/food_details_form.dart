@@ -19,7 +19,7 @@ var locationClicked = false;
 var locationLoading = false;
 var imageClicked = false;
 
-void GetDataFromDatabase() async {
+void GetDataFromDatabaseFoodDetails() async {
   await db.collection("sellerOrder").get().then((event) {
     orderData.orderDataList = event.docs;
     currentUser = FirebaseAuth.instance.currentUser;
@@ -59,7 +59,7 @@ PermissionStatus _permissionGranted = PermissionStatus.denied;
 LocationData? _locationData;
 StreamSubscription<LocationData>? locationSubscription;
 
-Future<dynamic> getLocation() async {
+Future<dynamic> getLocationFoodDetails() async {
   _serviceEnabled = await location.serviceEnabled();
   if (!_serviceEnabled) {
     _serviceEnabled = await location.requestService();
@@ -90,7 +90,7 @@ class OrderDetails extends StatefulWidget {
 class _OrderDetailsState extends State<OrderDetails> {
   @override
   void initState() {
-    GetDataFromDatabase();
+    GetDataFromDatabaseFoodDetails();
     setState(() {
       locationClicked = false;
     });
@@ -480,7 +480,7 @@ class _MyAppState extends State<MyApp> {
                         setState(() {
                           locationLoading = true;
                         });
-                        await getLocation().then((value) {
+                        await getLocationFoodDetails().then((value) {
                           print(value);
                           details['latitude'] = value.latitude;
                           details['longitude'] = value.longitude;
@@ -501,7 +501,7 @@ class _MyAppState extends State<MyApp> {
                         setState(() {
                           locationLoading = true;
                         });
-                        getLocation().then((value) {
+                        getLocationFoodDetails().then((value) {
                           print(value);
                           details['latitude'] = value.latitude;
                           details['longitude'] = value.longitude;

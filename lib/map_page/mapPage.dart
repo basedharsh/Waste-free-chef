@@ -10,7 +10,7 @@ import '../order_display/orderDataList.dart';
 final db = FirebaseFirestore.instance;
 var orderData = OrderDataList();
 
-void GetDataFromDatabase() async {
+void GetDataFromDatabaseMap() async {
   await db.collection("sellerOrder").get().then((event) {
     orderData.orderDataList = event.docs;
     print(orderData.orderDataList);
@@ -27,7 +27,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   @override
   void initState() {
-    GetDataFromDatabase();
+    GetDataFromDatabaseMap();
     super.initState();
     print("data aa raha hai");
   }
