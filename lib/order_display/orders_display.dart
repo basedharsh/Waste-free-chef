@@ -19,8 +19,11 @@ import '../chat_page/chatBot.dart';
 import '../map_page/mapPage.dart';
 import '../models/price_model.dart';
 
+import '../order_form/food_details_form.dart';
+import '../past_orders/past_orders.dart';
 import '../signup_page/signUpPage.dart';
 import 'filter_page.dart';
+import 'getDataFromDatabaseFunction.dart';
 
 RefreshController _orderDisplayrefreshController =
     RefreshController(initialRefresh: false);
@@ -170,15 +173,6 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             ListTile(
-              title: Text('Main Page'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OrdersDisplay()),
-                );
-              },
-            ),
-            ListTile(
               title: Text('Chatbot'),
               onTap: () {
                 Navigator.push(
@@ -191,10 +185,10 @@ class _MyAppState extends State<MyApp> {
               title: Text('Past Orders'),
               onTap: () {
                 // Error in past orders
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => PastOrders()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PastOrders()),
+                );
               },
             ),
             ListTile(
@@ -210,10 +204,10 @@ class _MyAppState extends State<MyApp> {
             ListTile(
               title: Text('Donate'),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => OrderDetails()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrderDetails()),
+                );
               },
             ),
             ListTile(
