@@ -21,7 +21,9 @@ final PlacedOrderDetails = <String, dynamic>{
   "apporived": false,
   "status": "onHold",
   "contactNumber": "",
-  "contactName": ""
+  "contactName": "",
+  "foodImage": "",
+  "foodName": ""
 };
 
 TextEditingController contactNumber = TextEditingController();
@@ -221,6 +223,8 @@ class _PlaceOrderPageAppState extends State<PlaceOrderPageApp> {
                     PlacedOrderDetails['contactName'] = contactName.text.trim();
                     PlacedOrderDetails['contactNumber'] = contactNumber.text.trim();
                     PlacedOrderDetails['contactEmail'] = contactEmail.text.trim();
+                    PlacedOrderDetails['foodImage'] = orderDetails.data()['foodimage'];
+                    PlacedOrderDetails['foodName'] = orderDetails.data()['foodname'];
 
                     await db
                         .collection('customerOrder')
