@@ -135,7 +135,7 @@ class _MyAppState extends State<MyApp> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 2),
+              SizedBox(height: 4),
               InkWell(
                 onTap: () {},
                 child: Material(
@@ -248,30 +248,37 @@ class _MyAppState extends State<MyApp> {
                                 elevation: 3,
                                 borderRadius: BorderRadius.circular(80),
                                 child: Container(
+                                  // margin: EdgeInsets.only(left: 10),
                                   // add border radius
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(80),
-                                      color: Colors.white),
+                                      color: Colors.deepPurple.shade100),
                                   height: 350,
                                   width: 250,
                                   // color: Color.fromARGB(255, 238, 139, 255),
                                   // Add gap between each order
-                                  margin: EdgeInsets.all(2),
+
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       // Image
                                       Container(
                                         decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
+                                          borderRadius:
+                                              BorderRadius.circular(80),
+                                          color: Colors.deepPurple.shade100,
+                                        ),
                                         height: 200,
                                         width: 250,
                                         child: FittedBox(
                                           fit: BoxFit.fill,
                                           child: ClipRRect(
                                             borderRadius:
-                                                BorderRadius.circular(80),
+                                                // Only top left corner
+                                                BorderRadius.only(
+                                              topLeft: Radius.circular(80),
+                                              topRight: Radius.circular(80),
+                                            ),
                                             child: Image(
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
@@ -478,6 +485,10 @@ class _MyAppState extends State<MyApp> {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.purple.shade50,
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width -
+              10, // here increase or decrease in width
+        ),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),

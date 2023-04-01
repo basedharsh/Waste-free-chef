@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      backgroundColor: Colors.deepPurple.shade300,
       body: SmartRefresher(
         controller: _refreshPastOrdersController,
         onRefresh: () async {
@@ -125,8 +125,10 @@ class _MyAppState extends State<MyApp> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           opacity: 0.3,
-                                          image: NetworkImage(customerListy.elementAt(index).data()['foodImage']),
-                                          fit: BoxFit.cover,
+                                          image: NetworkImage(customerListy
+                                              .elementAt(index)
+                                              .data()['foodImage']),
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
                                       height: 200,
@@ -233,14 +235,22 @@ class _MyAppState extends State<MyApp> {
                                                     print("onError");
                                                   });
 
-                                                  Email confirmationEmail = Email(
-                                                    body: 'Your Order is Confirmed. Please pickup before the expiry date. Your order details are:\nQuantity - ${customerListy.elementAt(index).data()['orderQuantity']}\nPrice - ${customerListy.elementAt(index).data()['orderPrice']}\nOrder ID - ${customerListy.elementAt(index).id}',
+                                                  Email confirmationEmail =
+                                                      Email(
+                                                    body:
+                                                        'Your Order is Confirmed. Please pickup before the expiry date. Your order details are:\nQuantity - ${customerListy.elementAt(index).data()['orderQuantity']}\nPrice - ${customerListy.elementAt(index).data()['orderPrice']}\nOrder ID - ${customerListy.elementAt(index).id}',
                                                     subject: 'Order Confirmed',
-                                                    recipients: [customerListy.elementAt(index).data()['contactEmail']],
+                                                    recipients: [
+                                                      customerListy
+                                                              .elementAt(index)
+                                                              .data()[
+                                                          'contactEmail']
+                                                    ],
                                                     isHTML: false,
                                                   );
 
-                                                  await FlutterEmailSender.send(confirmationEmail);
+                                                  await FlutterEmailSender.send(
+                                                      confirmationEmail);
 
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
@@ -272,13 +282,20 @@ class _MyAppState extends State<MyApp> {
                                                       .delete();
 
                                                   Email email = Email(
-                                                    body: 'Sorry, your Order request is not approved',
+                                                    body:
+                                                        'Sorry, your Order request is not approved',
                                                     subject: 'Order Declined',
-                                                    recipients: [customerListy.elementAt(index).data()['contactEmail']],
+                                                    recipients: [
+                                                      customerListy
+                                                              .elementAt(index)
+                                                              .data()[
+                                                          'contactEmail']
+                                                    ],
                                                     isHTML: false,
                                                   );
 
-                                                  await FlutterEmailSender.send(email);
+                                                  await FlutterEmailSender.send(
+                                                      email);
 
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
@@ -373,9 +390,7 @@ class _MyAppState extends State<MyApp> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               MaterialButton(
-                                                onPressed: () {
-
-                                                },
+                                                onPressed: () {},
                                                 child: Icon(Icons.check),
                                                 color: Colors.green,
                                                 minWidth: 10,
