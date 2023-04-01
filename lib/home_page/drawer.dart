@@ -88,7 +88,7 @@ class _HiddrawerState extends State<Hiddrawer> {
 
   Widget build(BuildContext context) {
     return HiddenDrawerMenu(
-      backgroundColorMenu: Colors.deepPurple.shade300,
+      backgroundColorMenu: Color.fromARGB(255, 163, 139, 209),
       screens: _pages,
       initPositionSelected: 0,
       slidePercent: 40,
