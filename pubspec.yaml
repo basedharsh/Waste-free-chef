@@ -57,6 +57,7 @@ dependencies:
 
   dialog_flowtter: ^0.3.3
   carousel_slider: ^4.2.1
+  hidden_drawer_menu: ^3.0.1
 
 
 #***********Warn****************--> Don't Touch this until and unless you want to change ICON of the app
