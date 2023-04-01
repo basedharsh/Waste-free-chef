@@ -1,3 +1,4 @@
+import 'package:firebase/home_page/drawer.dart';
 import 'package:firebase/login_page/loginAuthorization.dart';
 import 'package:firebase/order_display/orders_display.dart';
 import 'package:firebase/signup_page/signUpAuthorization.dart';
@@ -31,16 +32,17 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 255, 0, 0),
+          scaffoldBackgroundColor: Colors.deepPurple.shade400,
+          primarySwatch: Colors.deepPurple,
         ),
         debugShowMaterialGrid: false,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, userSnp) {
             if (userSnp.hasData) {
-              return OrdersDisplay();
+              return Hiddrawer();
               // and appbar
-              
+
             }
             return SignUpPage();
           },
