@@ -98,12 +98,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(
-          unselectedWidgetColor: Color.fromARGB(255, 227, 233, 236),
-        ),
-        debugShowCheckedModeBanner: false,
-        home: MyApp());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: MyApp());
   }
 }
 
@@ -115,198 +110,182 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // This is the style for the text in the drawer menu
+  final mylabelstyle = GoogleFonts.roboto(
+    textStyle: TextStyle(
+      color: Colors.grey.shade900,
+      fontSize: 16,
+    ),
+  );
+
+  final myfocusedborder = OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Color.fromARGB(255, 0, 0, 0),
+      width: 3,
+    ),
+    borderRadius: BorderRadius.circular(30.0),
+    //thickness: 5,
+  );
+
+  final myenabledborder = OutlineInputBorder(
+    borderSide: BorderSide(
+      width: 1,
+      color: Color.fromARGB(255, 0, 0, 0),
+    ),
+    borderRadius: BorderRadius.circular(30.0),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 10),
-              TextFormField(
-                style: TextStyle(
-                  color: Color.fromARGB(255, 227, 233, 236),
-                ),
-                controller: providerName,
-                decoration: InputDecoration(
-                  hintText: 'Provider Name',
-                  hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                    // align the text to the left instead of centered
-                  ),
-                  labelText: 'Provider Name',
-                  labelStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(255, 230, 230, 230),
+          child: Container(
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.only(top: 5, bottom: 5, left: 0, right: 0),
+            decoration: BoxDecoration(
+              color: Colors.deepPurple.shade300,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: Material(
+                    elevation: 10,
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      height: 100,
+                      width: 400,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("images/bg2.jpg"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30)),
+                          color: Colors.white),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 14),
+                          // Image.asset("images/band.gif", height: 100, width: 300),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Waste",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 206, 7, 0),
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "-Food",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text("-Chef",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 206, 7, 0),
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          SizedBox(height: 5),
+                          Divider(
+                            color: Color.fromARGB(255, 59, 59, 59),
+                            thickness: 1,
+                            indent: 40,
+                            endIndent: 40,
+                          ),
+                          Text(
+                            "Place your order here",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontSize: 20,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                style: TextStyle(
-                  color: Color.fromARGB(255, 227, 233, 236),
-                ),
-                controller: foodName,
-                decoration: InputDecoration(
-                  hintText: 'Food Name',
-                  hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                    // align the text to the left instead of centered
-                  ),
-                  labelText: 'Food Name',
-                  labelStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(255, 230, 230, 230),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
+                SizedBox(height: 10),
+                TextFormField(
+                  style: mylabelstyle,
+                  controller: providerName,
+                  decoration: InputDecoration(
+                    hintText: 'Provider Name',
+                    hintStyle: mylabelstyle,
+                    labelText: 'Provider Name',
+                    labelStyle: mylabelstyle,
+                    focusedBorder: myfocusedborder,
+                    enabledBorder: myenabledborder,
                   ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                style: TextStyle(
-                  color: Color.fromARGB(255, 227, 233, 236),
-                ),
-                controller: expiryDate,
-                decoration: InputDecoration(
-                  hintText: 'Expiry Date',
-                  hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                    // align the text to the left instead of centered
-                  ),
-                  labelText: 'Expiry Date',
-                  labelStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(255, 230, 230, 230),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
+                SizedBox(height: 10),
+                TextFormField(
+                  style: mylabelstyle,
+                  controller: foodName,
+                  decoration: InputDecoration(
+                    hintText: 'Food Name',
+                    hintStyle: mylabelstyle,
+                    labelText: 'Food Name',
+                    labelStyle: mylabelstyle,
+                    enabledBorder: myenabledborder,
+                    focusedBorder: myfocusedborder,
                   ),
                 ),
-                onTap: () async {
-                  DateTime? pickeddate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101));
+                SizedBox(height: 10),
+                TextFormField(
+                  style: mylabelstyle,
+                  controller: expiryDate,
+                  decoration: InputDecoration(
+                    hintText: 'Expiry Date',
+                    hintStyle: mylabelstyle,
+                    labelText: 'Expiry Date',
+                    labelStyle: mylabelstyle,
+                    enabledBorder: myenabledborder,
+                    focusedBorder: myfocusedborder,
+                  ),
+                  onTap: () async {
+                    DateTime? pickeddate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101));
 
-                  if (pickeddate != null) {
-                    setState(() {
-                      expiryDate.text = pickeddate.toString().split(" ")[0];
-                    });
-                  }
-                },
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                style: TextStyle(
-                  color: Color.fromARGB(255, 227, 233, 236),
+                    if (pickeddate != null) {
+                      setState(() {
+                        expiryDate.text = pickeddate.toString().split(" ")[0];
+                      });
+                    }
+                  },
                 ),
-                controller: nos,
-                decoration: InputDecoration(
-                  hintText: 'Number of Servings',
-                  hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                    // align the text to the left instead of centered
-                  ),
-                  labelText: 'Number of Servings',
-                  labelStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(255, 230, 230, 230),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
+                SizedBox(height: 10),
+                TextFormField(
+                  style: mylabelstyle,
+                  controller: nos,
+                  decoration: InputDecoration(
+                    hintText: 'Number of Servings',
+                    hintStyle: mylabelstyle,
+                    labelText: 'Number of Servings',
+                    labelStyle: mylabelstyle,
+                    enabledBorder: myenabledborder,
+                    focusedBorder: myfocusedborder,
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 227, 233, 236),
-                    )),
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Food Type",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 139, 13, 236),
-                        )),
-                    RadioListTile(
-                      activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Breakfast",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 227, 233, 236))),
-                      value: "breakfast",
-                      groupValue: details['foodtype'],
-                      onChanged: (value) {
-                        setState(() {
-                          details['foodtype'] = value.toString();
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Lunch",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 227, 233, 236))),
-                      value: "lunch",
-                      groupValue: details['foodtype'],
-                      onChanged: (value) {
-                        setState(() {
-                          details['foodtype'] = value.toString();
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Snacks",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 227, 233, 236))),
-                      value: "snacks",
-                      groupValue: details['foodtype'],
-                      onChanged: (value) {
-                        setState(() {
-                          details['foodtype'] = value.toString();
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      activeColor: Color.fromARGB(255, 139, 13, 236),
-                      title: Text("Dinner",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 227, 233, 236))),
-                      value: "dinner",
-                      groupValue: details['foodtype'],
-                      onChanged: (value) {
-                        setState(() {
-                          details['foodtype'] = value.toString();
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
+                SizedBox(height: 20),
+                Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
@@ -314,265 +293,313 @@ class _MyAppState extends State<MyApp> {
                       )),
                   padding: EdgeInsets.all(10),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Donate or Sell",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 139, 13, 236),
-                            )),
-                        RadioListTile(
-                          activeColor: Color.fromARGB(255, 139, 13, 236),
-                          title: Text("Donate",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 227, 233, 236))),
-                          value: false,
-                          groupValue: priceEnabled,
-                          onChanged: (value) {
-                            setState(() {
-                              priceEnabled = false;
-                            });
-                          },
-                        ),
-                        RadioListTile(
-                          activeColor: Color.fromARGB(255, 139, 13, 236),
-                          title: Text("Sell",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 227, 233, 236))),
-                          value: true,
-                          groupValue: priceEnabled,
-                          onChanged: (value) {
-                            setState(() {
-                              priceEnabled = true;
-                            });
-                          },
-                        ),
-                      ])),
-              SizedBox(height: 20),
-              (priceEnabled == true)
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextFormField(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Food Type",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 227, 233, 236),
-                          ),
-                          controller: foodPrice,
-                          decoration: InputDecoration(
-                            hintText: 'Food Price',
-                            hintStyle: TextStyle(
-                              color: Color.fromARGB(255, 139, 13, 236),
-                              // align the text to the left instead of centered
-                            ),
-                            labelText: 'Food Price',
-                            labelStyle: TextStyle(
-                              color: Color.fromARGB(255, 139, 13, 236),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color.fromARGB(255, 230, 230, 230),
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    )
-                  : SizedBox(),
-              TextFormField(
-                style: TextStyle(
-                  color: Color.fromARGB(255, 227, 233, 236),
+                            color: Color.fromARGB(255, 139, 13, 236),
+                          )),
+                      RadioListTile(
+                        activeColor: Color.fromARGB(255, 139, 13, 236),
+                        title: Text("Breakfast", style: mylabelstyle),
+                        value: "breakfast",
+                        groupValue: details['foodtype'],
+                        onChanged: (value) {
+                          setState(() {
+                            details['foodtype'] = value.toString();
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        activeColor: Color.fromARGB(255, 139, 13, 236),
+                        title: Text("Lunch", style: mylabelstyle),
+                        value: "lunch",
+                        groupValue: details['foodtype'],
+                        onChanged: (value) {
+                          setState(() {
+                            details['foodtype'] = value.toString();
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        activeColor: Color.fromARGB(255, 139, 13, 236),
+                        title: Text("Snacks", style: mylabelstyle),
+                        value: "snacks",
+                        groupValue: details['foodtype'],
+                        onChanged: (value) {
+                          setState(() {
+                            details['foodtype'] = value.toString();
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        activeColor: Color.fromARGB(255, 139, 13, 236),
+                        title: Text("Dinner", style: mylabelstyle),
+                        value: "dinner",
+                        groupValue: details['foodtype'],
+                        onChanged: (value) {
+                          setState(() {
+                            details['foodtype'] = value.toString();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                controller: providerNumber,
-                decoration: InputDecoration(
-                  hintText: 'Contact Number',
-                  hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                    // align the text to the left instead of centered
+                SizedBox(height: 20),
+                Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Color.fromARGB(255, 227, 233, 236),
+                        )),
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Donate or Sell",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 139, 13, 236),
+                              )),
+                          RadioListTile(
+                            activeColor: Color.fromARGB(255, 139, 13, 236),
+                            title: Text("Donate", style: mylabelstyle),
+                            value: false,
+                            groupValue: priceEnabled,
+                            onChanged: (value) {
+                              setState(() {
+                                priceEnabled = false;
+                              });
+                            },
+                          ),
+                          RadioListTile(
+                            activeColor: Color.fromARGB(255, 139, 13, 236),
+                            title: Text("Sell", style: mylabelstyle),
+                            value: true,
+                            groupValue: priceEnabled,
+                            onChanged: (value) {
+                              setState(() {
+                                priceEnabled = true;
+                              });
+                            },
+                          ),
+                        ])),
+                SizedBox(height: 20),
+                (priceEnabled == true)
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextFormField(
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 227, 233, 236),
+                            ),
+                            controller: foodPrice,
+                            decoration: InputDecoration(
+                              hintText: 'Food Price',
+                              hintStyle: mylabelstyle,
+                              labelText: 'Food Price',
+                              labelStyle: mylabelstyle,
+                              enabledBorder: myenabledborder,
+                              focusedBorder: myfocusedborder,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      )
+                    : SizedBox(),
+                TextFormField(
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 227, 233, 236),
                   ),
-                  labelText: 'Contact Number',
-                  labelStyle: TextStyle(
-                    color: Color.fromARGB(255, 139, 13, 236),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(255, 230, 230, 230),
+                  controller: providerNumber,
+                  decoration: InputDecoration(
+                    hintText: 'Contact Number',
+                    hintStyle: TextStyle(
+                      color: Color.fromARGB(255, 139, 13, 236),
+                      // align the text to the left instead of centered
                     ),
-                    borderRadius: BorderRadius.circular(10),
+                    labelText: 'Contact Number',
+                    labelStyle: mylabelstyle,
+                    enabledBorder: myenabledborder,
+                    focusedBorder: myfocusedborder,
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              (imageClicked == false)
-                  ? MaterialButton(
-                      onPressed: () async {
-                        ImagePicker imagePicker = ImagePicker();
-                        XFile? foodimage = await imagePicker.pickImage(
-                            source: ImageSource.gallery);
-                        print(foodimage?.path);
+                SizedBox(height: 20),
+                (imageClicked == false)
+                    ? MaterialButton(
+                        onPressed: () async {
+                          ImagePicker imagePicker = ImagePicker();
+                          XFile? foodimage = await imagePicker.pickImage(
+                              source: ImageSource.gallery);
+                          print(foodimage?.path);
 
-                        if (foodimage == null) return;
+                          if (foodimage == null) return;
 
-                        Reference referenceRoot =
-                            FirebaseStorage.instance.ref();
-                        Reference referenceImageDir =
-                            referenceRoot.child('foodImage');
-                        Reference referenceImageToUpload =
-                            referenceImageDir.child(uuid.v1());
+                          Reference referenceRoot =
+                              FirebaseStorage.instance.ref();
+                          Reference referenceImageDir =
+                              referenceRoot.child('foodImage');
+                          Reference referenceImageToUpload =
+                              referenceImageDir.child(uuid.v1());
 
-                        try {
-                          await referenceImageToUpload
-                              .putFile(File(foodimage!.path) as File)
-                              .then((value) {
+                          try {
+                            await referenceImageToUpload
+                                .putFile(File(foodimage!.path) as File)
+                                .then((value) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Image Noted"),
+                              ));
+                            });
+                            foodImageUrl =
+                                await referenceImageToUpload.getDownloadURL();
+                          } catch (error) {}
+                          setState(() {
+                            imageClicked = true;
+                          });
+                        },
+                        child: Text("Image"),
+                        color: Color.fromARGB(255, 139, 13, 236),
+                      )
+                    : MaterialButton(
+                        onPressed: () async {
+                          ImagePicker imagePicker = ImagePicker();
+                          XFile? foodimage = await imagePicker.pickImage(
+                              source: ImageSource.gallery);
+                          print(foodimage?.path);
+
+                          if (foodimage == null) return;
+
+                          Reference referenceRoot =
+                              FirebaseStorage.instance.ref();
+                          Reference referenceImageDir =
+                              referenceRoot.child('foodImage');
+                          Reference referenceImageToUpload =
+                              referenceImageDir.child(uuid.v1());
+
+                          try {
+                            await referenceImageToUpload
+                                .putFile(File(foodimage!.path) as File)
+                                .then((value) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Image Noted"),
+                              ));
+                            });
+                            foodImageUrl =
+                                await referenceImageToUpload.getDownloadURL();
+                          } catch (error) {}
+                        },
+                        child: Icon(Icons.check),
+                        color: Color.fromARGB(255, 139, 13, 236),
+                      ),
+                SizedBox(height: 20),
+                (locationClicked == false)
+                    ? MaterialButton(
+                        child: (locationLoading == true)
+                            ? CircularProgressIndicator()
+                            : Text("Get Location"),
+                        color: Color.fromARGB(255, 139, 13, 236),
+                        onPressed: () async {
+                          setState(() {
+                            locationLoading = true;
+                          });
+                          await getLocation().then((value) {
+                            print(value);
+                            details['latitude'] = value.latitude;
+                            details['longitude'] = value.longitude;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Location Noted")));
+                          });
+                          setState(() {
+                            locationClicked = true;
+                            locationLoading = false;
+                          });
+                        })
+                    : MaterialButton(
+                        child: (locationLoading == true)
+                            ? CircularProgressIndicator()
+                            : Icon(Icons.check),
+                        color: Color.fromARGB(255, 139, 13, 236),
+                        onPressed: () {
+                          setState(() {
+                            locationLoading = true;
+                          });
+                          getLocation().then((value) {
+                            print(value);
+                            details['latitude'] = value.latitude;
+                            details['longitude'] = value.longitude;
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Image Noted"),
+                              content: Text("Location Noted"),
                             ));
                           });
-                          foodImageUrl =
-                              await referenceImageToUpload.getDownloadURL();
-                        } catch (error) {}
-                        setState(() {
-                          imageClicked = true;
-                        });
-                      },
-                      child: Text("Image"),
-                      color: Color.fromARGB(255, 139, 13, 236),
-                    )
-                  : MaterialButton(
-                      onPressed: () async {
-                        ImagePicker imagePicker = ImagePicker();
-                        XFile? foodimage = await imagePicker.pickImage(
-                            source: ImageSource.gallery);
-                        print(foodimage?.path);
-
-                        if (foodimage == null) return;
-
-                        Reference referenceRoot =
-                            FirebaseStorage.instance.ref();
-                        Reference referenceImageDir =
-                            referenceRoot.child('foodImage');
-                        Reference referenceImageToUpload =
-                            referenceImageDir.child(uuid.v1());
-
-                        try {
-                          await referenceImageToUpload
-                              .putFile(File(foodimage!.path) as File)
-                              .then((value) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Image Noted"),
-                            ));
+                          setState(() {
+                            locationClicked = true;
+                            locationLoading = false;
                           });
-                          foodImageUrl =
-                              await referenceImageToUpload.getDownloadURL();
-                        } catch (error) {}
-                      },
-                      child: Icon(Icons.check),
-                      color: Color.fromARGB(255, 139, 13, 236),
-                    ),
-              SizedBox(height: 20),
-              (locationClicked == false)
-                  ? MaterialButton(
-                      child: (locationLoading == true)
-                          ? CircularProgressIndicator()
-                          : Text("Get Location"),
-                      color: Color.fromARGB(255, 139, 13, 236),
-                      onPressed: () async {
-                        setState(() {
-                          locationLoading = true;
-                        });
-                        await getLocation().then((value) {
-                          print(value);
-                          details['latitude'] = value.latitude;
-                          details['longitude'] = value.longitude;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Location Noted")));
-                        });
-                        setState(() {
-                          locationClicked = true;
-                          locationLoading = false;
-                        });
-                      })
-                  : MaterialButton(
-                      child: (locationLoading == true)
-                          ? CircularProgressIndicator()
-                          : Icon(Icons.check),
-                      color: Color.fromARGB(255, 139, 13, 236),
-                      onPressed: () {
-                        setState(() {
-                          locationLoading = true;
-                        });
-                        getLocation().then((value) {
-                          print(value);
-                          details['latitude'] = value.latitude;
-                          details['longitude'] = value.longitude;
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Location Noted"),
-                          ));
-                        });
-                        setState(() {
-                          locationClicked = true;
-                          locationLoading = false;
-                        });
-                      }),
-              SizedBox(height: 20),
-              MaterialButton(
-                onPressed: () async {
-                  if (foodImageUrl == "") {
+                        }),
+                SizedBox(height: 20),
+                MaterialButton(
+                  onPressed: () async {
+                    if (foodImageUrl == "") {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              Text("Input an image for food to place order")));
+                    } else if (details['latitude'] == "" &&
+                        details['longitude'] == "") {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              Text("Select your Location to place order")));
+                    } else {
+                      details['providername'] = providerName.text.trim();
+                      details['foodname'] = foodName.text.trim();
+                      (priceEnabled == false)
+                          ? details['foodprice'] = "0"
+                          : details['foodprice'] = foodPrice.text.trim();
+                      details['foodnos'] = nos.text.trim();
+                      //details['foodtype'] = foodType.text.trim();
+                      details['foodimage'] = foodImageUrl;
+                      details['providerid'] = currentUser.uid;
+                      details['expirydate'] = expiryDate.text.trim();
+                      details['providernumber'] = providerNumber.text.trim();
+                      details['foodimage'] = foodImageUrl;
+
+                      db
+                          .collection('sellerOrder')
+                          .doc(uuid.v1())
+                          .set(details)
+                          .onError(
+                              (e, _) => print("Error In Placing Order: $e"));
+
+                      await db.collection("sellerOrder").get().then((event) {
+                        orderData.orderDataList = event.docs;
+                      });
+                      print(details);
+                    }
+
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content:
-                            Text("Input an image for food to place order")));
-                  } else if (details['latitude'] == "" &&
-                      details['longitude'] == "") {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("Select your Location to place order")));
-                  } else {
-                    details['providername'] = providerName.text.trim();
-                    details['foodname'] = foodName.text.trim();
-                    (priceEnabled == false)
-                        ? details['foodprice'] = "0"
-                        : details['foodprice'] = foodPrice.text.trim();
-                    details['foodnos'] = nos.text.trim();
-                    //details['foodtype'] = foodType.text.trim();
-                    details['foodimage'] = foodImageUrl;
-                    details['providerid'] = currentUser.uid;
-                    details['expirydate'] = expiryDate.text.trim();
-                    details['providernumber'] = providerNumber.text.trim();
-                    details['foodimage'] = foodImageUrl;
-
-                    db
-                        .collection('sellerOrder')
-                        .doc(uuid.v1())
-                        .set(details)
-                        .onError((e, _) => print("Error In Placing Order: $e"));
-
-                    await db.collection("sellerOrder").get().then((event) {
-                      orderData.orderDataList = event.docs;
-                    });
-                    print(details);
-                  }
-
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Order Placed"),
-                  ));
-                },
-                child: Text("Submit"),
-                color: Color.fromARGB(255, 139, 13, 236),
-              ),
-              SizedBox(height: 20),
-              // MaterialButton(
-              //   onPressed: ()async{
-              //     await db.collection("sellerOrder").get().then((event) {
-              //       //orderData.orderDataList = event.docs;
-              //       for (var doc in event.docs) {
-              //         print("${doc.id} => ${doc.data()}");
-              //       }
-              //     });
-              //   },
-              //   color: Colors.red,
-              //   child: Text("Output"),
-              // ),
-              //SizedBox(height: 20),
-            ],
+                      content: Text("Order Placed"),
+                    ));
+                  },
+                  child: Text("Submit"),
+                  color: Color.fromARGB(255, 139, 13, 236),
+                ),
+                SizedBox(height: 20),
+                // MaterialButton(
+                //   onPressed: ()async{
+                //     await db.collection("sellerOrder").get().then((event) {
+                //       //orderData.orderDataList = event.docs;
+                //       for (var doc in event.docs) {
+                //         print("${doc.id} => ${doc.data()}");
+                //       }
+                //     });
+                //   },
+                //   color: Colors.red,
+                //   child: Text("Output"),
+                // ),
+                //SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),
