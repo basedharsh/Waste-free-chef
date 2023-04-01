@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.deepPurple.shade500,
+          unselectedWidgetColor: Color.fromARGB(255, 227, 233, 236),
+          scaffoldBackgroundColor: Colors.deepPurple.shade300,
           primarySwatch: Colors.deepPurple,
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.deepPurple,

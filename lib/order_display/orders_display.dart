@@ -145,7 +145,7 @@ class _MyAppState extends State<MyApp> {
                     width: 400,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("images/bg.jpg"),
+                          image: AssetImage("images/bg2.jpg"),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.only(
@@ -184,8 +184,8 @@ class _MyAppState extends State<MyApp> {
                         ),
                         SizedBox(height: 5),
                         Divider(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          thickness: 0.7,
+                          color: Color.fromARGB(255, 62, 61, 61),
+                          thickness: 1,
                           indent: 40,
                           endIndent: 40,
                         ),

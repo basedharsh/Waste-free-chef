@@ -28,19 +28,22 @@ class _ChatbotsupportState extends State<Chatbotsupport> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Column(
           children: [
-            Text(
-              "WFC Chatbot",
-              style: TextStyle(
-                color: Color.fromARGB(255, 139, 13, 236),
-                fontSize: 20,
-                fontFamily: "Roboto",
-                fontWeight: FontWeight.w700,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Write your query here",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  fontSize: 20,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             Expanded(child: MessagesScreen(messages: messages)),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 1, vertical: 0),
-              margin: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Color.fromARGB(103, 255, 255, 255),
@@ -53,23 +56,23 @@ class _ChatbotsupportState extends State<Chatbotsupport> {
                     style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     decoration: InputDecoration(
                       //label text and style
-                      labelText: 'Type your query here',
-                      labelStyle: TextStyle(
-                        color: Color.fromARGB(255, 139, 13, 236),
-                      ),
+                      // labelText: 'Type your query here',
+                      // labelStyle: TextStyle(
+                      //   color: Color.fromARGB(255, 139, 13, 236),
+                      // ),
 
                       hintText: 'What is Wfc?',
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color.fromARGB(255, 154, 120, 255),
-                          width: 3,
+                          width: 0,
                         ),
                         borderRadius: BorderRadius.circular(30.0),
                         //thickness: 5,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          width: 1,
+                          width: 0,
                           color: Color.fromRGBO(158, 136, 255, 1),
                         ),
                         borderRadius: BorderRadius.circular(30.0),
