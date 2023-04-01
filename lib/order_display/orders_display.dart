@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
     var mq = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.deepPurple.shade200,
+      backgroundColor: Colors.deepPurple.shade300,
       body: SmartRefresher(
         controller: _orderDisplayrefreshController,
         onRefresh: () async {
