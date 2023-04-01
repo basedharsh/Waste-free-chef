@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.deepPurple.shade400,
+          scaffoldBackgroundColor: Colors.deepPurple.shade200,
           primarySwatch: Colors.deepPurple,
         ),
         debugShowMaterialGrid: false,
