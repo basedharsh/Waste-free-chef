@@ -1,4 +1,5 @@
 import 'package:firebase/chat_page/chatBot.dart';
+import 'package:firebase/login_page/loginPage.dart';
 import 'package:firebase/map_page/mapPage.dart';
 import 'package:firebase/order_display/orders_display.dart';
 import 'package:firebase/order_form/food_details_form.dart';
@@ -77,11 +78,11 @@ class _HiddrawerState extends State<Hiddrawer> {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => SignUpPage())));
             },
-            name: "Sign Out",
+            name: "Log Out",
             baseStyle: myTextStyle,
             selectedStyle: myTextStyle,
             colorLineSelected: Colors.deepPurple),
-        SignUpPage(),
+        LoginPage(),
       ),
     ];
   }

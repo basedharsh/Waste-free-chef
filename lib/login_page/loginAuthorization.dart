@@ -1,4 +1,6 @@
+import 'package:firebase/home_page/drawer.dart';
 import 'package:firebase/home_page/homePage.dart';
+import 'package:firebase/order_display/orders_display.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -35,7 +37,7 @@ class LoginAuthorization with ChangeNotifier {
           loading = false;
           notifyListeners();
           await Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => HomePage()));
+              .push(MaterialPageRoute(builder: (context) => Hiddrawer()));
         });
       } on FirebaseAuthException catch (e) {
         loading = false;
