@@ -248,6 +248,7 @@ class _MyAppState extends State<MyApp> {
                         ? Row(
                             children: List.generate(listy.length, (index) {
                             //var listy = orderData.orderDataList[index];
+
                             if (listy.elementAt(index).data()["approved"] ==
                                     "true" &&
                                 listy.elementAt(index).data()["providerid"] !=
@@ -629,6 +630,7 @@ class _MyAppState extends State<MyApp> {
                                 });
                                 print(lunchFliter);
                               }),
+                          //AGla hackey hackey apna bc
                         ],
                       ),
                       Row(
@@ -809,8 +811,6 @@ class CustomFilterPrice extends StatelessWidget {
     );
   }
 }
-
-
 
 //Statefull Karna Padega Price Wale Class ko(Try kiys mene but nahi hua)
 // class CustomFilterPrice extends StatefulWidget {
