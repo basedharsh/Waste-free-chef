@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       // backgroundColor: Color.fromARGB(255, 0, 0, 0),
       // catch bg color from main.dart
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.deepPurple.shade200,
       body: SafeArea(
         child: GestureDetector(
           onTap: () {
@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                     "Welcome to Waste-food-Chef",
                     style: GoogleFonts.autourOne(
                       textStyle: TextStyle(
-                        color: Color.fromARGB(255, 206, 7, 0),
+                        color: Color.fromARGB(255, 91, 0, 249),
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.italic,
@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: Colors.deepPurple.shade200,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     height: 0.28 * size.height,
@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                     margin: EdgeInsets.only(left: 14, right: 14),
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 254, 254),
+                      color: Color.fromARGB(255, 221, 208, 245),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(children: [
@@ -294,7 +294,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                       SizedBox(height: 20),
                       Divider(
-                        color: Colors.grey.shade300,
+                        color: Color.fromARGB(255, 34, 33, 33),
                         thickness: 1,
                         indent: 20,
                         endIndent: 20,
@@ -318,7 +318,7 @@ class _MyAppState extends State<MyApp> {
                             child: Text(
                               'Login',
                               style: TextStyle(
-                                color: Color.fromARGB(255, 206, 7, 0),
+                                color: Color.fromARGB(255, 93, 0, 255),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 // align the text to the left instead of centered

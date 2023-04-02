@@ -27,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         unselectedWidgetColor: Color.fromARGB(255, 227, 233, 236),
         scaffoldBackgroundColor: Colors.deepPurple.shade300,
@@ -66,7 +67,7 @@ class _MyAppState extends State<MyApp> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.deepPurple.shade200,
       body: SafeArea(
         //on screen tap keyboard will be closed
         child: GestureDetector(
@@ -95,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                   "Welcome to Waste-food-Chef",
                   style: GoogleFonts.autourOne(
                     textStyle: TextStyle(
-                      color: Color.fromARGB(255, 206, 7, 0),
+                      color: Color.fromARGB(255, 93, 0, 255),
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.italic,
@@ -106,7 +107,7 @@ class _MyAppState extends State<MyApp> {
 
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: Colors.deepPurple.shade200,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   height: 0.3 * size.height,
@@ -141,7 +142,7 @@ class _MyAppState extends State<MyApp> {
                   margin: EdgeInsets.only(left: 20, right: 20),
                   width: 0.96 * size.width,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 221, 208, 245),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Column(
@@ -259,7 +260,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                       SizedBox(height: 10),
                       Divider(
-                        color: Colors.grey.shade300,
+                        color: Color.fromARGB(255, 82, 80, 80),
                         thickness: 1,
                         indent: 20,
                         endIndent: 20,
