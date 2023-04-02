@@ -98,7 +98,17 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: MyApp());
+    return MaterialApp(
+        theme: ThemeData(
+          unselectedWidgetColor: Color.fromARGB(255, 227, 233, 236),
+          scaffoldBackgroundColor: Colors.deepPurple.shade300,
+          primarySwatch: Colors.deepPurple,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.deepPurple,
+          ),
+        ),
+        debugShowCheckedModeBanner: false,
+        home: MyApp());
   }
 }
 

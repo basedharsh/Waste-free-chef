@@ -99,6 +99,7 @@ class _HiddrawerState extends State<Hiddrawer> {
           blurRadius: 10,
           spreadRadius: 5,
           color: Colors.black.withOpacity(0.5),
+          
         ),
       ],
     );
