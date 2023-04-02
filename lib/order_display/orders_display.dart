@@ -205,6 +205,7 @@ class _MyAppState extends State<MyApp> {
                               color: Color.fromARGB(255, 0, 0, 0),
                               fontSize: 20,
                               fontStyle: FontStyle.italic,
+                              //sdfghjwertyughdfghjkjgfdfghjkjfghjksdfghjklsiuuuuuuuuuuuuuuuu
                               fontWeight: FontWeight.bold),
                         ),
                       ],
