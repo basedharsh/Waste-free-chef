@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../order_display/orderDataList.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 Email email = Email(
@@ -13,8 +12,7 @@ Email email = Email(
   isHTML: false,
 );
 
-RefreshController _refreshPastOrdersController =
-    RefreshController(initialRefresh: false);
+
 
 final db = FirebaseFirestore.instance;
 var orderData = OrderDataList();
@@ -76,6 +74,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    RefreshController _refreshPastOrdersController = RefreshController(initialRefresh: true);
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade300,
       body: SmartRefresher(
@@ -539,7 +538,7 @@ class _MyAppState extends State<MyApp> {
                                           height: 250,
                                           width: 250,
                                           child: FittedBox(
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.contain,
                                             child: Image(
                                               height: 25,
                                               image: NetworkImage(listy

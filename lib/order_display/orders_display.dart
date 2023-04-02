@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,18 +12,10 @@ import 'package:firebase/order_display/getUserLocationFunction.dart';
 import 'package:firebase/order_display/deleteExpiredFromDatabaseFunction.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:firebase/order_display/distanceFilteringFunction.dart';
-
-import '../chat_page/chatBot.dart';
-import '../home_page/drawer.dart';
-import '../map_page/mapPage.dart';
 import '../models/price_model.dart';
-
-import '../signup_page/signUpPage.dart';
-import 'filter_page.dart';
 import 'getDataFromDatabaseFunction.dart';
 
-RefreshController _orderDisplayrefreshController =
-    RefreshController(initialRefresh: false);
+
 
 final db = FirebaseFirestore.instance;
 var currentUser;
@@ -47,7 +37,6 @@ var priceFilter = "";
 
 class OrdersDisplay extends StatefulWidget {
   const OrdersDisplay({Key? key}) : super(key: key);
-  //OrdersDisplay({required ordersist});
 
   @override
   State<OrdersDisplay> createState() => _OrdersDisplayState();
@@ -66,7 +55,9 @@ class _OrdersDisplayState extends State<OrdersDisplay> {
       GetDataFromDatabase();
       currentUser = FirebaseAuth.instance.currentUser;
       listy = orderData.orderDataList;
-      listy = DistanceFilter(list: orderData.orderDataList);
+      if(currentLongitude!=null && currentLatitude !=null){
+        listy = DistanceFilter(list: orderData.orderDataList);
+      }
       if (applyFilter) {
         if (lunchFliter || snacksFliter || dinnerFliter) {
           listy = CategoryFilter(
@@ -96,6 +87,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    RefreshController _orderDisplayrefreshController = RefreshController(initialRefresh: true);
     // write mq for media query
     var mq = MediaQuery.of(context).size;
 
@@ -105,17 +97,27 @@ class _MyAppState extends State<MyApp> {
         controller: _orderDisplayrefreshController,
         onRefresh: () async {
           await Future.delayed(Duration(milliseconds: 1000));
+          var loc;
+          await getLocation().then((value) {
+            loc = value;
+          });
           setState(() {
-            getLocation().then((value) {
-              currentLatitude = value.latitude;
-              currentLongitude = value.longitude;
-            });
+            currentLatitude = loc.latitude;
+            currentLongitude = loc.longitude;
             DeleteExpiredFromDatabase();
-            setState(() {
               currentUser = FirebaseAuth.instance.currentUser;
               GetDataFromDatabase();
               listy = orderData.orderDataList;
-              listy = DistanceFilter(list: orderData.orderDataList);
+              if(currentLongitude!=null && currentLatitude !=null){
+                listy = DistanceFilter(list: orderData.orderDataList);
+              }
+              else{
+                getLocation().then((value) {
+                  currentLatitude = value.latitude;
+                  currentLongitude = value.longitude;
+                });
+                listy = DistanceFilter(list: orderData.orderDataList);
+              }
               if (applyFilter) {
                 if (lunchFliter || snacksFliter || dinnerFliter) {
                   listy = CategoryFilter(
@@ -128,7 +130,6 @@ class _MyAppState extends State<MyApp> {
                   listy = PriceFilter(list1: listy, p: priceFilter);
                 }
               }
-            });
           });
           _orderDisplayrefreshController.refreshCompleted();
         },
@@ -244,118 +245,121 @@ class _MyAppState extends State<MyApp> {
                                 listy.elementAt(index).data()["providerid"] !=
                                     currentUser.uid) {
                               // main container for each order
-                              return Material(
-                                elevation: 3,
-                                borderRadius: BorderRadius.circular(80),
-                                child: Container(
-                                  // margin: EdgeInsets.only(left: 10),
-                                  // add border radius
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(80),
-                                      color: Colors.deepPurple.shade100),
-                                  height: 350,
-                                  width: 250,
-                                  // color: Color.fromARGB(255, 238, 139, 255),
-                                  // Add gap between each order
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 10,right: 10,bottom: 5),
+                                child: Material(
+                                  elevation: 3,
+                                  borderRadius: BorderRadius.circular(80),
+                                  child: Container(
+                                    // margin: EdgeInsets.only(left: 10),
+                                    // add border radius
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(80),
+                                        color: Colors.deepPurple.shade100),
+                                    height: 350,
+                                    width: 250,
+                                    // color: Color.fromARGB(255, 238, 139, 255),
+                                    // Add gap between each order
 
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      // Image
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(80),
-                                          color: Colors.deepPurple.shade100,
-                                        ),
-                                        height: 200,
-                                        width: 250,
-                                        child: FittedBox(
-                                          fit: BoxFit.fill,
-                                          child: ClipRRect(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        // Image
+                                        Container(
+                                          decoration: BoxDecoration(
                                             borderRadius:
-                                                // Only top left corner
-                                                BorderRadius.only(
-                                              topLeft: Radius.circular(80),
-                                              topRight: Radius.circular(80),
-                                            ),
-                                            child: Image(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                listy
-                                                    .elementAt(index)
-                                                    .data()['foodimage'],
+                                                BorderRadius.circular(80),
+                                            color: Colors.deepPurple.shade100,
+                                          ),
+                                          height: 200,
+                                          width: 250,
+                                          child: FittedBox(
+                                            fit: BoxFit.fill,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  // Only top left corner
+                                                  BorderRadius.only(
+                                                topLeft: Radius.circular(80),
+                                                topRight: Radius.circular(80),
+                                              ),
+                                              child: Image(
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                  listy
+                                                      .elementAt(index)
+                                                      .data()['foodimage'],
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                          'NAME : ${listy.elementAt(index).data()['foodname']}',
-                                          style: TextStyle(
-                                              color:
-                                                  Color.fromARGB(255, 8, 8, 8),
-                                              fontWeight: FontWeight.bold)),
-                                      Text(
-                                          'PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',
-                                          style: TextStyle(
-                                              color:
-                                                  Color.fromARGB(255, 8, 8, 8),
-                                              fontWeight: FontWeight.bold)),
-                                      Text(
-                                          'QUANTITY : ${listy.elementAt(index).data()['foodnos']}',
-                                          style: TextStyle(
-                                              color:
-                                                  Color.fromARGB(255, 8, 8, 8),
-                                              fontWeight: FontWeight.bold)),
-                                      Text(
-                                          'TYPE : ${listy.elementAt(index).data()['foodtype']}',
-                                          style: TextStyle(
-                                              color:
-                                                  Color.fromARGB(255, 8, 8, 8),
-                                              fontWeight: FontWeight.bold)),
-                                      Text(
-                                          'EXPIRY DATE : ${listy.elementAt(index).data()['expirydate']}',
-                                          style: TextStyle(
-                                              color:
-                                                  Color.fromARGB(255, 8, 8, 8),
-                                              fontWeight: FontWeight.bold)),
-                                      MaterialButton(
-                                        onPressed: () {
-                                          print(currentUser.uid);
-                                          print(listy
-                                              .elementAt(index)
-                                              .data()["providerid"]);
-                                          print(listy.elementAt(index).id);
-                                          print("Ahhhhhhhhhhhh");
-                                          RoutingPage.goToNext(
-                                              context: context,
-                                              navigateTo: PlaceOrderPage(
-                                                custId: currentUser.uid,
-                                                provId: listy
-                                                    .elementAt(index)
-                                                    .data()["providerid"],
-                                                ordId:
-                                                    listy.elementAt(index).id,
-                                                ordD: listy.elementAt(index),
-                                              ));
-                                        },
-                                        child: Text(
-                                          "Confirm Order",
-                                          style: TextStyle(color: Colors.white),
+                                        SizedBox(height: 5),
+                                        Text(
+                                            'NAME : ${listy.elementAt(index).data()['foodname']}',
+                                            style: TextStyle(
+                                                color:
+                                                    Color.fromARGB(255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                            'PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',
+                                            style: TextStyle(
+                                                color:
+                                                    Color.fromARGB(255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                            'QUANTITY : ${listy.elementAt(index).data()['foodnos']}',
+                                            style: TextStyle(
+                                                color:
+                                                    Color.fromARGB(255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                            'TYPE : ${listy.elementAt(index).data()['foodtype']}',
+                                            style: TextStyle(
+                                                color:
+                                                    Color.fromARGB(255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                            'EXPIRY DATE : ${listy.elementAt(index).data()['expirydate']}',
+                                            style: TextStyle(
+                                                color:
+                                                    Color.fromARGB(255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
+                                        MaterialButton(
+                                          onPressed: () {
+                                            print(currentUser.uid);
+                                            print(listy
+                                                .elementAt(index)
+                                                .data()["providerid"]);
+                                            print(listy.elementAt(index).id);
+                                            print("Ahhhhhhhhhhhh");
+                                            RoutingPage.goToNext(
+                                                context: context,
+                                                navigateTo: PlaceOrderPage(
+                                                  custId: currentUser.uid,
+                                                  provId: listy
+                                                      .elementAt(index)
+                                                      .data()["providerid"],
+                                                  ordId:
+                                                      listy.elementAt(index).id,
+                                                  ordD: listy.elementAt(index),
+                                                ));
+                                          },
+                                          child: Text(
+                                            "Confirm Order",
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                          color: Color.fromARGB(255, 0, 0, 0),
                                         ),
-                                        color: Color.fromARGB(255, 0, 0, 0),
-                                      ),
-                                      // MaterialButton(
-                                      //   onPressed: () {
-                                      //     print(currentUser.uid);
-                                      //     print(listy.elementAt(index).data()["providerid"]);
-                                      //   },
-                                      //   child: Text("Chat"),
-                                      //   color: Color.fromARGB(255, 226, 84, 245),
-                                      // )
-                                    ],
+                                        // MaterialButton(
+                                        //   onPressed: () {
+                                        //     print(currentUser.uid);
+                                        //     print(listy.elementAt(index).data()["providerid"]);
+                                        //   },
+                                        //   child: Text("Chat"),
+                                        //   color: Color.fromARGB(255, 226, 84, 245),
+                                        // )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

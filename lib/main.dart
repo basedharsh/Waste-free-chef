@@ -1,13 +1,11 @@
 import 'package:firebase/home_page/drawer.dart';
 import 'package:firebase/login_page/loginAuthorization.dart';
-import 'package:firebase/order_display/orders_display.dart';
 import 'package:firebase/signup_page/signUpAuthorization.dart';
 import 'package:firebase/signup_page/signUpPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'home_page/homePage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
