@@ -207,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     },
                                     icon: Icon(
                                       Icons.location_on,
-                                      color: Colors.red,
+                                      color: Colors.deepPurple,
                                     ),
                                   ),
                                 )
@@ -231,7 +231,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                             return Container(
                                               height: 100,
                                               width: double.infinity,
-                                              color: Colors.lightBlue,
                                               margin: EdgeInsets.all(10),
                                               child: Row(
                                                 mainAxisAlignment:
