@@ -97,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 198, 170, 245),
       body: _locationData != null
           ? FlutterMap(
               options: MapOptions(

@@ -76,7 +76,7 @@ class _HiddrawerState extends State<Hiddrawer> {
             onTap: () {
               FirebaseAuth.instance.signOut().then((value) =>
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignUpPage())));
+                      MaterialPageRoute(builder: (context) => LoginPage())));
             },
             name: "Log Out",
             baseStyle: myTextStyle,
@@ -99,7 +99,6 @@ class _HiddrawerState extends State<Hiddrawer> {
           blurRadius: 10,
           spreadRadius: 5,
           color: Colors.black.withOpacity(0.5),
-          
         ),
       ],
     );
