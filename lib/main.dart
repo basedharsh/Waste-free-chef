@@ -11,7 +11,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    
+    
+    MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +38,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.deepPurple,
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.deepPurple,
-            elevation: 0,
+            
           ),
         ),
         debugShowMaterialGrid: false,

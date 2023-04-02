@@ -15,8 +15,6 @@ import 'package:firebase/order_display/distanceFilteringFunction.dart';
 import '../models/price_model.dart';
 import 'getDataFromDatabaseFunction.dart';
 
-
-
 final db = FirebaseFirestore.instance;
 var currentUser;
 
@@ -55,7 +53,7 @@ class _OrdersDisplayState extends State<OrdersDisplay> {
       GetDataFromDatabase();
       currentUser = FirebaseAuth.instance.currentUser;
       listy = orderData.orderDataList;
-      if(currentLongitude!=null && currentLatitude !=null){
+      if (currentLongitude != null && currentLatitude != null) {
         listy = DistanceFilter(list: orderData.orderDataList);
       }
       if (applyFilter) {
@@ -73,7 +71,17 @@ class _OrdersDisplayState extends State<OrdersDisplay> {
   @override
   Widget build(BuildContext context) {
     print("Building");
-    return MaterialApp(debugShowCheckedModeBanner: false, home: MyApp());
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          unselectedWidgetColor: Color.fromARGB(255, 227, 233, 236),
+          scaffoldBackgroundColor: Colors.deepPurple.shade300,
+          primarySwatch: Colors.deepPurple,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.deepPurple,
+          ),
+        ),
+        home: MyApp());
   }
 }
 
@@ -87,7 +95,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    RefreshController _orderDisplayrefreshController = RefreshController(initialRefresh: true);
+    RefreshController _orderDisplayrefreshController =
+        RefreshController(initialRefresh: true);
     // write mq for media query
     var mq = MediaQuery.of(context).size;
 
@@ -105,31 +114,30 @@ class _MyAppState extends State<MyApp> {
             currentLatitude = loc.latitude;
             currentLongitude = loc.longitude;
             DeleteExpiredFromDatabase();
-              currentUser = FirebaseAuth.instance.currentUser;
-              GetDataFromDatabase();
-              listy = orderData.orderDataList;
-              if(currentLongitude!=null && currentLatitude !=null){
-                listy = DistanceFilter(list: orderData.orderDataList);
+            currentUser = FirebaseAuth.instance.currentUser;
+            GetDataFromDatabase();
+            listy = orderData.orderDataList;
+            if (currentLongitude != null && currentLatitude != null) {
+              listy = DistanceFilter(list: orderData.orderDataList);
+            } else {
+              getLocation().then((value) {
+                currentLatitude = value.latitude;
+                currentLongitude = value.longitude;
+              });
+              listy = DistanceFilter(list: orderData.orderDataList);
+            }
+            if (applyFilter) {
+              if (lunchFliter || snacksFliter || dinnerFliter) {
+                listy = CategoryFilter(
+                    list: listy,
+                    l: lunchFliter,
+                    s: snacksFliter,
+                    d: dinnerFliter);
               }
-              else{
-                getLocation().then((value) {
-                  currentLatitude = value.latitude;
-                  currentLongitude = value.longitude;
-                });
-                listy = DistanceFilter(list: orderData.orderDataList);
+              if (priceFilter != "") {
+                listy = PriceFilter(list1: listy, p: priceFilter);
               }
-              if (applyFilter) {
-                if (lunchFliter || snacksFliter || dinnerFliter) {
-                  listy = CategoryFilter(
-                      list: listy,
-                      l: lunchFliter,
-                      s: snacksFliter,
-                      d: dinnerFliter);
-                }
-                if (priceFilter != "") {
-                  listy = PriceFilter(list1: listy, p: priceFilter);
-                }
-              }
+            }
           });
           _orderDisplayrefreshController.refreshCompleted();
         },
@@ -246,7 +254,8 @@ class _MyAppState extends State<MyApp> {
                                     currentUser.uid) {
                               // main container for each order
                               return Padding(
-                                padding: const EdgeInsets.only(left: 10,right: 10,bottom: 5),
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 5),
                                 child: Material(
                                   elevation: 3,
                                   borderRadius: BorderRadius.circular(80),
@@ -262,7 +271,8 @@ class _MyAppState extends State<MyApp> {
                                     // Add gap between each order
 
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         // Image
                                         Container(
@@ -297,32 +307,32 @@ class _MyAppState extends State<MyApp> {
                                         Text(
                                             'NAME : ${listy.elementAt(index).data()['foodname']}',
                                             style: TextStyle(
-                                                color:
-                                                    Color.fromARGB(255, 8, 8, 8),
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
                                                 fontWeight: FontWeight.bold)),
                                         Text(
                                             'PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',
                                             style: TextStyle(
-                                                color:
-                                                    Color.fromARGB(255, 8, 8, 8),
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
                                                 fontWeight: FontWeight.bold)),
                                         Text(
                                             'QUANTITY : ${listy.elementAt(index).data()['foodnos']}',
                                             style: TextStyle(
-                                                color:
-                                                    Color.fromARGB(255, 8, 8, 8),
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
                                                 fontWeight: FontWeight.bold)),
                                         Text(
                                             'TYPE : ${listy.elementAt(index).data()['foodtype']}',
                                             style: TextStyle(
-                                                color:
-                                                    Color.fromARGB(255, 8, 8, 8),
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
                                                 fontWeight: FontWeight.bold)),
                                         Text(
                                             'EXPIRY DATE : ${listy.elementAt(index).data()['expirydate']}',
                                             style: TextStyle(
-                                                color:
-                                                    Color.fromARGB(255, 8, 8, 8),
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
                                                 fontWeight: FontWeight.bold)),
                                         MaterialButton(
                                           onPressed: () {
@@ -346,7 +356,8 @@ class _MyAppState extends State<MyApp> {
                                           },
                                           child: Text(
                                             "Confirm Order",
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
                                           color: Color.fromARGB(255, 0, 0, 0),
                                         ),
