@@ -122,8 +122,9 @@ class _MyAppState extends State<MyApp> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
-                                          opacity: 0.3,
+                                          opacity: 0.35,
                                           image: NetworkImage(customerListy
                                               .elementAt(index)
                                               .data()['foodImage']),
@@ -139,29 +140,53 @@ class _MyAppState extends State<MyApp> {
                                           Text("Name : " +
                                               customerListy
                                                   .elementAt(index)
-                                                  .data()['contactName']),
+                                                  .data()['contactName'],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Text("Email : " +
                                               customerListy
                                                   .elementAt(index)
-                                                  .data()['contactEmail']),
+                                                  .data()['contactEmail'],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Text("Number : " +
                                               customerListy
                                                   .elementAt(index)
-                                                  .data()['contactNumber']),
+                                                  .data()['contactNumber'],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Text("Food Name : " +
                                               customerListy
                                                   .elementAt(index)
-                                                  .data()['foodName']),
+                                                  .data()['foodName'],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Text("Quantity : " +
                                               customerListy
                                                   .elementAt(index)
                                                   .data()['orderQuantity']
-                                                  .toString()),
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Text("Price : " +
                                               customerListy
                                                   .elementAt(index)
                                                   .data()['orderPrice']
-                                                  .toString()),
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -256,8 +281,8 @@ class _MyAppState extends State<MyApp> {
                                                           content: Text(
                                                               "Order approved for pickup")));
                                                 },
-                                                child: Icon(Icons.check),
-                                                color: Colors.green,
+                                                child: Text("Approve"),
+                                                color: Colors.deepPurple.shade100,
                                                 minWidth: 10,
                                               ),
                                               SizedBox(width: 20),
@@ -301,8 +326,8 @@ class _MyAppState extends State<MyApp> {
                                                           content: Text(
                                                               "Order request declined")));
                                                 },
-                                                child: Icon(Icons.close),
-                                                color: Colors.redAccent,
+                                                child: Text("Decline"),
+                                                color: Colors.deepPurple.shade100,
                                                 minWidth: 10,
                                               )
                                             ],
@@ -358,40 +383,79 @@ class _MyAppState extends State<MyApp> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       height: 200,
-                                      width: 200,
-                                      color: Color.fromARGB(255, 255, 0, 0),
+                                      width: 400,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          opacity: 0.35,
+                                          image: NetworkImage(customerListy
+                                              .elementAt(index)
+                                              .data()['foodImage']),
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text("CustomerId : " +
+                                          Text("Name : " +
                                               customerListy
                                                   .elementAt(index)
-                                                  .data()['customerId']
-                                                  .toString()),
-                                          Text("OrderId : " +
+                                                  .data()['contactName'],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
+                                          Text("Email : " +
                                               customerListy
                                                   .elementAt(index)
-                                                  .data()['orderId']
-                                                  .toString()),
+                                                  .data()['contactEmail'],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
+                                          Text("Number : " +
+                                              customerListy
+                                                  .elementAt(index)
+                                                  .data()['contactNumber'],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
+                                          Text("Food Name : " +
+                                              customerListy
+                                                  .elementAt(index)
+                                                  .data()['foodName'],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Text("Quantity : " +
                                               customerListy
                                                   .elementAt(index)
                                                   .data()['orderQuantity']
-                                                  .toString()),
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Text("Price : " +
                                               customerListy
                                                   .elementAt(index)
                                                   .data()['orderPrice']
-                                                  .toString()),
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 8, 8, 8),
+                                                  fontWeight: FontWeight.bold)),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
                                               MaterialButton(
                                                 onPressed: () {},
-                                                child: Icon(Icons.check),
-                                                color: Colors.green,
+                                                child: Text("Delivered"),
+                                                color: Colors.deepPurple.shade100,
                                                 minWidth: 10,
                                               ),
                                               SizedBox(width: 20),
@@ -468,8 +532,8 @@ class _MyAppState extends State<MyApp> {
                                                           content: Text(
                                                               "Order waiting for approval")));
                                                 },
-                                                child: Icon(Icons.close),
-                                                color: Colors.redAccent,
+                                                child: Text("Decline"),
+                                                color: Colors.deepPurple.shade100,
                                                 minWidth: 10,
                                               )
                                             ],
@@ -502,7 +566,9 @@ class _MyAppState extends State<MyApp> {
                   color: Color.fromARGB(96, 0, 0, 0),
                   thickness: 1.2,
                 ),
-                Text("Currently Placed Orders"),
+                Text("Orders You Have Placed:",
+                    style:
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: (listy != null && currentUser != null)
@@ -518,11 +584,12 @@ class _MyAppState extends State<MyApp> {
                                         currentUser.uid) {
                                   return Center(
                                       child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.pink,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    height: 400,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(80),
+                                          color: Colors.deepPurple.shade100,
+                                        ),
+                                    height: 380,
                                     width: 250,
                                     margin: EdgeInsets.all(10),
                                     child: Column(
@@ -538,32 +605,50 @@ class _MyAppState extends State<MyApp> {
                                           height: 250,
                                           width: 250,
                                           child: FittedBox(
-                                            fit: BoxFit.contain,
-                                            child: Image(
-                                              height: 25,
-                                              image: NetworkImage(listy
-                                                  .elementAt(index)
-                                                  .data()['foodimage']),
+                                            fit: BoxFit.fill,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                              // Only top left corner
+                                              BorderRadius.only(
+                                                topLeft: Radius.circular(80),
+                                                topRight: Radius.circular(80),
+                                              ),
+                                              child: Image(
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                  listy
+                                                      .elementAt(index)
+                                                      .data()['foodimage'],
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                        // SizedBox(height: 50),
+                                        SizedBox(height: 20),
                                         Text(
                                             'NAME : ${listy.elementAt(index).data()['foodname']}',
-                                            style:
-                                                TextStyle(color: Colors.white)),
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
                                         Text(
                                             'PRICE : ${listy.elementAt(index).data()['foodprice']} Rs',
-                                            style:
-                                                TextStyle(color: Colors.white)),
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
                                         Text(
                                             'QUANTITY : ${listy.elementAt(index).data()['foodnos']}',
-                                            style:
-                                                TextStyle(color: Colors.white)),
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
                                         Text(
                                             'TYPE : ${listy.elementAt(index).data()['foodtype']}',
-                                            style:
-                                                TextStyle(color: Colors.white)),
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 8, 8, 8),
+                                                fontWeight: FontWeight.bold)),
                                       ],
                                     ),
                                   ));
