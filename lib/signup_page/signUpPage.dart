@@ -158,7 +158,7 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Username',
                           labelStyle: TextStyle(
-                            color: Colors.blueGrey,
+                            color: Colors.black87,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
@@ -199,7 +199,7 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Email',
                           labelStyle: TextStyle(
-                            color: Colors.blueGrey,
+                            color: Colors.black87,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
@@ -242,7 +242,7 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Password',
                           labelStyle: TextStyle(
-                            color: Colors.blueGrey,
+                            color: Colors.black87,
                           ),
                           // Icon for email
                           prefixIcon: Icon(

@@ -165,7 +165,7 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Email',
                           labelStyle: TextStyle(
-                            color: Colors.blueGrey,
+                            color: Colors.black87,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
@@ -209,7 +209,7 @@ class _MyAppState extends State<MyApp> {
                           //label text and style
                           labelText: 'Password',
                           labelStyle: TextStyle(
-                            color: Colors.blueGrey,
+                            color: Colors.black87,
                           ),
                           // Icon for email
                           prefixIcon: Icon(
@@ -283,7 +283,7 @@ class _MyAppState extends State<MyApp> {
                               },
                               child: Text(' Signup',
                                   style: TextStyle(
-                                      color: Color.fromARGB(255, 206, 7, 0),
+                                      color: Color.fromARGB(255, 93, 0, 255),
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold))),
                         ],
