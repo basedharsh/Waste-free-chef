@@ -191,12 +191,12 @@ class _MyAppState extends State<MyApp> {
                               Text(
                                 "Waste",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 206, 7, 0),
+                                    color: Colors.deepPurple.shade900,
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                "-Food",
+                                "-Free",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 30,
@@ -204,7 +204,7 @@ class _MyAppState extends State<MyApp> {
                               ),
                               Text("-Chef",
                                   style: TextStyle(
-                                      color: Color.fromARGB(255, 206, 7, 0),
+                                      color: Colors.deepPurple.shade900,
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold)),
                             ],
