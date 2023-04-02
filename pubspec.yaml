@@ -54,7 +54,6 @@ dependencies:
   url_launcher: ^6.1.10
   flutter_email_sender: ^5.2.0
   flutter_phone_direct_caller: ^2.1.1
-
   dialog_flowtter: ^0.3.3
   carousel_slider: ^4.2.1
   hidden_drawer_menu: ^3.0.1
