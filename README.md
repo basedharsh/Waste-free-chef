@@ -1,6 +1,6 @@
 # firebase
 
-A new Flutter project.
+A new Flutter project to save sulprus food.
 
 ## Getting Started
 

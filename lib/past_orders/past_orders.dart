@@ -353,14 +353,14 @@ class _MyAppState extends State<MyApp> {
                             child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
-                            children: [Text("Refresh the page")],
+                            children: [Text("Refresh the page!")],
                           ))),
                 SizedBox(height: 30),
                 Divider(
                   color: Color.fromARGB(96, 0, 0, 0),
                   thickness: 1.2,
                 ),
-                Text("Pickup Ready Orders:",
+                Text("Pick-up Ready Orders :",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 SingleChildScrollView(
