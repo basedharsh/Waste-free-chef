@@ -453,7 +453,39 @@ class _MyAppState extends State<MyApp> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               MaterialButton(
-                                                onPressed: () {},
+                                                onPressed: ()async{
+
+                                                  var originalOrder = await db
+                                                      .collection("sellerOrder")
+                                                      .doc()
+                                                      .get();
+                                                  print(customerListy.elementAt(index).data()['orderId']);
+                                                  print(originalOrder);
+
+                                                  // if(originalOrderDetails.data()["foodnos"]==0){
+                                                  //   print(originalOrderDetails);
+                                                  //   await FirebaseFirestore
+                                                  //       .instance
+                                                  //       .collection('sellerOrder')
+                                                  //       .doc(originalOrderDetails.id)
+                                                  //       .delete();
+                                                  // }
+                                                  //
+                                                  // Email email = Email(
+                                                  //   body: 'Order succefully pickedup!!',
+                                                  //   subject: 'Order Pickedup',
+                                                  //   recipients: [
+                                                  //     customerListy
+                                                  //         .elementAt(index)
+                                                  //         .data()[
+                                                  //     'contactEmail']
+                                                  //   ],
+                                                  //   isHTML: false,
+                                                  // );
+                                                  //
+                                                  // await FlutterEmailSender.send(
+                                                  //     email);
+                                                },
                                                 child: Text("Delivered"),
                                                 color: Colors.deepPurple.shade100,
                                                 minWidth: 10,
@@ -463,74 +495,50 @@ class _MyAppState extends State<MyApp> {
                                                 onPressed: () async {
                                                   await FirebaseFirestore
                                                       .instance
-                                                      .collection(
-                                                          'customerOrder')
-                                                      .doc(
-                                                          customerListy
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .data()[
-                                                                  'orderId'] +
-                                                              customerListy
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .data()[
-                                                                  'customerId'])
-                                                      .update({
-                                                    "apporived": false,
-                                                    "status": "onHold"
-                                                  }).then((result) {
-                                                    print(
-                                                        "Order Status Updated");
-                                                  }).catchError((onError) {
-                                                    print("onError");
-                                                  });
+                                                      .collection('customerOrder')
+                                                      .doc(customerListy.elementAt(index).data()['orderId'] + customerListy.elementAt(index).data()['customerId'])
+                                                      .delete();
 
                                                   originalOrderDetails = await db
                                                       .collection("sellerOrder")
-                                                      .doc(customerListy
-                                                          .elementAt(index)
-                                                          .data()['orderId'])
+                                                      .doc(customerListy.elementAt(index).data()['orderId'])
                                                       .get();
 
                                                   await FirebaseFirestore
                                                       .instance
                                                       .collection('sellerOrder')
-                                                      .doc(customerListy
-                                                          .elementAt(index)
-                                                          .data()['orderId'])
+                                                      .doc(customerListy.elementAt(index).data()['orderId'])
                                                       .update({
-                                                    "foodnos": (int.parse(
-                                                                originalOrderDetails
-                                                                        .data()[
-                                                                    'foodnos']) +
-                                                            customerListy
-                                                                    .elementAt(
-                                                                        index)
-                                                                    .data()[
-                                                                'orderQuantity'])
-                                                        .toString(),
-                                                    "foodprice": (int.parse(
-                                                                originalOrderDetails
-                                                                        .data()[
-                                                                    'foodprice']) +
-                                                            customerListy
-                                                                    .elementAt(
-                                                                        index)
-                                                                    .data()[
-                                                                'orderPrice'])
-                                                        .toString()
-                                                  }).then((result) {
+                                                        "foodnos": (int.parse(originalOrderDetails.data()['foodnos']) + customerListy.elementAt(index).data()['orderQuantity']).toString(),
+                                                        "foodprice": (int.parse(originalOrderDetails.data()['foodprice']) + customerListy.elementAt(index).data()['orderPrice']).toString()
+                                                      }).then((result) {
                                                     print(
                                                         "Original Order Updated");
                                                   }).catchError((onError) {
                                                     print("onError");
                                                   });
 
+                                                  Email email = Email(
+                                                    body:
+                                                    'Sorry, your Order request is not approved',
+                                                    subject: 'Order Declined',
+                                                    recipients: [
+                                                      customerListy
+                                                          .elementAt(index)
+                                                          .data()[
+                                                      'contactEmail']
+                                                    ],
+                                                    isHTML: false,
+                                                  );
+
+                                                  await FlutterEmailSender.send(
+                                                      email);
+
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
-                                                          content: Text(
-                                                              "Order waiting for approval")));
+                                                      content: Text(
+                                                          "Order request declined")));
+
                                                 },
                                                 child: Text("Decline"),
                                                 color: Colors.deepPurple.shade100,

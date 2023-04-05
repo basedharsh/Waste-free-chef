@@ -251,7 +251,8 @@ class _MyAppState extends State<MyApp> {
                             if (listy.elementAt(index).data()["approved"] ==
                                     "true" &&
                                 listy.elementAt(index).data()["providerid"] !=
-                                    currentUser.uid) {
+                                    currentUser.uid&&
+                                listy.elementAt(index).data()["foodnos"] != "0") {
                               // main container for each order
                               return Padding(
                                 padding: const EdgeInsets.only(
