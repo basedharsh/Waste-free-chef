@@ -1,13 +1,14 @@
 # WFC (Waste Free Chef)
-<p align="center">
-  <img src="https://media.tenor.com/7drLi0EGeKkAAAAi/pepe-clown-band-clown-band.gif" alt="Waste Free Chef" />
-</p>
+
 
 
 **Authors:** [Me](https://github.com/basedharsh),[Manan](https://github.com/MananKabra), [Shri](https://github.com/SHRIVATSA-D) ,[Sharvil](https://github.com/dodomyg)
 
 
 ## Introduction
+<p align="center">
+  <img src="https://media.tenor.com/7drLi0EGeKkAAAAi/pepe-clown-band-clown-band.gif" alt="Waste Free Chef" />
+</p>
 
 Welcome to the README file for WFC (Waste Free Chef)! This app is designed to reduce food waste and provide food to the needy. Our target audience is anyone who wants to help reduce food waste and contribute to a good cause.
 
