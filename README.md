@@ -1,4 +1,4 @@
-# WFC (Waste Free Chef)
+# WFC (Waste-Free-Chef)
 
 
 
